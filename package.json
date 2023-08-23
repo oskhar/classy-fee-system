@@ -11,7 +11,9 @@
   },
   "devDependencies": {
     "axios": "^1.1.2",
-    "laravel-mix": "^6.0.49"
+    "laravel-mix": "^6.0.49",
+    "resolve-url-loader": "^5.0.0",
+    "sass-loader": "^12.6.0"
   },
   "name": "classy-fee-system",
   "description": "Simplify school payments, Classy Fee System. With the magic of Laravel, the speed of Vite, and the coolness of AdminLTE. Effortless fee management for schools, principals, and stress-free payments for students and parents. Join us for seamless school financials!",
@@ -21,6 +23,7 @@
     "test": "tests"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.4.2",
     "asynckit": "^0.4.0",
     "combined-stream": "^1.0.8",
     "delayed-stream": "^1.0.0",
@@ -36,6 +39,7 @@
     "proxy-from-env": "^1.1.0",
     "rollup": "^3.28.1",
     "source-map-js": "^1.0.2",
+    "sweetalert2": "^11.6.13",
     "vite-plugin-full-reload": "^1.0.5"
   },
   "keywords": [],

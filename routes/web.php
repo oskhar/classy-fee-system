@@ -16,3 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/admin', function () {
+    return view('admin.dashboard');
+})->name('dashboard');
+Route::get('/admin/data-siswa', function () {
+    return view('admin.data_siswa');
+})->name('data-siswa');

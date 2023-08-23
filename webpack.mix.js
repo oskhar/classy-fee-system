@@ -11,7 +11,6 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        //
-    ]);
+mix.js('resources/js/template_admin.js', 'public/js');
+mix.postCss('resources/css/template_admin.css', 'public/css');
+mix.copy('resources/assets/images', 'public/images');
