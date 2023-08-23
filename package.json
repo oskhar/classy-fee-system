@@ -1,0 +1,42 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "axios": "^1.1.2",
+    "laravel-mix": "^6.0.49",
+    "laravel-vite-plugin": "^0.8.0",
+    "vite": "^4.0.0"
+  },
+  "name": "classy-fee-system",
+  "description": "Simplify school payments, Classy Fee System. With the magic of Laravel, the speed of Vite, and the coolness of AdminLTE. Effortless fee management for schools, principals, and stress-free payments for students and parents. Join us for seamless school financials!",
+  "version": "1.0.0",
+  "main": "vite.config.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "asynckit": "^0.4.0",
+    "combined-stream": "^1.0.8",
+    "delayed-stream": "^1.0.0",
+    "esbuild": "^0.18.20",
+    "follow-redirects": "^1.15.2",
+    "form-data": "^4.0.0",
+    "mime-db": "^1.52.0",
+    "mime-types": "^2.1.35",
+    "nanoid": "^3.3.6",
+    "picocolors": "^1.0.0",
+    "picomatch": "^2.3.1",
+    "postcss": "^8.4.28",
+    "proxy-from-env": "^1.1.0",
+    "rollup": "^3.28.1",
+    "source-map-js": "^1.0.2",
+    "vite-plugin-full-reload": "^1.0.5"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
