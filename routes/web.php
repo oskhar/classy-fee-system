@@ -28,3 +28,6 @@ Route::get('/admin/data-siswa', function () {
 Route::get('/admin/data-kelas', function () {
     return view('admin.data_kelas');
 })->name('admin.data_kelas');
+Route::get('/admin/data-kelas-create', function () {
+    return view('admin.data_kelas_create');
+})->name('admin.data_kelas_create');
