@@ -1,4 +1,4 @@
-@extends('layout/template_admin')
+@extends('layout.template_admin')
 
 @section('title', 'Halaman Dashboard')
 @section('mainContent')

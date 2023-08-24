@@ -20,5 +20,7 @@ Route::get('/admin', function () {
     return view('admin.dashboard');
 })->name('dashboard');
 Route::get('/admin/data-siswa', function () {
-    return view('admin.data_siswa');
+    return view('admin.data_siswa', [
+        'data_siswa' => []
+    ]);
 })->name('data-siswa');
