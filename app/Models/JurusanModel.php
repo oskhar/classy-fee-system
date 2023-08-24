@@ -19,11 +19,19 @@ class JurusanModel extends Model
     protected $table = 'tb_jurusan';
 
     /**
+     * Memperbolehkan penggunaan timestamps.
+     * 
+     * @var boolean
+     */
+    public $timestamps = true;
+
+    /**
      * Atribut atau kolom yang boleh diubah.
      *
      * @var array<int, string>
      */
     protected $fillable = [
+        'id_jurusan',
         'nama_jurusan',
         'statud_data',
     ];

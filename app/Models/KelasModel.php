@@ -20,11 +20,19 @@ class KelasModel extends Model
     protected $table = 'tb_kelas';
 
     /**
+     * Memperbolehkan penggunaan timestamps.
+     * 
+     * @var boolean
+     */
+    public $timestamps = true;
+
+    /**
      * Atribut atau kolom yang boleh diubah.
      *
      * @var array<int, string>
      */
     protected $fillable = [
+        'id_kelas',
         'id_jurusan',
         'nama_kelas',
         'statud_data',

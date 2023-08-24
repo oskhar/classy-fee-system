@@ -17,23 +17,23 @@ class DatabaseSeeder extends Seeder
 
         JurusanModel::create([
             'id_jurusan' => 'J-001',
+            'nama_jurusan' => 'Ilmu Pengetahuan Alam',
+            'singkatan' => 'IPA',
+        ]);
+        JurusanModel::create([
+            'id_jurusan' => 'J-002',
+            'nama_jurusan' => 'Ilmu Pengetahuan Sosial',
+            'singkatan' => 'IPS',
+        ]);
+        JurusanModel::create([
+            'id_jurusan' => 'J-003',
             'nama_jurusan' => 'Teknik Komputer Jaringan',
             'singkatan' => 'TKJ',
         ]);
         JurusanModel::create([
-            'id_jurusan' => 'J-002',
+            'id_jurusan' => 'J-004',
             'nama_jurusan' => 'Multimedia',
             'singkatan' => 'MM',
-        ]);
-        JurusanModel::create([
-            'id_jurusan' => 'J-003',
-            'nama_jurusan' => 'Akutansi Keuangan',
-            'singkatan' => 'AK',
-        ]);
-        JurusanModel::create([
-            'id_jurusan' => 'J-004',
-            'nama_jurusan' => 'Administrasi Perkantoran',
-            'singkatan' => 'AP',
         ]);
         JurusanModel::create([
             'id_jurusan' => 'J-005',
@@ -188,27 +188,27 @@ class DatabaseSeeder extends Seeder
         ]);
         KelasModel::create([
             'id_kelas' => 'K-026',
-            'id_jurusan' => 'J-005',
+            'id_jurusan' => 'J-004',
             'nama_kelas' => 'X-MM-2',
         ]);
         KelasModel::create([
             'id_kelas' => 'K-027',
-            'id_jurusan' => 'J-006',
+            'id_jurusan' => 'J-004',
             'nama_kelas' => 'XI-MM-1',
         ]);
         KelasModel::create([
             'id_kelas' => 'K-028',
-            'id_jurusan' => 'J-007',
+            'id_jurusan' => 'J-004',
             'nama_kelas' => 'XI-MM-2',
         ]);
         KelasModel::create([
             'id_kelas' => 'K-029',
-            'id_jurusan' => 'J-008',
+            'id_jurusan' => 'J-004',
             'nama_kelas' => 'XII-MM-1',
         ]);
         KelasModel::create([
             'id_kelas' => 'K-030',
-            'id_jurusan' => 'J-009',
+            'id_jurusan' => 'J-004',
             'nama_kelas' => 'XII-MM-2',
         ]);
     }

@@ -16,11 +16,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
 Route::get('/admin', function () {
     return view('admin.dashboard');
 })->name('dashboard');
+
 Route::get('/admin/data-siswa', function () {
-    return view('admin.data_siswa', [
-        'data_siswa' => []
-    ]);
-})->name('data-siswa');
+    return view('admin.data_siswa');
+})->name('admin.data_siswa');
+
+Route::get('/admin/data-kelas', function () {
+    return view('admin.data_kelas');
+})->name('admin.data_kelas');

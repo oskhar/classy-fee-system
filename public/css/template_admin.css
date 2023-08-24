@@ -1,1 +1,9 @@
+body {
+    background-color: #f4f6f9;
+}
+body #navbar-costume {
+    position: fixed;
+    width: 100vw;
+    top: 0;
+}
 

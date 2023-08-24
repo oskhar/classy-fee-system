@@ -1,6 +1,6 @@
 {{-- START CSS --}}
 {{-- Main CSS --}}
-<link rel="stylesheet" href="{{ asset('css/admin/data_siswa.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/data_kelas.css') }}">
 {{-- DataTables & Plugins --}}
 <link rel="stylesheet" href="{{ asset('adminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('adminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
@@ -9,7 +9,7 @@
 
 {{-- START JS --}}
 {{-- Main JS --}}
-<script src="{{ asset('js/admin/data_siswa.js') }}"></script>
+<script src="{{ asset('js/admin/data_kelas.js') }}"></script>
 {{-- DataTables  & Plugins --}}
 <script src="{{ asset('adminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('adminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>

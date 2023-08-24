@@ -5,17 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>@yield('title')</title>
   @include('depedensi.layout.template_admin');
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed bg-light">
 <div class="wrapper">
-
-  <!-- Preloader -->
-  {{-- <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="adminLTE/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-  </div> --}}
-
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light" id="navbar-costume">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -28,27 +23,6 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      <!-- Navbar Search -->
-      <li class="nav-item">
-        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-          <i class="fas fa-search"></i>
-        </a>
-        <div class="navbar-search-block">
-          <form class="form-inline">
-            <div class="input-group input-group-sm">
-              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-              <div class="input-group-append">
-                <button class="btn btn-navbar" type="submit">
-                  <i class="fas fa-search"></i>
-                </button>
-                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </li>
 
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
@@ -60,7 +34,7 @@
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img src="adminLTE/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+              <img src="" alt="User Avatar" class="img-size-50 mr-3 img-circle">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Brad Diesel
@@ -76,7 +50,7 @@
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img src="adminLTE/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <img src="" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   John Pierce
@@ -92,7 +66,7 @@
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img src="adminLTE/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <img src="" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Nora Silvester
@@ -176,7 +150,7 @@
 
           <!-- li-menu-data-siswa -->
           <li class="nav-item">
-            <a href="{{ route('data-siswa') }}" class="nav-link">
+            <a href="{{ route('admin.data_siswa') }}" class="nav-link">
               <i class="nav-icon fas fa-user-graduate"></i>
               <p>
                 Data Siswa
@@ -227,7 +201,7 @@
 
               <!-- data kelas -->
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('admin.data_kelas') }}" class="nav-link">
                   <i class="fas fa-minus nav-icon"></i>
                   <p>Data kelas</p>
                 </a>
@@ -275,7 +249,7 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper mt-5">
     @yield('mainContent')
   </div>
   <!-- /.content-wrapper -->

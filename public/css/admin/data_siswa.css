@@ -1,0 +1,10 @@
+.buttons-excel {
+    background: var(--primary);
+}
+.buttons-excel::before {
+    content: "Unduh Sebagai ";
+}
+.card-outline-left {
+    border-left: 0.3rem solid var(--success);
+}
+
