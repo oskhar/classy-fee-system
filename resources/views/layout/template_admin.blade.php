@@ -140,7 +140,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- li-main-dashboard -->
           <li class="nav-item">
-            <a href="{{ route('dashboard') }}" class="nav-link">
+            <a href="{{ route('dashboard') }}" class="nav-link @if(request()->is('admin')) active @endif">
               <i class="nav-icon fas fa-home"></i>
               <p>
                 Main Dashboard
@@ -179,10 +179,10 @@
           <!-- /. li-menu-cetak-laporan -->
 
           <!-- menu-pengaturan-sistem -->
-          <li class="nav-item">
+          <li class="nav-item @if(request()->is('admin/data-jurusan') || request()->is('admin/data-kelas') || request()->is('admin/data-tahun-ajar')) menu-open @endif">
 
             <!-- pengaturan sistem -->
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link @if(request()->is('admin/data-jurusan') || request()->is('admin/data-kelas') || request()->is('admin/data-tahun-ajar')) active @endif">
               <i class="nav-icon fas fa-gears"></i>
               <p>Pengaturan Sistem<i class="fas fa-angle-left right"></i></p>
             </a>
@@ -193,7 +193,7 @@
 
               <!-- data jurusan -->
               <li class="nav-item">
-                <a href="?page=jurusan" class="nav-link">
+                <a href="?page=jurusan" class="nav-link @if(request()->is('admin/data-jurusan')) active @endif">
                   <i class="fas fa-minus nav-icon"></i>
                   <p>Data Jurusan</p>
                 </a>
@@ -202,7 +202,7 @@
 
               <!-- data kelas -->
               <li class="nav-item">
-                <a href="{{ route('admin.data_kelas') }}" class="nav-link">
+                <a href="{{ route('admin.data_kelas') }}" class="nav-link @if(request()->is('admin/data-kelas')) active @endif">
                   <i class="fas fa-minus nav-icon"></i>
                   <p>Data kelas</p>
                 </a>
