@@ -25,6 +25,8 @@ class KelasModel extends Model
      * @var boolean
      */
     public $timestamps = true;
+    protected $primaryKey = 'id_kelas';
+    protected $keyType = "string";
 
     /**
      * Atribut atau kolom yang boleh diubah.

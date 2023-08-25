@@ -15,8 +15,12 @@ class JurusanModel extends Model
      * Mengatur nama tabel database yang dituju.
      * 
      * @var string
+     * @var string
+     * @var string
      */
     protected $table = 'tb_jurusan';
+    protected $primaryKey = 'id_jurusan';
+    protected $keyType = "string";
 
     /**
      * Memperbolehkan penggunaan timestamps.

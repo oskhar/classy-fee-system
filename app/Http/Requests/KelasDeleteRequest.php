@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Requests;
-use Illuminate\Contracts\Validation\Validator;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class KelasUpdateRequest extends FormRequest
+class KelasDeleteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,7 @@ class KelasUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nama_kelas' => ['nullable'],
-            'id_jurusan' => ['nullable'],
-            'status_data' => ['nullable'],
+            'id_kelas' => 'required',
         ];
     }
 

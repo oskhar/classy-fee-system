@@ -19,7 +19,7 @@ use App\Http\Controllers\KelasController;
 Route::get('/kelas', [KelasController::class, 'get']);
 Route::post('/kelas', [KelasController::class, 'create']);
 Route::put('/kelas', [KelasController::class, 'update']);
-Route::delete('/kelas/{id_kelas}', [KelasController::class, 'delete']);
+Route::delete('/kelas', [KelasController::class, 'delete']);
 Route::get('/kelas/untuk-tabel', [KelasController::class, 'getUntukTabel']);
 
 Route::get('/jurusan', [JurusanController::class, 'get']);

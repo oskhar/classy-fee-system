@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\KelasCreateRequest;
+use App\Http\Requests\KelasDeleteRequest;
 use App\Http\Requests\KelasUpdateRequest;
 use App\Http\Resources\KelasResource;
 use App\Models\KelasModel;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -20,7 +22,7 @@ class KelasController extends Controller
     }
     public function getUntukTabel (): JsonResponse
     {
-        $data = KelasModel::select('tb_kelas.nama_kelas', 'tb_kelas.status_data', 'tb_kelas.id_kelas', 'tb_jurusan.nama_jurusan')
+        $data = KelasModel::select('tb_kelas.id_kelas', 'tb_kelas.nama_kelas', 'tb_kelas.status_data', 'tb_jurusan.nama_jurusan')
         ->join('tb_jurusan', 'tb_kelas.id_jurusan', '=', 'tb_jurusan.id_jurusan')
         ->get();
         return KelasResource::collection($data)->response()->setStatusCode(200);
@@ -37,22 +39,31 @@ class KelasController extends Controller
     public function update (KelasUpdateRequest $request): JsonResponse
     {
         $data = $request->validated();
-        $kelas = KelasModel::find($data['id_kelas']);
+        $kelas = KelasModel::where('id_kelas', $data['id_kelas'])->first();
         $kelas->fill($data);
         $kelas->save();
         return (new KelasResource(['nama_kelas' => $kelas->nama_kelas]))->response()->setStatusCode(201);
     }
-    public function delete($id_kelas): JsonResponse
+    public function delete(KelasDeleteRequest $request): JsonResponse
     {
-        $kelas = KelasModel::where('id_kelas', $id_kelas)->first();
+        $data = $request->validated();
+
+        $kelas = KelasModel::where('id_kelas', $data['id_kelas'])->first();
+        $kelas->fill(['status_data' => 'Tidak Aktif']);
         
         if (!$kelas) {
-            return response()->json(['message' => 'Kelas not found'], 404);
+            throw new HttpResponseException(response()->json([
+                'errors' => [
+                    'message' => [
+                        'Kelas not found'
+                    ]
+                ]
+            ])->setStatusCode(404));
         }
     
         $kelas->delete(); // Perform soft delete
         
-        return response()->json(['message' => 'Kelas deleted successfully']);
+        return (new KelasResource(['nama_kelas' => $kelas->nama_kelas]))->response()->setStatusCode(200);
     }
 
 }
