@@ -14,7 +14,7 @@ var Main = /*#__PURE__*/function () {
   function Main() {
     _classCallCheck(this, Main);
     this.dataTableElement = $("#example1");
-    this.dataTable = this.initializeDataTable(this.dataTableElement);
+    this.dataTable = this.setDataTable(this.dataTableElement);
     this.setListener();
   }
   _createClass(Main, [{
@@ -25,16 +25,18 @@ var Main = /*#__PURE__*/function () {
       // Event listener untuk tombol delete
       this.dataTableElement.on("click", ".btn-action.delete", function (event) {
         var button = $(this);
-        var id = button.data("id");
-        self.performSoftDelete(id); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari kelas Main
+        var id_kelas = button.data("id");
+        var nama_kelas = button.data("nama");
+        self.performSoftDelete(id_kelas, nama_kelas); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari kelas Main
       });
     }
   }, {
-    key: "initializeDataTable",
-    value: function initializeDataTable(tableElement) {
+    key: "setDataTable",
+    value: function setDataTable(tableElement) {
       return tableElement.DataTable({
         ajax: {
-          url: "".concat(mainURL, "/api/kelas/untuk-tabel")
+          url: "".concat(mainURL, "/api/kelas/untuk-tabel"),
+          type: "GET"
         },
         columns: [{
           data: "nama_kelas"
@@ -48,8 +50,8 @@ var Main = /*#__PURE__*/function () {
           }
         }, {
           data: "id_kelas",
-          render: function render(data) {
-            return "\n                        <a class=\"btn btn-outline-primary btn-action btn-sm view\" data-id=\"".concat(data, "\" data-action=\"view\">\n                            <i class=\"fas fa-eye\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-warning btn-action btn-sm edit\" data-id=\"").concat(data, "\" data-action=\"edit\">\n                            <i class=\"fas fa-pencil-alt\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-id=\"").concat(data, "\" data-action=\"delete\">\n                            <i class=\"fas fa-trash\"></i>\n                        </a>\n                    ");
+          render: function render(data, type, row) {
+            return "\n                        <a class=\"btn btn-outline-primary btn-sm\" href=\"".concat(mainURL, "/data-kelas-detail/").concat(data, "\">\n                            <i class=\"fas fa-eye\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-warning btn-sm\" href=\"").concat(mainURL, "/data-kelas-update/").concat(data, "\">\n                            <i class=\"fas fa-pencil-alt\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-id=\"").concat(data, "\" data-nama=\"").concat(row.nama_kelas, "\">\n                            <i class=\"fas fa-trash\"></i>\n                        </a>\n                    ");
           }
         }],
         responsive: true,
@@ -58,6 +60,9 @@ var Main = /*#__PURE__*/function () {
         language: {
           info: "Last updated data on"
         },
+        processing: true,
+        serverSide: true,
+        // Aktifkan server-side processing
         paging: true,
         // Mengaktifkan paginasi
         pageLength: 10 // Menentukan jumlah data per halaman
@@ -65,9 +70,9 @@ var Main = /*#__PURE__*/function () {
     }
   }, {
     key: "performSoftDelete",
-    value: function performSoftDelete(id_kelas) {
+    value: function performSoftDelete(id_kelas, nama_kelas) {
       var _this = this;
-      this.showWarningMessage("Hapus kelas ?", "Hapus").then(function (result) {
+      this.showWarningMessage("Hapus kelas ".concat(nama_kelas, " ?"), "Hapus").then(function (result) {
         /* Read more about isConfirmed, isDenied below */
         if (result.isDenied) {
           $.ajax({
@@ -82,9 +87,13 @@ var Main = /*#__PURE__*/function () {
               _this.showSuccessMessage("Kelas ".concat(response.data.nama_kelas, " berhasil dihapus"));
             },
             error: function error(xhr) {
-              var errors = Object.keys(xhr.responseJSON).map(function (key) {
-                return xhr.responseJSON[key];
-              }).join("<br>");
+              // Menampilkan pesan error AJAX
+              var errors;
+              if (xhr.responseJSON.errors) {
+                errors = self.objectToString(xhr.responseJSON.errors);
+              } else {
+                errors = self.objectToString(xhr.responseJSON);
+              }
               _this.showErrorMessage(errors);
             }
           });
@@ -131,6 +140,11 @@ var Main = /*#__PURE__*/function () {
         showCancelButton: true,
         denyButtonText: buttonText
       });
+    }
+  }, {
+    key: "objectToString",
+    value: function objectToString(object) {
+      return Object.values(object).join("<br>");
     }
   }]);
   return Main;

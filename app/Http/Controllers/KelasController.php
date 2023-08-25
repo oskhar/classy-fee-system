@@ -20,17 +20,19 @@ class KelasController extends Controller
         $data = KelasModel::all();
         return KelasResource::collection($data)->response()->setStatusCode(200);
     }
-    public function getUntukTabel (): JsonResponse
+    public function getUntukTabel (Request $request): JsonResponse
     {
         $data = KelasModel::select('tb_kelas.id_kelas', 'tb_kelas.nama_kelas', 'tb_kelas.status_data', 'tb_jurusan.nama_jurusan')
         ->join('tb_jurusan', 'tb_kelas.id_jurusan', '=', 'tb_jurusan.id_jurusan')
-        ->get();
+        ->offset($request->start)
+        ->limit($request->length)
+        ->get();;
         return KelasResource::collection($data)->response()->setStatusCode(200);
     }
     public function create (KelasCreateRequest $request): JsonResponse
     {
         $data = $request->validated();
-        $banyakData = KelasModel::count();
+        $banyakData = KelasModel::withTrashed()->count();
         $data['id_kelas'] = "K-".str_pad(($banyakData+1), 3, '0', STR_PAD_LEFT);
         $kelas = new KelasModel($data);
         $kelas->save();

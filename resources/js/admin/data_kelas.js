@@ -3,7 +3,7 @@
 class Main {
     constructor() {
         this.dataTableElement = $("#example1");
-        this.dataTable = this.initializeDataTable(this.dataTableElement);
+        this.dataTable = this.setDataTable(this.dataTableElement);
 
         this.setListener();
     }
@@ -17,16 +17,18 @@ class Main {
             ".btn-action.delete",
             function (event) {
                 const button = $(this);
-                const id = button.data("id");
-                self.performSoftDelete(id); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari kelas Main
+                const id_kelas = button.data("id");
+                const nama_kelas = button.data("nama");
+                self.performSoftDelete(id_kelas, nama_kelas); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari kelas Main
             }
         );
     }
 
-    initializeDataTable(tableElement) {
+    setDataTable(tableElement) {
         return tableElement.DataTable({
             ajax: {
                 url: `${mainURL}/api/kelas/untuk-tabel`,
+                type: "GET",
             },
             columns: [
                 { data: "nama_kelas" },
@@ -41,14 +43,14 @@ class Main {
                 },
                 {
                     data: "id_kelas",
-                    render: (data) => `
-                        <a class="btn btn-outline-primary btn-action btn-sm view" data-id="${data}" data-action="view">
+                    render: (data, type, row) => `
+                        <a class="btn btn-outline-primary btn-sm" href="${mainURL}/data-kelas-detail/${data}">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a class="btn btn-outline-warning btn-action btn-sm edit" data-id="${data}" data-action="edit">
+                        <a class="btn btn-outline-warning btn-sm" href="${mainURL}/data-kelas-update/${data}">
                             <i class="fas fa-pencil-alt"></i>
                         </a>
-                        <a class="btn btn-outline-danger btn-action btn-sm delete" data-id="${data}" data-action="delete">
+                        <a class="btn btn-outline-danger btn-action btn-sm delete" data-id="${data}" data-nama="${row.nama_kelas}">
                             <i class="fas fa-trash"></i>
                         </a>
                     `,
@@ -60,35 +62,45 @@ class Main {
             language: {
                 info: "Last updated data on",
             },
+            processing: true,
+            serverSide: true, // Aktifkan server-side processing
             paging: true, // Mengaktifkan paginasi
             pageLength: 10, // Menentukan jumlah data per halaman
         });
     }
 
-    performSoftDelete(id_kelas) {
-        this.showWarningMessage("Hapus kelas ?", "Hapus").then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isDenied) {
-                $.ajax({
-                    url: `${mainURL}/api/kelas`,
-                    type: "delete",
-                    data: { id_kelas },
-                    dataType: "json",
-                    success: (response) => {
-                        this.refreshDataTable();
-                        this.showSuccessMessage(
-                            `Kelas ${response.data.nama_kelas} berhasil dihapus`
-                        );
-                    },
-                    error: (xhr) => {
-                        const errors = Object.keys(xhr.responseJSON)
-                            .map((key) => xhr.responseJSON[key])
-                            .join("<br>");
-                        this.showErrorMessage(errors);
-                    },
-                });
+    performSoftDelete(id_kelas, nama_kelas) {
+        this.showWarningMessage(`Hapus kelas ${nama_kelas} ?`, "Hapus").then(
+            (result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isDenied) {
+                    $.ajax({
+                        url: `${mainURL}/api/kelas`,
+                        type: "delete",
+                        data: { id_kelas },
+                        dataType: "json",
+                        success: (response) => {
+                            this.refreshDataTable();
+                            this.showSuccessMessage(
+                                `Kelas ${response.data.nama_kelas} berhasil dihapus`
+                            );
+                        },
+                        error: (xhr) => {
+                            // Menampilkan pesan error AJAX
+                            let errors;
+                            if (xhr.responseJSON.errors) {
+                                errors = self.objectToString(
+                                    xhr.responseJSON.errors
+                                );
+                            } else {
+                                errors = self.objectToString(xhr.responseJSON);
+                            }
+                            this.showErrorMessage(errors);
+                        },
+                    });
+                }
             }
-        });
+        );
     }
 
     refreshDataTable() {
@@ -126,6 +138,10 @@ class Main {
             showCancelButton: true,
             denyButtonText: buttonText,
         });
+    }
+
+    objectToString(object) {
+        return Object.values(object).join("<br>");
     }
 }
 
