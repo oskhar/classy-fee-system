@@ -1,76 +1,97 @@
-const apiURL = mainURL + "/api/kelas/untuk-tabel";
-function doSoftDelete(nis, url) {
+function lakukanSoftDelete(id_kelas) {
     // Kirim data ke controller menggunakan AJAX
     $.ajax({
-        url: apiURL,
-        type: "get",
+        url: mainURL + "/api/kelas",
+        type: "delete",
+        data: { id_kelas: id_kelas },
         dataType: "json",
         success: function (response) {
+            // Respon berhasil dikirim ke user
             console.log(response);
+            Swal.fire({
+                toast: true,
+                position: "top-right",
+                iconColor: "white",
+                color: "white",
+                background: "var(--warning)",
+                showConfirmButton: false,
+                timer: 10000,
+                timerProgressBar: true,
+                icon: "success",
+                title: "Kelas " + response.nama_kelas + " berhasil dihapus",
+            });
         },
         error: function (xhr, status, error) {
-            alert(
-                "Data gagal ditemukan: " +
-                    xhr.status +
-                    "\n" +
-                    xhr.responseText +
-                    "\n" +
-                    error
-            );
+            // Menampilkan pesan error AJAX
+            let errors = Object.keys(xhr.responseJSON.errors)
+                .map(function (key) {
+                    return xhr.responseJSON.errors[key];
+                })
+                .join("<br>");
+            Swal.fire({
+                title: "" + errors,
+                icon: "error",
+                confirmButtonText: "Ok",
+            });
         },
     });
 }
 
+function pindahDenganMembawaData(url, data) {
+    localStorage.setItem("idKelasYangDipilih", data);
+    window.location.href = url;
+}
+
 $(function () {
     // Mengatur DataTable
-    $("#example1")
-        .DataTable({
-            ajax: {
-                url: apiURL,
-            },
-            columns: [
-                { data: "nama_kelas" },
-                { data: "nama_jurusan" },
-                {
-                    data: "status_data",
-                    render: function (data) {
-                        return (
-                            "<strong class='text-success px-3'>" +
-                            data +
-                            "</strong>"
-                        );
-                    },
+    const table = $("#example1").DataTable({
+        ajax: {
+            url: mainURL + "/api/kelas/untuk-tabel",
+        },
+        columns: [
+            { data: "nama_kelas" },
+            { data: "nama_jurusan" },
+            {
+                data: "status_data",
+                render: function (data) {
+                    return `<strong class='text-success px-3'>${data}</strong>`;
                 },
-                {
-                    data: "id_kelas",
-                    render: function (data) {
-                        localStorage.setItem("idKelasYangDipilih", data);
-                        return (
-                            `<a onmouseover="this.classList.add('btn-primary');this.classList.remove('text-primary')" onmouseout="this.classList.remove('btn-primary');this.classList.add('text-primary')" href="` +
-                            (mainURL + "/admin/data-kelas/detail/") +
-                            `" class="btn border-primary text-primary btn-sm">
+            },
+            {
+                data: "id_kelas",
+                render: function (data) {
+                    return `
+                        <a class="btn-action view" data-id="${data}" data-action="view">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a onmouseover="this.classList.add('btn-warning');this.classList.remove('text-warning')" onmouseout="this.classList.remove('btn-warning');this.classList.add('text-warning')" href="` +
-                            (mainURL + "/admin/data-kelas/edit/") +
-                            `" class="btn border-warning text-warning btn-sm">
+                        <a class="btn-action edit" data-id="${data}" data-action="edit">
                             <i class="fas fa-pencil-alt"></i>
                         </a>
-                        <a onmouseover="this.classList.add('btn-danger');this.classList.remove('text-danger')" onmouseout="this.classList.remove('btn-danger');this.classList.add('text-danger')" class="btn border-danger text-danger btn-sm" onclick="doSoftDelete({{ $data->id }}, '{{ $data->nama_lengkap }}')">
+                        <a class="btn-action delete" data-id="${data}" data-action="delete">
                             <i class="fas fa-trash"></i>
-                        </a>`
-                        );
-                    },
+                        </a>`;
                 },
-            ],
-            responsive: true,
-            lengthChange: false,
-            autoWidth: false,
-            language: {
-                info: "Last updated data on",
             },
-        })
-        .buttons()
-        .container()
-        .appendTo("#example1_wrapper .col-md-6:eq(0)");
+        ],
+        responsive: true,
+        lengthChange: false,
+        autoWidth: false,
+        language: {
+            info: "Last updated data on",
+        },
+    });
+
+    // Event listener untuk tindakan pada tombol-tombol
+    $("#example1").on("click", ".btn-action", function () {
+        const id = $(this).data("id");
+        const action = $(this).data("action");
+
+        if (action === "view") {
+            pindahDenganMembawaData(`${mainURL}/admin/data-kelas/detail/`, id);
+        } else if (action === "edit") {
+            pindahDenganMembawaData(`${mainURL}/admin/data-kelas/edit/`, id);
+        } else if (action === "delete") {
+            lakukanSoftDelete(id);
+        }
+    });
 });

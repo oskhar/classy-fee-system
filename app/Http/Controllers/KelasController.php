@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\KelasCreateRequest;
+use App\Http\Requests\KelasUpdateRequest;
 use App\Http\Resources\KelasResource;
 use App\Models\KelasModel;
 use Illuminate\Http\JsonResponse;
@@ -31,7 +32,23 @@ class KelasController extends Controller
         $data['id_kelas'] = "K-".str_pad(($banyakData+1), 3, '0', STR_PAD_LEFT);
         $kelas = new KelasModel($data);
         $kelas->save();
-        return (new KelasResource(['nama_kelas' => $data['nama_kelas']]))->response()->setStatusCode(201);
+        return (new KelasResource(['nama_kelas' => $kelas->nama_kelas]))->response()->setStatusCode(201);
+    }
+    public function update (KelasUpdateRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+        $kelas = KelasModel::find($data['id_kelas']);
+        $kelas->fill($data);
+        $kelas->save();
+        return (new KelasResource(['nama_kelas' => $kelas->nama_kelas]))->response()->setStatusCode(201);
+    }
+    public function delete (String $id_kelas): JsonResponse
+    {
+        $kelas = KelasModel::where('id_kelas', $id_kelas)->first();
+        $kelas->delete();
+        return response()->json([
+            'nama_kelas' => $kelas->nama_kelas,
+        ]);
     }
 
 }

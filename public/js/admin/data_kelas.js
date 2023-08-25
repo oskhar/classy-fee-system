@@ -3,26 +3,53 @@ var __webpack_exports__ = {};
 /*!******************************************!*\
   !*** ./resources/js/admin/data_kelas.js ***!
   \******************************************/
-var apiURL = mainURL + "/api/kelas/untuk-tabel";
-function doSoftDelete(nis, url) {
+function lakukanSoftDelete(id_kelas) {
   // Kirim data ke controller menggunakan AJAX
   $.ajax({
-    url: apiURL,
-    type: "get",
+    url: mainURL + "/api/kelas",
+    type: "delete",
+    data: {
+      id_kelas: id_kelas
+    },
     dataType: "json",
     success: function success(response) {
+      // Respon berhasil dikirim ke user
       console.log(response);
+      Swal.fire({
+        toast: true,
+        position: "top-right",
+        iconColor: "white",
+        color: "white",
+        background: "var(--warning)",
+        showConfirmButton: false,
+        timer: 10000,
+        timerProgressBar: true,
+        icon: "success",
+        title: "Kelas " + response.nama_kelas + " berhasil dihapus"
+      });
     },
     error: function error(xhr, status, _error) {
-      alert("Data gagal ditemukan: " + xhr.status + "\n" + xhr.responseText + "\n" + _error);
+      // Menampilkan pesan error AJAX
+      var errors = Object.keys(xhr.responseJSON.errors).map(function (key) {
+        return xhr.responseJSON.errors[key];
+      }).join("<br>");
+      Swal.fire({
+        title: "" + errors,
+        icon: "error",
+        confirmButtonText: "Ok"
+      });
     }
   });
 }
+function pindahDenganMembawaData(url, data) {
+  localStorage.setItem("idKelasYangDipilih", data);
+  window.location.href = url;
+}
 $(function () {
   // Mengatur DataTable
-  $("#example1").DataTable({
+  var table = $("#example1").DataTable({
     ajax: {
-      url: apiURL
+      url: mainURL + "/api/kelas/untuk-tabel"
     },
     columns: [{
       data: "nama_kelas"
@@ -31,13 +58,12 @@ $(function () {
     }, {
       data: "status_data",
       render: function render(data) {
-        return "<strong class='text-success px-3'>" + data + "</strong>";
+        return "<strong class='text-success px-3'>".concat(data, "</strong>");
       }
     }, {
       data: "id_kelas",
       render: function render(data) {
-        localStorage.setItem("idKelasYangDipilih", data);
-        return "<a onmouseover=\"this.classList.add('btn-primary');this.classList.remove('text-primary')\" onmouseout=\"this.classList.remove('btn-primary');this.classList.add('text-primary')\" href=\"" + (mainURL + "/admin/data-kelas/detail/") + "\" class=\"btn border-primary text-primary btn-sm\">\n                            <i class=\"fas fa-eye\"></i>\n                        </a>\n                        <a onmouseover=\"this.classList.add('btn-warning');this.classList.remove('text-warning')\" onmouseout=\"this.classList.remove('btn-warning');this.classList.add('text-warning')\" href=\"" + (mainURL + "/admin/data-kelas/edit/") + "\" class=\"btn border-warning text-warning btn-sm\">\n                            <i class=\"fas fa-pencil-alt\"></i>\n                        </a>\n                        <a onmouseover=\"this.classList.add('btn-danger');this.classList.remove('text-danger')\" onmouseout=\"this.classList.remove('btn-danger');this.classList.add('text-danger')\" class=\"btn border-danger text-danger btn-sm\" onclick=\"doSoftDelete({{ $data->id }}, '{{ $data->nama_lengkap }}')\">\n                            <i class=\"fas fa-trash\"></i>\n                        </a>";
+        return "\n                        <a class=\"btn-action view\" data-id=\"".concat(data, "\" data-action=\"view\">\n                            <i class=\"fas fa-eye\"></i>\n                        </a>\n                        <a class=\"btn-action edit\" data-id=\"").concat(data, "\" data-action=\"edit\">\n                            <i class=\"fas fa-pencil-alt\"></i>\n                        </a>\n                        <a class=\"btn-action delete\" data-id=\"").concat(data, "\" data-action=\"delete\">\n                            <i class=\"fas fa-trash\"></i>\n                        </a>");
       }
     }],
     responsive: true,
@@ -46,7 +72,20 @@ $(function () {
     language: {
       info: "Last updated data on"
     }
-  }).buttons().container().appendTo("#example1_wrapper .col-md-6:eq(0)");
+  });
+
+  // Event listener untuk tindakan pada tombol-tombol
+  $("#example1").on("click", ".btn-action", function () {
+    var id = $(this).data("id");
+    var action = $(this).data("action");
+    if (action === "view") {
+      pindahDenganMembawaData("".concat(mainURL, "/admin/data-kelas/detail/"), id);
+    } else if (action === "edit") {
+      pindahDenganMembawaData("".concat(mainURL, "/admin/data-kelas/edit/"), id);
+    } else if (action === "delete") {
+      lakukanSoftDelete(id);
+    }
+  });
 });
 /******/ })()
 ;

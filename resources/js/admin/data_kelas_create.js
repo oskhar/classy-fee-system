@@ -52,6 +52,7 @@ $(function () {
             dataType: "json",
             success: function (response) {
                 // Respon berhasil dikirim ke user
+                console.log(response);
                 Swal.fire({
                     toast: true,
                     position: "top-right",
@@ -62,7 +63,10 @@ $(function () {
                     timer: 10000,
                     timerProgressBar: true,
                     icon: "success",
-                    title: "Kelas " + data.nama_kelas + " berhasil ditambahkan",
+                    title:
+                        "Kelas " +
+                        response.nama_kelas +
+                        " berhasil ditambahkan",
                 });
             },
             error: function (xhr, status, error) {
