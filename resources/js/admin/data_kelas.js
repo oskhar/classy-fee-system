@@ -1,5 +1,3 @@
-const objectURL = new URL(window.location.href);
-const mainURL = objectURL.origin;
 const apiURL = mainURL + "/api/kelas/untuk-tabel";
 function doSoftDelete(nis, url) {
     // Kirim data ke controller menggunakan AJAX

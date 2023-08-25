@@ -33,6 +33,6 @@ class JurusanModel extends Model
     protected $fillable = [
         'id_jurusan',
         'nama_jurusan',
-        'statud_data',
+        'status_data',
     ];
 }

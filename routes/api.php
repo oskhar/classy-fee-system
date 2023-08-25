@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\JurusanController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KelasController;
@@ -15,5 +16,9 @@ use App\Http\Controllers\KelasController;
 |
 */
 
-Route::get('/kelas', [KelasController::class, 'getDetail']);
+Route::get('/kelas', [KelasController::class, 'get']);
+Route::post('/kelas', [KelasController::class, 'create']);
 Route::get('/kelas/untuk-tabel', [KelasController::class, 'getUntukTabel']);
+
+Route::get('/jurusan', [JurusanController::class, 'get']);
+Route::get('/jurusan/untuk-input-option', [JurusanController::class, 'getUntukInputOption']);

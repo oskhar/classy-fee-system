@@ -3,8 +3,6 @@ var __webpack_exports__ = {};
 /*!******************************************!*\
   !*** ./resources/js/admin/data_kelas.js ***!
   \******************************************/
-var objectURL = new URL(window.location.href);
-var mainURL = objectURL.origin;
 var apiURL = mainURL + "/api/kelas/untuk-tabel";
 function doSoftDelete(nis, url) {
   // Kirim data ke controller menggunakan AJAX

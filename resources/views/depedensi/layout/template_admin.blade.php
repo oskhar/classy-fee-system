@@ -1,6 +1,17 @@
 {{-- Main CSS --}}
 <link rel="stylesheet" href="{{ asset('css/template_admin.css') }}">
 
+{{-- Main JS --}}
+<script src="{{ asset('js/template_admin.js') }}"></script>
+<script>
+  const objectURL = new URL(window.location.href);
+  const mainURL = objectURL.origin;
+</script>
+
+{{-- Sweetalert 2 --}}
+<link rel="stylesheet" href="{{ asset('sweetalert/sweetalert2.min.css') }}">
+<script src="{{ asset('sweetalert/sweetalert2.min.js') }}"></script>
+
   <!-- Google Font: Source Sans Pro -->
   {{-- <link rel="stylesheet" href="{{ asset('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> ') }}--}}
   <!-- Font Awesome -->

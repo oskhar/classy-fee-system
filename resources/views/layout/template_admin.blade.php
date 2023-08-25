@@ -179,10 +179,10 @@
           <!-- /. li-menu-cetak-laporan -->
 
           <!-- menu-pengaturan-sistem -->
-          <li class="nav-item @if(request()->is('admin/data-jurusan') || request()->is('admin/data-kelas') || request()->is('admin/data-tahun-ajar')) menu-open @endif">
+          <li class="nav-item @if(strpos(request()->path(), 'admin/data-jurusan') !== false || strpos(request()->path(), 'admin/data-kelas') !== false || request()->is('admin/data-tahun-ajar')) menu-open @endif">
 
             <!-- pengaturan sistem -->
-            <a href="#" class="nav-link @if(request()->is('admin/data-jurusan') || request()->is('admin/data-kelas') || request()->is('admin/data-tahun-ajar')) active @endif">
+            <a href="#" class="nav-link @if(strpos(request()->path(), 'admin/data-jurusan') !== false || strpos(request()->path(), 'admin/data-kelas') !== false || request()->is('admin/data-tahun-ajar')) active @endif">
               <i class="nav-icon fas fa-gears"></i>
               <p>Pengaturan Sistem<i class="fas fa-angle-left right"></i></p>
             </a>
@@ -202,7 +202,7 @@
 
               <!-- data kelas -->
               <li class="nav-item">
-                <a href="{{ route('admin.data_kelas') }}" class="nav-link @if(request()->is('admin/data-kelas')) active @endif">
+                <a href="{{ route('admin.data_kelas') }}" class="nav-link @if(strpos(request()->path(), 'admin/data-kelas') !== false) active @endif">
                   <i class="fas fa-minus nav-icon"></i>
                   <p>Data kelas</p>
                 </a>

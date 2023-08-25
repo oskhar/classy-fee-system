@@ -57,29 +57,6 @@
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach($data_siswa as $data)
-                      <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $data['nis'] }}</td>
-                        <td>{{ $data['nisn'] }}</td>
-                        <td>{{ $data['nama'] }}</td>
-                        <td>{{ ['Perempuan', 'Laki Laki'][$data['gender']] }}</td>
-                        <td>{{ $data['agama'] }}</td>
-                        <td>{{ $data['no_telp'] }}</td>
-                        <td>{{ ['Aktif', 'Tidak Aktif'][$data['status_data']] }}</td>
-                        <td>
-                          <a onmouseover="this.classList.add('btn-info');this.classList.remove('text-info')" onmouseout="this.classList.remove('btn-info');this.classList.add('text-info')" href="{{ url('/dashboard/detail') }}/{{ $data['nis'] }}" class="btn border-info text-info btn-sm">
-                            <i class="fas fa-eye"></i>
-                          </a>
-                          <a onmouseover="this.classList.add('btn-primary');this.classList.remove('text-primary')" onmouseout="this.classList.remove('btn-primary');this.classList.add('text-primary')" href="{{ url('/dashboard/update') }}/{{ $data['nis'] }}" class="btn border-primary text-primary btn-sm">
-                            <i class="fas fa-pencil-alt"></i>
-                          </a>
-                          <a onmouseover="this.classList.add('btn-danger');this.classList.remove('text-danger')" onmouseout="this.classList.remove('btn-danger');this.classList.add('text-danger')" onclick="doSoftDelete(\'{{ $data['nis'] }}\')" class="btn border-danger text-danger btn-sm">
-                            <i class="fas fa-trash"></i>
-                          </a>
-                        </td>
-                      </tr>
-                      @endforeach
                     </tbody>
                   </table>
                 </div>

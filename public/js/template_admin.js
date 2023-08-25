@@ -54,11 +54,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-$.ajaxSetup({
-  header: {
-    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-  }
-});
 
 /***/ }),
 
@@ -2150,6 +2145,19 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************************!*\
   !*** ./resources/css/admin/data_kelas.css ***!
   \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/css/admin/data_kelas_create.css":
+/*!***************************************************!*\
+  !*** ./resources/css/admin/data_kelas_create.css ***!
+  \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -6362,6 +6370,7 @@ const isThenable = (thing) =>
 /******/ 		var installedChunks = {
 /******/ 			"/js/template_admin": 0,
 /******/ 			"css/template_admin": 0,
+/******/ 			"css/admin/data_kelas_create": 0,
 /******/ 			"css/admin/data_kelas": 0,
 /******/ 			"css/admin/data_siswa": 0
 /******/ 		};
@@ -6413,10 +6422,11 @@ const isThenable = (thing) =>
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/template_admin","css/admin/data_kelas","css/admin/data_siswa"], () => (__webpack_require__("./resources/js/template_admin.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/template_admin","css/admin/data_kelas","css/admin/data_siswa"], () => (__webpack_require__("./resources/css/admin/data_siswa.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/template_admin","css/admin/data_kelas","css/admin/data_siswa"], () => (__webpack_require__("./resources/css/admin/data_kelas.css")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/template_admin","css/admin/data_kelas","css/admin/data_siswa"], () => (__webpack_require__("./resources/css/template_admin.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/template_admin","css/admin/data_kelas_create","css/admin/data_kelas","css/admin/data_siswa"], () => (__webpack_require__("./resources/js/template_admin.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/template_admin","css/admin/data_kelas_create","css/admin/data_kelas","css/admin/data_siswa"], () => (__webpack_require__("./resources/css/admin/data_siswa.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/template_admin","css/admin/data_kelas_create","css/admin/data_kelas","css/admin/data_siswa"], () => (__webpack_require__("./resources/css/admin/data_kelas.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/template_admin","css/admin/data_kelas_create","css/admin/data_kelas","css/admin/data_siswa"], () => (__webpack_require__("./resources/css/admin/data_kelas_create.css")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/template_admin","css/admin/data_kelas_create","css/admin/data_kelas","css/admin/data_siswa"], () => (__webpack_require__("./resources/css/template_admin.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

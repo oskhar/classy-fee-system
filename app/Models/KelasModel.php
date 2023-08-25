@@ -35,6 +35,6 @@ class KelasModel extends Model
         'id_kelas',
         'id_jurusan',
         'nama_kelas',
-        'statud_data',
+        'status_data',
     ];
 }
