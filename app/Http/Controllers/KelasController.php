@@ -42,13 +42,17 @@ class KelasController extends Controller
         $kelas->save();
         return (new KelasResource(['nama_kelas' => $kelas->nama_kelas]))->response()->setStatusCode(201);
     }
-    public function delete (String $id_kelas): JsonResponse
+    public function delete($id_kelas): JsonResponse
     {
         $kelas = KelasModel::where('id_kelas', $id_kelas)->first();
-        $kelas->delete();
-        return response()->json([
-            'nama_kelas' => $kelas->nama_kelas,
-        ]);
+        
+        if (!$kelas) {
+            return response()->json(['message' => 'Kelas not found'], 404);
+        }
+    
+        $kelas->delete(); // Perform soft delete
+        
+        return response()->json(['message' => 'Kelas deleted successfully']);
     }
 
 }

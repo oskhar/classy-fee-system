@@ -35,4 +35,13 @@ class JurusanModel extends Model
         'nama_jurusan',
         'status_data',
     ];
+
+    /**
+     * Atribut atau kolom yang boleh diubah.
+     *
+     * @var array<int, string>
+     */
+    protected $dates = [
+        'deleted_at',
+    ];
 }
