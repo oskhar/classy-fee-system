@@ -63,6 +63,7 @@ class Main {
                 info: "Last updated data on",
             },
             processing: true,
+            searching: true, // Aktifkan fungsi searching
             serverSide: true, // Aktifkan server-side processing
             paging: true, // Mengaktifkan paginasi
             pageLength: 10, // Menentukan jumlah data per halaman

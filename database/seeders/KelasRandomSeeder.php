@@ -13,6 +13,6 @@ class KelasRandomSeeder extends Seeder
      */
     public function run(): void
     {
-        KelasModel::factory(50000)->create();
+        KelasModel::factory(500)->create();
     }
 }

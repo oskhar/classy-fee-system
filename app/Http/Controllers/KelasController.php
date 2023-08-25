@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\KelasCreateRequest;
 use App\Http\Requests\KelasDeleteRequest;
+use App\Http\Requests\KelasReadRequest;
 use App\Http\Requests\KelasUpdateRequest;
 use App\Http\Resources\KelasResource;
 use App\Models\KelasModel;
@@ -20,13 +21,21 @@ class KelasController extends Controller
         $data = KelasModel::all();
         return KelasResource::collection($data)->response()->setStatusCode(200);
     }
-    public function getUntukTabel (Request $request): JsonResponse
+    public function getUntukTabel (KelasReadRequest $request): JsonResponse
     {
-        $data = KelasModel::select('tb_kelas.id_kelas', 'tb_kelas.nama_kelas', 'tb_kelas.status_data', 'tb_jurusan.nama_jurusan')
-        ->join('tb_jurusan', 'tb_kelas.id_jurusan', '=', 'tb_jurusan.id_jurusan')
-        ->offset($request->start)
-        ->limit($request->length)
-        ->get();;
+        $query = KelasModel::select('tb_kelas.id_kelas', 'tb_kelas.nama_kelas', 'tb_kelas.status_data', 'tb_jurusan.nama_jurusan')
+            ->join('tb_jurusan', 'tb_kelas.id_jurusan', '=', 'tb_jurusan.id_jurusan')
+            ->offset($request->start)
+            ->limit($request->length);
+
+        // Pencarian berdasarkan nama_kelas
+        if ($request->has('search') && !empty($request->search['value'])) {
+            $searchValue = $request->search['value'];
+            $query->where('tb_kelas.nama_kelas', 'LIKE', '%' . $searchValue . '%');
+        }
+
+        $data = $query->get();
+
         return KelasResource::collection($data)->response()->setStatusCode(200);
     }
     public function create (KelasCreateRequest $request): JsonResponse
