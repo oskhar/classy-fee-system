@@ -29,6 +29,13 @@ class Main {
             ajax: {
                 url: `${mainURL}/api/kelas/untuk-tabel`,
                 type: "GET",
+                data: function (data) {
+                    // Tambahkan parameter pengurutan
+                    if (data.order.length > 0) {
+                        data.orderColumn = data.order[0].column; // Indeks kolom yang ingin diurutkan
+                        data.orderDir = data.order[0].dir; // Arah pengurutan (asc atau desc)
+                    }
+                },
             },
             columns: [
                 { data: "nama_kelas" },
@@ -44,10 +51,10 @@ class Main {
                 {
                     data: "id_kelas",
                     render: (data, type, row) => `
-                        <a class="btn btn-outline-primary btn-sm" href="${mainURL}/data-kelas-detail/${data}">
+                        <a class="btn btn-outline-primary btn-sm" href="${mainURL}/admin/data-kelas-detail/${data}">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a class="btn btn-outline-warning btn-sm" href="${mainURL}/data-kelas-update/${data}">
+                        <a class="btn btn-outline-warning btn-sm" href="${mainURL}/admin/data-kelas-update/${data}">
                             <i class="fas fa-pencil-alt"></i>
                         </a>
                         <a class="btn btn-outline-danger btn-action btn-sm delete" data-id="${data}" data-nama="${row.nama_kelas}">

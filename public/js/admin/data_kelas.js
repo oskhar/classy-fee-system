@@ -36,8 +36,16 @@ var Main = /*#__PURE__*/function () {
       return tableElement.DataTable({
         ajax: {
           url: "".concat(mainURL, "/api/kelas/untuk-tabel"),
-          type: "GET"
+          type: "GET",
+          data: function data(_data) {
+            // Tambahkan parameter pengurutan
+            if (_data.order.length > 0) {
+              _data.orderColumn = _data.order[0].column; // Indeks kolom yang ingin diurutkan
+              _data.orderDir = _data.order[0].dir; // Arah pengurutan (asc atau desc)
+            }
+          }
         },
+
         columns: [{
           data: "nama_kelas"
         }, {
@@ -51,7 +59,7 @@ var Main = /*#__PURE__*/function () {
         }, {
           data: "id_kelas",
           render: function render(data, type, row) {
-            return "\n                        <a class=\"btn btn-outline-primary btn-sm\" href=\"".concat(mainURL, "/data-kelas-detail/").concat(data, "\">\n                            <i class=\"fas fa-eye\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-warning btn-sm\" href=\"").concat(mainURL, "/data-kelas-update/").concat(data, "\">\n                            <i class=\"fas fa-pencil-alt\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-id=\"").concat(data, "\" data-nama=\"").concat(row.nama_kelas, "\">\n                            <i class=\"fas fa-trash\"></i>\n                        </a>\n                    ");
+            return "\n                        <a class=\"btn btn-outline-primary btn-sm\" href=\"".concat(mainURL, "/admin/data-kelas-detail/").concat(data, "\">\n                            <i class=\"fas fa-eye\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-warning btn-sm\" href=\"").concat(mainURL, "/admin/data-kelas-update/").concat(data, "\">\n                            <i class=\"fas fa-pencil-alt\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-id=\"").concat(data, "\" data-nama=\"").concat(row.nama_kelas, "\">\n                            <i class=\"fas fa-trash\"></i>\n                        </a>\n                    ");
           }
         }],
         responsive: true,

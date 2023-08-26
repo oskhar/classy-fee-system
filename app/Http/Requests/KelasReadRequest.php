@@ -24,6 +24,9 @@ class KelasReadRequest extends FormRequest
         return [
             'start' => 'required|integer',
             'length' => 'required|integer',
+            'search' => 'nullable',
+            'orderColumn' => 'nullable',
+            'orderDir' => 'nullable',
         ];
     }
 }

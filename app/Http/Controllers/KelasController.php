@@ -21,23 +21,43 @@ class KelasController extends Controller
         $data = KelasModel::all();
         return KelasResource::collection($data)->response()->setStatusCode(200);
     }
-    public function getUntukTabel (KelasReadRequest $request): JsonResponse
+    public function getUntukTabel(KelasReadRequest $request): JsonResponse
     {
-        $query = KelasModel::select('tb_kelas.id_kelas', 'tb_kelas.nama_kelas', 'tb_kelas.status_data', 'tb_jurusan.nama_jurusan')
-            ->join('tb_jurusan', 'tb_kelas.id_jurusan', '=', 'tb_jurusan.id_jurusan')
-            ->offset($request->start)
-            ->limit($request->length);
+        $query = KelasModel::select(
+            'tb_kelas.id_kelas',
+            'tb_kelas.nama_kelas',
+            'tb_kelas.status_data',
+            'tb_jurusan.nama_jurusan'
+            )->join('tb_jurusan', 'tb_kelas.id_jurusan', '=', 'tb_jurusan.id_jurusan');
+
+        $totalRecords = KelasModel::count();
+
+        if ($request->has('start') && $request->has('length')) {
+            $query = $query->offset($request->start)
+                ->limit($request->length);
+        }
 
         // Pencarian berdasarkan nama_kelas
         if ($request->has('search') && !empty($request->search['value'])) {
             $searchValue = $request->search['value'];
-            $query->where('tb_kelas.nama_kelas', 'LIKE', '%' . $searchValue . '%');
+            $query = $query->where('tb_kelas.nama_kelas', 'LIKE', '%' . $searchValue . '%');
+        } else {
+            $filteredRecords = $totalRecords; // Jumlah total keseluruhan data
         }
 
         $data = $query->get();
-
-        return KelasResource::collection($data)->response()->setStatusCode(200);
+        $filteredRecords = count($data);
+        
+        $response = [
+            'draw' => intval($request->input('draw')), // Pastikan draw disertakan
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $filteredRecords,
+            'data' => KelasResource::collection($data),
+        ];
+        
+        return response()->json($response)->setStatusCode(200);
     }
+
     public function create (KelasCreateRequest $request): JsonResponse
     {
         $data = $request->validated();

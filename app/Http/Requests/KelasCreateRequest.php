@@ -26,7 +26,7 @@ class KelasCreateRequest extends FormRequest
         return [
             'nama_kelas' => ['required', 'unique:tb_kelas'],
             'id_jurusan' => ['required'],
-            'status_data' => ['required'],
+            'status_data' => ['nullable', 'in:Aktif,Tidak Aktif'],
         ];
     }
 
@@ -41,6 +41,7 @@ class KelasCreateRequest extends FormRequest
             'nama_kelas.unique' => "Nama Kelas sudah digunakan !! Harap menggunakan nama kelas lain",
             'nama_kelas.required' => "Nama Kelas wajib diisi !!",
             'id_jurusan.required' => "Jurusan wajib diisi !!",
+            'status_data.in' => 'Status data hanya dapat diisi dengan "Aktif" atau "Tidak Aktif"',
         ];
     }
 
