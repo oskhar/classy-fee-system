@@ -25,7 +25,7 @@
                             <div class='form-group col-sm-4'>
                                 <label for='id_jurusan'>Pilih Jurusan</label>
                                 <select class='form-control' id='id_jurusan' name='id_jurusan'>
-                                    <option value='' id="belum-memilih-jurusan" selected disabled>Pilih Satu Opsi</option>
+                                    <option value='' selected disabled>Pilih Satu Opsi</option>
                                 </select>
                             </div>
 

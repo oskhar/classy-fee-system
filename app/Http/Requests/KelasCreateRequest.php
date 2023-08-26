@@ -2,19 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
-
-class KelasCreateRequest extends FormRequest
+class KelasCreateRequest extends CoreRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -45,14 +34,4 @@ class KelasCreateRequest extends FormRequest
         ];
     }
 
-    /**
-     * Aksi saat data tervalidasi salah
-     * @param Validator
-     */
-    public function failedValidation (Validator $validator)
-    {
-        throw new HttpResponseException(response([
-            "errors" => $validator->getMessageBag()
-        ], 400));
-    }
 }

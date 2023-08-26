@@ -3,10 +3,6 @@
 
 {{-- Main JS --}}
 <script src="{{ asset('js/template_admin.js') }}"></script>
-<script>
-  const objectURL = new URL(window.location.href);
-  const mainURL = objectURL.origin;
-</script>
 
 {{-- Sweetalert 2 --}}
 <link rel="stylesheet" href="{{ asset('sweetalert/sweetalert2.min.css') }}">

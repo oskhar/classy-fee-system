@@ -12,6 +12,7 @@ const mix = require("laravel-mix");
  */
 
 mix.js("resources/js/template_admin.js", "public/js");
+mix.js("resources/js/admin/Core.js", "public/js/admin");
 
 mix.js("resources/js/admin/data_siswa.js", "public/js/admin");
 mix.postCss("resources/css/admin/data_siswa.css", "public/css/admin");

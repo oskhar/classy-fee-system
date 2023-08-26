@@ -2,7 +2,8 @@
 
 namespace App\Http\Requests;
 
-class KelasDeleteRequest extends CoreRequest
+
+class KelasFindRequest extends CoreRequest
 {
 
     /**

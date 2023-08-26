@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\KelasCreateRequest;
 use App\Http\Requests\KelasDeleteRequest;
+use App\Http\Requests\KelasFindRequest;
 use App\Http\Requests\KelasReadRequest;
 use App\Http\Requests\KelasUpdateRequest;
 use App\Http\Resources\KelasResource;
@@ -95,6 +96,19 @@ class KelasController extends Controller
         $kelas->delete(); // Perform soft delete
         
         return (new KelasResource(['nama_kelas' => $kelas->nama_kelas]))->response()->setStatusCode(200);
+    }
+    public function find(KelasFindRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+        $kelas = KelasModel::select(
+            'id_kelas',
+            'nama_kelas',
+            'status_data',
+            'id_jurusan')
+            ->where('id_kelas', $data['id_kelas'])
+            ->first();
+        
+        return (new KelasResource($kelas))->response()->setStatusCode(200);
     }
 
 }

@@ -24,9 +24,26 @@ class KelasUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nama_kelas' => ['nullable'],
-            'id_jurusan' => ['nullable'],
-            'status_data' => ['nullable'],
+            'id_kelas' => ['required'],
+            'nama_kelas' => ['required'],
+            'id_jurusan' => ['required'],
+            'status_data' => ['required'],
+        ];
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     */
+    public function messages(): array
+    {
+        return [
+            'id_kelas.required' => "Data id kelas kosong !!",
+            'nama_kelas.unique' => "Nama Kelas sudah digunakan !! Harap menggunakan nama kelas lain",
+            'nama_kelas.required' => "Nama Kelas wajib diisi !!",
+            'id_jurusan.required' => "Jurusan wajib diisi !!",
+            'status_data.in' => 'Status data hanya dapat diisi dengan "Aktif" atau "Tidak Aktif"',
         ];
     }
 

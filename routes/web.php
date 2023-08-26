@@ -39,6 +39,6 @@ Route::get('/admin/data-kelas', function () {
 Route::get('/admin/data-kelas-create', function () {
     return view('admin.data_kelas_create');
 })->name('admin.data_kelas_create');
-Route::get('/admin/data-kelas-update/{a}', function () {
+Route::get('/admin/data-kelas-update', function () {
     return view('admin.data_kelas_update');
 })->name('admin.data_kelas_update');

@@ -1,10 +1,11 @@
-// JavaScript (ES6+)
+import { Core } from "./Core.js";
 
-class Main {
+class Main extends Core{
+
     constructor() {
+        super();
         this.dataTableElement = $("#example1");
         this.dataTable = this.setDataTable(this.dataTableElement);
-
         this.setListener();
     }
 
@@ -12,10 +13,7 @@ class Main {
         const self = this; // Simpan referensi this dalam variabel self
 
         // Event listener untuk tombol delete
-        this.dataTableElement.on(
-            "click",
-            ".btn-action.delete",
-            function (event) {
+        this.dataTableElement.on("click", ".btn-action.delete", function (event) {
                 const button = $(this);
                 const id_kelas = button.data("id");
                 const nama_kelas = button.data("nama");
@@ -27,7 +25,7 @@ class Main {
     setDataTable(tableElement) {
         return tableElement.DataTable({
             ajax: {
-                url: `${mainURL}/api/kelas/untuk-tabel`,
+                url: `${this.mainURL}/api/kelas/untuk-tabel`,
                 type: "GET",
                 data: function (data) {
                     // Tambahkan parameter pengurutan
@@ -51,10 +49,10 @@ class Main {
                 {
                     data: "id_kelas",
                     render: (data, type, row) => `
-                        <a class="btn btn-outline-primary btn-sm" href="${mainURL}/admin/data-kelas-detail/${data}">
+                        <a class="btn btn-outline-primary btn-sm" href="${this.mainURL}/admin/data-kelas-detail/${data}">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a class="btn btn-outline-warning btn-sm" href="${mainURL}/admin/data-kelas-update/${data}">
+                        <a class="btn btn-outline-warning btn-sm" href="${this.mainURL}/admin/data-kelas-update/?id_kelas=${data}">
                             <i class="fas fa-pencil-alt"></i>
                         </a>
                         <a class="btn btn-outline-danger btn-action btn-sm delete" data-id="${data}" data-nama="${row.nama_kelas}">
@@ -80,32 +78,20 @@ class Main {
     performSoftDelete(id_kelas, nama_kelas) {
         this.showWarningMessage(`Hapus kelas ${nama_kelas} ?`, "Hapus").then(
             (result) => {
-                /* Read more about isConfirmed, isDenied below */
+                
+                // Assigmen data yang dibutuhkan untuk mengakses API
+                let urlAPI = `${this.mainURL}/api/kelas`;
+                let method = 'delete';
+                let dataBody = {id_kelas: id_kelas};
+
+                // Jalankan api untuk delete data jika tombol hapus diclick
                 if (result.isDenied) {
-                    $.ajax({
-                        url: `${mainURL}/api/kelas`,
-                        type: "delete",
-                        data: { id_kelas },
-                        dataType: "json",
-                        success: (response) => {
-                            this.refreshDataTable();
-                            this.showSuccessMessage(
-                                `Kelas ${response.data.nama_kelas} berhasil dihapus`
-                            );
-                        },
-                        error: (xhr) => {
-                            // Menampilkan pesan error AJAX
-                            let errors;
-                            if (xhr.responseJSON.errors) {
-                                errors = self.objectToString(
-                                    xhr.responseJSON.errors
-                                );
-                            } else {
-                                errors = self.objectToString(xhr.responseJSON);
-                            }
-                            this.showErrorMessage(errors);
-                        },
-                    });
+                    this.doAjax(urlAPI, (response) => {
+                        this.refreshDataTable();
+                        this.showSuccessMessage(
+                            `Kelas ${response.data.nama_kelas} berhasil dihapus`
+                        );
+                    }, dataBody, method);
                 }
             }
         );
@@ -114,45 +100,8 @@ class Main {
     refreshDataTable() {
         this.dataTable.ajax.reload();
     }
-
-    showSuccessMessage(message) {
-        Swal.fire({
-            toast: true,
-            position: "top-right",
-            iconColor: "white",
-            color: "white",
-            background: "var(--success)",
-            showConfirmButton: false,
-            timer: 10000,
-            timerProgressBar: true,
-            icon: "success",
-            title: message,
-        });
-    }
-
-    showErrorMessage(message) {
-        Swal.fire({
-            title: message,
-            icon: "error",
-            confirmButtonText: "Ok",
-        });
-    }
-
-    showWarningMessage(message, buttonText) {
-        return Swal.fire({
-            title: message,
-            showConfirmButton: false,
-            showDenyButton: true,
-            showCancelButton: true,
-            denyButtonText: buttonText,
-        });
-    }
-
-    objectToString(object) {
-        return Object.values(object).join("<br>");
-    }
 }
 
 $(function () {
-    const main = new Main();
+    new Main();
 });

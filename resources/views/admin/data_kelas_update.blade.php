@@ -3,7 +3,7 @@
 @section('title', 'Tambah data kelas')
 @section('mainContent')
 
-@include('depedensi.admin.data_kelas_create')
+@include('depedensi.admin.data_kelas_update')
 <section class="content">
     <div class="container-fluid">
         <div class='row'>
@@ -25,7 +25,6 @@
                             <div class='form-group col-sm-4'>
                                 <label for='id_jurusan'>Pilih Jurusan</label>
                                 <select class='form-control' id='id_jurusan' name='id_jurusan'>
-                                    <option value='' id="belum-memilih-jurusan" selected disabled>Pilih Satu Opsi</option>
                                 </select>
                             </div>
 
