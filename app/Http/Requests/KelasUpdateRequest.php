@@ -27,7 +27,7 @@ class KelasUpdateRequest extends FormRequest
             'id_kelas' => ['required'],
             'nama_kelas' => ['required'],
             'id_jurusan' => ['required'],
-            'status_data' => ['required'],
+            'status_data' => ['required', 'in:Aktif,Tidak Aktif'],
         ];
     }
 
@@ -40,7 +40,6 @@ class KelasUpdateRequest extends FormRequest
     {
         return [
             'id_kelas.required' => "Data id kelas kosong !!",
-            'nama_kelas.unique' => "Nama Kelas sudah digunakan !! Harap menggunakan nama kelas lain",
             'nama_kelas.required' => "Nama Kelas wajib diisi !!",
             'id_jurusan.required' => "Jurusan wajib diisi !!",
             'status_data.in' => 'Status data hanya dapat diisi dengan "Aktif" atau "Tidak Aktif"',

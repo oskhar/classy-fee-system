@@ -9,8 +9,8 @@ class Main extends Core{
         this.inputStatusData = $("#status_data");
         this.paramIdKelas = this.getIdKelas();
 
-        this.setFormData();
         this.setInputJurusan();
+        this.setFormData();
         this.setListener();
     }
 
@@ -20,10 +20,11 @@ class Main extends Core{
         let dataBody = {id_kelas: self.paramIdKelas};
 
         this.doAjax(url, function (response) {
-            console.log(response);
+            let pilihanIdJurusan = parseInt(response.data.id_jurusan.replace('J-', ''))-1;
+            let pilihanStatusData = response.data.status_data == "Aktif" ? 0 : 1;
             self.inputNamaKelas.val(response.data.nama_kelas);
-            self.inputIdJurusan.$("#id_jurusan option").eq(response.data.id_jurusan).val();
-            self.inputStatusData.$("#status_data option").eq(response.data.status_data).val();
+            self.inputIdJurusan.val($("#id_jurusan option").eq(pilihanIdJurusan).val());
+            self.inputStatusData.val($("#status_data option").eq(pilihanStatusData).val());
         }, dataBody);
     }
 

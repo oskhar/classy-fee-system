@@ -187,8 +187,8 @@ var Main = /*#__PURE__*/function (_Core) {
     _this.inputIdJurusan = $("#id_jurusan");
     _this.inputStatusData = $("#status_data");
     _this.paramIdKelas = _this.getIdKelas();
-    _this.setFormData();
     _this.setInputJurusan();
+    _this.setFormData();
     _this.setListener();
     return _this;
   }
@@ -201,10 +201,11 @@ var Main = /*#__PURE__*/function (_Core) {
         id_kelas: self.paramIdKelas
       };
       this.doAjax(url, function (response) {
-        console.log(response);
+        var pilihanIdJurusan = parseInt(response.data.id_jurusan.replace('J-', '')) - 1;
+        var pilihanStatusData = response.data.status_data == "Aktif" ? 0 : 1;
         self.inputNamaKelas.val(response.data.nama_kelas);
-        self.inputIdJurusan.$("#id_jurusan option").eq(response.data.id_jurusan).val();
-        self.inputStatusData.$("#status_data option").eq(response.data.status_data).val();
+        self.inputIdJurusan.val($("#id_jurusan option").eq(pilihanIdJurusan).val());
+        self.inputStatusData.val($("#status_data option").eq(pilihanStatusData).val());
       }, dataBody);
     }
   }, {
