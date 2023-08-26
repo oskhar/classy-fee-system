@@ -193,7 +193,7 @@
 
               <!-- data jurusan -->
               <li class="nav-item">
-                <a href="?page=jurusan" class="nav-link @if(request()->is('admin/data-jurusan')) active @endif">
+                <a href="{{ route('admin.data_jurusan') }}" class="nav-link @if(request()->is('admin/data-jurusan')) active @endif">
                   <i class="fas fa-minus nav-icon"></i>
                   <p>Data Jurusan</p>
                 </a>

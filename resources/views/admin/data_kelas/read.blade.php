@@ -3,7 +3,7 @@
 @section('title', 'Kelola data kelas')
 @section('mainContent')
 
-  @include('depedensi.admin.data_kelas')
+  @include('depedensi.admin.data_kelas.read')
 
   <!-- Content Header (Page header) -->
   <section class="content-header">

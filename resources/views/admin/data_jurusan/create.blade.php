@@ -1,30 +1,31 @@
 @extends('layout.template_admin')
 
-@section('title', 'Tambah data kelas')
+@section('title', 'Tambah data jurusan')
 @section('mainContent')
 
-@include('depedensi.admin.data_kelas_update')
+@include('depedensi.admin.data_jurusan.create')
 <section class="content">
     <div class="container-fluid">
         <div class='row'>
             <div class='col-md-12'>
                 <div class='callout callout-success'>
-                    <p class='text-secondary'>Data Kelas SMK Triguna Utama</p>
+                    <p class='text-secondary'>Data jurusan SMK Triguna Utama</p>
                 </div>
             </div>
             <div class='col-md-12'>
                 <div class='card'>
                     <div class='card-body'>
-                        <form method='POST' enctype='multipart/form-data' class="row" id="form-tambah-kelas">
+                        <form method='POST' enctype='multipart/form-data' class="row" id="form-tambah-jurusan">
                             @csrf
                             <div class='form-group col-sm-12'>
-                                <label for='nama_kelas'>Nama Kelas</label>
-                                <input type='text' class='form-control' id='nama_kelas' name='nama_kelas' placeholder='Nama Jurusan'>
+                                <label for='nama_jurusan'>Nama jurusan</label>
+                                <input type='text' class='form-control' id='nama_jurusan' name='nama_jurusan' placeholder='Nama Jurusan'>
                             </div>
 
                             <div class='form-group col-sm-4'>
                                 <label for='id_jurusan'>Pilih Jurusan</label>
                                 <select class='form-control' id='id_jurusan' name='id_jurusan'>
+                                    <option value='' selected disabled>Pilih Satu Opsi</option>
                                 </select>
                             </div>
 

@@ -42,12 +42,12 @@ class KelasController extends Controller
         if ($request->has('search') && !empty($request->search['value'])) {
             $searchValue = $request->search['value'];
             $query = $query->where('tb_kelas.nama_kelas', 'LIKE', '%' . $searchValue . '%');
+            $filteredRecords = $query->count();
         } else {
             $filteredRecords = $totalRecords; // Jumlah total keseluruhan data
         }
 
         $data = $query->get();
-        $filteredRecords = count($data);
         
         $response = [
             'draw' => intval($request->input('draw')), // Pastikan draw disertakan
