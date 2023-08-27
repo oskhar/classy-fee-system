@@ -27,3 +27,4 @@ Route::delete('/kelas', [KelasController::class, 'delete']);
 Route::get('/jurusan', [JurusanController::class, 'get']);
 Route::get('/jurusan/untuk-tabel', [JurusanController::class, 'getUntukTabel']);
 Route::get('/jurusan/untuk-input-option', [JurusanController::class, 'getUntukInputOption']);
+Route::delete('/jurusan', [JurusanController::class, 'delete']);

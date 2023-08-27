@@ -186,6 +186,7 @@ var Main = /*#__PURE__*/function (_Core) {
     _this.dataTableElement = $("#example1");
     _this.dataTable = _this.setDataTable(_this.dataTableElement);
     _this.setListener();
+    _this.setTooltips();
     return _this;
   }
   _createClass(Main, [{
@@ -199,6 +200,14 @@ var Main = /*#__PURE__*/function (_Core) {
         var id_kelas = button.data("id");
         var nama_kelas = button.data("nama");
         self.performSoftDelete(id_kelas, nama_kelas); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari kelas Main
+      });
+    }
+  }, {
+    key: "setTooltips",
+    value: function setTooltips() {
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
       });
     }
   }, {
@@ -231,7 +240,7 @@ var Main = /*#__PURE__*/function (_Core) {
         }, {
           data: "id_kelas",
           render: function render(data, type, row) {
-            return "\n                        <a class=\"btn btn-outline-primary btn-sm\" href=\"".concat(_this2.mainURL, "/admin/data-kelas-detail/").concat(data, "\">\n                            <i class=\"fas fa-eye\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-warning btn-sm\" href=\"").concat(_this2.mainURL, "/admin/data-kelas-update/?id_kelas=").concat(data, "\">\n                            <i class=\"fas fa-pencil-alt\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-id=\"").concat(data, "\" data-nama=\"").concat(row.nama_kelas, "\">\n                            <i class=\"fas fa-trash\"></i>\n                        </a>\n                    ");
+            return "\n                        <a class=\"btn btn-outline-primary btn-sm\" href=\"".concat(_this2.mainURL, "/admin/data-kelas-detail/").concat(data, "\" data-bs-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"lihat detai data\">\n                            <i class=\"fas fa-eye\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-warning btn-sm\" href=\"").concat(_this2.mainURL, "/admin/data-kelas-update/?id_kelas=").concat(data, "\" data-bs-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"ubah data\">\n                            <i class=\"fas fa-pencil-alt\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-id=\"").concat(data, "\" data-nama=\"").concat(row.nama_kelas, "\" data-bs-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"hapus data\">\n                            <i class=\"fas fa-trash\"></i>\n                        </a>\n                    ");
           }
         }],
         responsive: true,
@@ -257,7 +266,7 @@ var Main = /*#__PURE__*/function (_Core) {
       this.showWarningMessage("Hapus kelas ".concat(nama_kelas, " ?"), "Hapus").then(function (result) {
         // Assigmen data yang dibutuhkan untuk mengakses API
         var urlAPI = "".concat(_this3.mainURL, "/api/kelas");
-        var method = 'delete';
+        var method = "delete";
         var dataBody = {
           id_kelas: id_kelas
         };

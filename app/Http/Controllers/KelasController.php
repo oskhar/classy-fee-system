@@ -58,7 +58,6 @@ class KelasController extends Controller
         
         return response()->json($response)->setStatusCode(200);
     }
-
     public function create (KelasCreateRequest $request): JsonResponse
     {
         $data = $request->validated();

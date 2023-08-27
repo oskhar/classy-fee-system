@@ -39,4 +39,3 @@ mix.postCss("resources/css/admin/data_kelas_create.css", "public/css/admin");
 mix.js("resources/js/admin/data_kelas_update.js", "public/js/admin");
 mix.postCss("resources/css/admin/data_kelas_update.css", "public/css/admin");
 // END DATA KELAS
-

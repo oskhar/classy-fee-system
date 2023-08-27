@@ -1,25 +1,37 @@
 import { Core } from "./Core.js";
 
-class Main extends Core{
-
+class Main extends Core {
     constructor() {
         super();
         this.dataTableElement = $("#example1");
         this.dataTable = this.setDataTable(this.dataTableElement);
         this.setListener();
+        this.setTooltips();
     }
 
     setListener() {
         const self = this; // Simpan referensi this dalam variabel self
 
         // Event listener untuk tombol delete
-        this.dataTableElement.on("click", ".btn-action.delete", function (event) {
+        this.dataTableElement.on(
+            "click",
+            ".btn-action.delete",
+            function (event) {
                 const button = $(this);
                 const id_kelas = button.data("id");
                 const nama_kelas = button.data("nama");
                 self.performSoftDelete(id_kelas, nama_kelas); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari kelas Main
             }
         );
+    }
+
+    setTooltips() {
+        var tooltipTriggerList = [].slice.call(
+            document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        );
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
     }
 
     setDataTable(tableElement) {
@@ -49,13 +61,13 @@ class Main extends Core{
                 {
                     data: "id_kelas",
                     render: (data, type, row) => `
-                        <a class="btn btn-outline-primary btn-sm" href="${this.mainURL}/admin/data-kelas-detail/${data}">
+                        <a class="btn btn-outline-primary btn-sm" href="${this.mainURL}/admin/data-kelas-detail/${data}" data-bs-toggle="tooltip" data-bs-placement="top" title="lihat detai data">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a class="btn btn-outline-warning btn-sm" href="${this.mainURL}/admin/data-kelas-update/?id_kelas=${data}">
+                        <a class="btn btn-outline-warning btn-sm" href="${this.mainURL}/admin/data-kelas-update/?id_kelas=${data}" data-bs-toggle="tooltip" data-bs-placement="top" title="ubah data">
                             <i class="fas fa-pencil-alt"></i>
                         </a>
-                        <a class="btn btn-outline-danger btn-action btn-sm delete" data-id="${data}" data-nama="${row.nama_kelas}">
+                        <a class="btn btn-outline-danger btn-action btn-sm delete" data-id="${data}" data-nama="${row.nama_kelas}" data-bs-toggle="tooltip" data-bs-placement="top" title="hapus data">
                             <i class="fas fa-trash"></i>
                         </a>
                     `,
@@ -78,20 +90,24 @@ class Main extends Core{
     performSoftDelete(id_kelas, nama_kelas) {
         this.showWarningMessage(`Hapus kelas ${nama_kelas} ?`, "Hapus").then(
             (result) => {
-                
                 // Assigmen data yang dibutuhkan untuk mengakses API
                 let urlAPI = `${this.mainURL}/api/kelas`;
-                let method = 'delete';
-                let dataBody = {id_kelas: id_kelas};
+                let method = "delete";
+                let dataBody = { id_kelas: id_kelas };
 
                 // Jalankan api untuk delete data jika tombol hapus diclick
                 if (result.isDenied) {
-                    this.doAjax(urlAPI, (response) => {
-                        this.refreshDataTable();
-                        this.showSuccessMessage(
-                            `Kelas ${response.data.nama_kelas} berhasil dihapus`
-                        );
-                    }, dataBody, method);
+                    this.doAjax(
+                        urlAPI,
+                        (response) => {
+                            this.refreshDataTable();
+                            this.showSuccessMessage(
+                                `Kelas ${response.data.nama_kelas} berhasil dihapus`
+                            );
+                        },
+                        dataBody,
+                        method
+                    );
                 }
             }
         );
