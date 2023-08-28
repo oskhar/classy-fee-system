@@ -30,7 +30,7 @@ var Core = /*#__PURE__*/function () {
     value: function doAjax(url, fungsiSaatSuccess) {
       var _this = this;
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-      var method = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'get';
+      var method = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "get";
       $.ajax({
         url: url,
         type: method,
@@ -88,13 +88,85 @@ var Core = /*#__PURE__*/function () {
       });
     }
   }, {
+    key: "showInfoMessage",
+    value: function showInfoMessage(message, buttonText) {
+      return Swal.fire({
+        title: message,
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonText: buttonText
+      });
+    }
+  }, {
     key: "objectToString",
     value: function objectToString(object) {
       return Object.values(object).join("<br>");
     }
+  }, {
+    key: "setDataTable",
+    value: function setDataTable(tableElement, urlAPI, dataColumns) {
+      return tableElement.DataTable({
+        ajax: {
+          url: urlAPI,
+          type: "GET",
+          data: function data(_data) {
+            // Tambahkan parameter pengurutan
+            if (_data.order.length > 0) {
+              _data.orderColumn = _data.order[0].column; // Indeks kolom yang ingin diurutkan
+              _data.orderDir = _data.order[0].dir; // Arah pengurutan (asc atau desc)
+            }
+          }
+        },
+
+        columns: dataColumns,
+        responsive: true,
+        lengthChange: false,
+        autoWidth: false,
+        language: {
+          info: "Last updated data on"
+        },
+        processing: true,
+        // Mengaktifkan side-server-processing
+        searching: true,
+        // Aktifkan fungsi searching
+        serverSide: true,
+        // Aktifkan server-side processing
+        paging: true,
+        // Mengaktifkan paginasi
+        pageLength: 5,
+        // Menentukan jumlah data per halaman
+        drawCallback: function drawCallback() {
+          $('[data-toggle="tooltip"]').tooltip();
+        }
+      });
+    }
   }]);
   return Core;
 }();
+
+/***/ }),
+
+/***/ "./resources/css/admin/data_kelas.css":
+/*!********************************************!*\
+  !*** ./resources/css/admin/data_kelas.css ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/css/admin/data_kelas_create.css":
+/*!***************************************************!*\
+  !*** ./resources/css/admin/data_kelas_create.css ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
 
 /***/ }),
 
@@ -146,10 +218,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/css/admin/data_kelas.css":
-/*!********************************************!*\
-  !*** ./resources/css/admin/data_kelas.css ***!
-  \********************************************/
+/***/ "./resources/css/admin/data_jurusan_create.css":
+/*!*****************************************************!*\
+  !*** ./resources/css/admin/data_jurusan_create.css ***!
+  \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -158,10 +230,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/css/admin/data_kelas_create.css":
-/*!***************************************************!*\
-  !*** ./resources/css/admin/data_kelas_create.css ***!
-  \***************************************************/
+/***/ "./resources/css/admin/data_jurusan_update.css":
+/*!*****************************************************!*\
+  !*** ./resources/css/admin/data_jurusan_update.css ***!
+  \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -269,12 +341,14 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
 /******/ 			"/js/admin/Core": 0,
-/******/ 			"css/admin/data_kelas_create": 0,
-/******/ 			"css/admin/data_kelas": 0,
+/******/ 			"css/admin/data_jurusan_update": 0,
+/******/ 			"css/admin/data_jurusan_create": 0,
 /******/ 			"css/admin/data_jurusan": 0,
 /******/ 			"css/admin/data_siswa": 0,
 /******/ 			"css/template_admin": 0,
-/******/ 			"css/admin/data_kelas_update": 0
+/******/ 			"css/admin/data_kelas_update": 0,
+/******/ 			"css/admin/data_kelas_create": 0,
+/******/ 			"css/admin/data_kelas": 0
 /******/ 		};
 /******/ 		
 /******/ 		// no chunk on demand loading
@@ -324,13 +398,15 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_kelas_create","css/admin/data_kelas","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_kelas_update"], () => (__webpack_require__("./resources/js/admin/Core.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_kelas_create","css/admin/data_kelas","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_kelas_update"], () => (__webpack_require__("./resources/css/template_admin.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_kelas_create","css/admin/data_kelas","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_kelas_update"], () => (__webpack_require__("./resources/css/admin/data_siswa.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_kelas_create","css/admin/data_kelas","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_kelas_update"], () => (__webpack_require__("./resources/css/admin/data_jurusan.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_kelas_create","css/admin/data_kelas","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_kelas_update"], () => (__webpack_require__("./resources/css/admin/data_kelas.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_kelas_create","css/admin/data_kelas","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_kelas_update"], () => (__webpack_require__("./resources/css/admin/data_kelas_create.css")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/admin/data_kelas_create","css/admin/data_kelas","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_kelas_update"], () => (__webpack_require__("./resources/css/admin/data_kelas_update.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/js/admin/Core.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/template_admin.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_siswa.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_jurusan.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_jurusan_create.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_jurusan_update.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_kelas.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_kelas_create.css")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_kelas_update.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

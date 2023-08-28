@@ -23,9 +23,8 @@
                             </div>
 
                             <div class='form-group col-sm-4'>
-                                <label for='id_jurusan'>Pilih Jurusan</label>
-                                <select class='form-control' id='id_jurusan' name='id_jurusan'>
-                                </select>
+                                <label for='singkatan'>Singkatan Nama Jurusan</label>
+                                <input type='text' class='form-control' id='singkatan' name='singkatan' placeholder='Nama Jurusan'>
                             </div>
 
                             <div class='form-group col-sm-4'>

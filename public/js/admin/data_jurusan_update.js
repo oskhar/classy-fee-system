@@ -205,9 +205,9 @@ var Core = /*#__PURE__*/function () {
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!********************************************!*\
-  !*** ./resources/js/admin/data_jurusan.js ***!
-  \********************************************/
+/*!***************************************************!*\
+  !*** ./resources/js/admin/data_jurusan_update.js ***!
+  \***************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Core.js */ "./resources/js/admin/Core.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -231,75 +231,70 @@ var Main = /*#__PURE__*/function (_Core) {
     var _this;
     _classCallCheck(this, Main);
     _this = _super.call(this);
-    _this.setDataTableJurusan();
+    _this.inputNamaJurusan = $("#nama_jurusan");
+    _this.inputSingkatan = $("#singkatan");
+    _this.inputStatusData = $("#status_data");
+    _this.paramIdJurusan = _this.getIdJurusan();
+    _this.setFormData();
     _this.setListener();
     return _this;
   }
   _createClass(Main, [{
+    key: "setFormData",
+    value: function setFormData() {
+      var self = this; // Simpan referensi this dalam variabel self
+      var url = "".concat(self.mainURL, "/api/jurusan/find");
+      var dataBody = {
+        id_jurusan: self.paramIdJurusan
+      };
+      this.doAjax(url, function (response) {
+        var pilihanStatusData = response.data.status_data == "Aktif" ? 0 : 1;
+        self.inputNamaJurusan.val(response.data.nama_jurusan);
+        self.inputSingkatan.val(response.data.singkatan);
+        self.inputStatusData.val($("#status_data option").eq(pilihanStatusData).val());
+      }, dataBody);
+    }
+  }, {
     key: "setListener",
     value: function setListener() {
       var self = this; // Simpan referensi this dalam variabel self
+      $("#form-tambah-jurusan").submit(function (event) {
+        // Mencegah pengiriman formulir secara default
+        event.preventDefault();
 
-      // Event listener untuk tombol delete
-      this.dataTableElement.on("click", ".btn-action.delete", function (event) {
-        var button = $(this);
-        var id_jurusan = button.data("id");
-        var nama_jurusan = button.data("nama");
-        self.performSoftDelete(id_jurusan, nama_jurusan); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari jurusan Main
-      });
-    }
-  }, {
-    key: "setDataTableJurusan",
-    value: function setDataTableJurusan() {
-      var _this2 = this;
-      // Data yang dibutuhkan tabel
-      this.dataTableElement = $("#example1");
-      var urlAPI = "".concat(this.mainURL, "/api/jurusan/untuk-tabel");
-      var dataColumns = [{
-        data: "nama_jurusan"
-      }, {
-        data: "singkatan"
-      }, {
-        data: "status_data",
-        render: function render(data) {
-          var className = data === "Aktif" ? "text-success" : "text-danger";
-          return "<strong class='".concat(className, " px-3'>").concat(data, "</strong>");
-        }
-      }, {
-        data: "id_jurusan",
-        render: function render(data, type, row) {
-          return "\n                        <a class=\"btn btn-outline-primary btn-sm\" href=\"".concat(_this2.mainURL, "/admin/data-jurusan-detail/").concat(data, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"lihat detai data\">\n                            <i class=\"fas fa-eye\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-warning btn-sm\" href=\"").concat(_this2.mainURL, "/admin/data-jurusan-update/?id_jurusan=").concat(data, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"ubah data\">\n                            <i class=\"fas fa-edit\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-id=\"").concat(data, "\" data-nama=\"").concat(row.nama_jurusan, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"hapus data\">\n                            <i class=\"fas fa-trash\"></i>\n                        </a>\n                    ");
-        }
-      }];
-
-      // Membuat tabel
-      this.dataTable = this.setDataTable(this.dataTableElement, urlAPI, dataColumns);
-    }
-  }, {
-    key: "performSoftDelete",
-    value: function performSoftDelete(id_jurusan, nama_jurusan) {
-      var _this3 = this;
-      this.showWarningMessage("Hapus jurusan ".concat(nama_jurusan, " ?"), "Hapus").then(function (result) {
-        // Assigmen data yang dibutuhkan untuk mengakses API
-        var urlAPI = "".concat(_this3.mainURL, "/api/jurusan");
-        var method = "delete";
+        // Assigmen data yang diperlukan untuk mengakses API
+        var url = "".concat(self.mainURL, "/api/jurusan");
+        var method = "put";
         var dataBody = {
-          id_jurusan: id_jurusan
+          id_jurusan: self.paramIdJurusan,
+          nama_jurusan: self.inputNamaJurusan.val(),
+          singkatan: self.inputSingkatan.val(),
+          status_data: self.inputStatusData.val()
         };
 
-        // Jalankan api untuk delete data jika tombol hapus diclick
-        if (result.isDenied) {
-          _this3.doAjax(urlAPI, function (response) {
-            _this3.refreshDataTable();
-            _this3.showSuccessMessage("jurusan ".concat(response.data.nama_jurusan, " berhasil dihapus"));
-          }, dataBody, method);
-        }
+        // Jalankan api untuk create data saat submit
+        self.doAjax(url, function (response) {
+          Swal.fire({
+            toast: true,
+            position: "top-right",
+            iconColor: "white",
+            color: "white",
+            background: "var(--success)",
+            showConfirmButton: false,
+            timer: 10000,
+            timerProgressBar: true,
+            icon: "success",
+            title: "Jurusan ".concat(response.data.nama_jurusan, " berhasil diubah")
+          });
+        }, dataBody, method);
       });
     }
   }, {
-    key: "refreshDataTable",
-    value: function refreshDataTable() {
-      this.dataTable.ajax.reload();
+    key: "getIdJurusan",
+    value: function getIdJurusan() {
+      // Ambil url keseluruhan
+      var id_jurusan = this.objectURL.searchParams.get("id_jurusan");
+      return id_jurusan;
     }
   }]);
   return Main;

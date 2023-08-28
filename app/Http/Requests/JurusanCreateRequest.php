@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class KelasCreateRequest extends CoreRequest
+class JurusanCreateRequest extends CoreRequest
 {
 
     /**
@@ -13,8 +13,8 @@ class KelasCreateRequest extends CoreRequest
     public function rules(): array
     {
         return [
-            'nama_kelas' => ['required'],
-            'id_jurusan' => ['required'],
+            'nama_jurusan' => ['required'],
+            'singkatan' => ['required'],
             'status_data' => ['nullable', 'in:Aktif,Tidak Aktif'],
         ];
     }
@@ -27,8 +27,8 @@ class KelasCreateRequest extends CoreRequest
     public function messages(): array
     {
         return [
-            'nama_kelas.required' => "Nama Kelas wajib diisi !!",
-            'id_jurusan.required' => "Jurusan wajib diisi !!",
+            'nama_jurusan.required' => "Nama Kelas wajib diisi !!",
+            'singkatan.required' => "Jurusan wajib diisi !!",
             'status_data.in' => 'Status data hanya dapat diisi dengan "Aktif" atau "Tidak Aktif"',
         ];
     }

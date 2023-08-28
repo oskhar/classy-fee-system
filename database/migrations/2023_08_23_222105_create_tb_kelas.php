@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('id_jurusan');
             $table->foreign('id_jurusan')->references('id_jurusan')->on('tb_jurusan');
 
-            $table->string('nama_kelas');
+            $table->string('nama_kelas')->unique();
 
             $table->string('status_data')->default('Aktif');
 

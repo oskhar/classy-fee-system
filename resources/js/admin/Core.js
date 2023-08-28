@@ -5,7 +5,7 @@ export class Core {
         this.mainURL = this.objectURL.origin;
     }
 
-    doAjax (url, fungsiSaatSuccess, data = {}, method = 'get') {
+    doAjax(url, fungsiSaatSuccess, data = {}, method = "get") {
         $.ajax({
             url: url,
             type: method,
@@ -18,9 +18,7 @@ export class Core {
                 // Menampilkan pesan error AJAX
                 let errors;
                 if (xhr.responseJSON.errors) {
-                    errors = this.objectToString(
-                        xhr.responseJSON.errors
-                    );
+                    errors = this.objectToString(xhr.responseJSON.errors);
                 } else {
                     errors = this.objectToString(xhr.responseJSON);
                 }
@@ -62,7 +60,47 @@ export class Core {
         });
     }
 
+    showInfoMessage(message, buttonText) {
+        return Swal.fire({
+            title: message,
+            showConfirmButton: true,
+            showCancelButton: true,
+            confirmButtonText: buttonText,
+        });
+    }
+
     objectToString(object) {
         return Object.values(object).join("<br>");
+    }
+
+    setDataTable(tableElement, urlAPI, dataColumns) {
+        return tableElement.DataTable({
+            ajax: {
+                url: urlAPI,
+                type: "GET",
+                data: function (data) {
+                    // Tambahkan parameter pengurutan
+                    if (data.order.length > 0) {
+                        data.orderColumn = data.order[0].column; // Indeks kolom yang ingin diurutkan
+                        data.orderDir = data.order[0].dir; // Arah pengurutan (asc atau desc)
+                    }
+                },
+            },
+            columns: dataColumns,
+            responsive: true,
+            lengthChange: false,
+            autoWidth: false,
+            language: {
+                info: "Last updated data on",
+            },
+            processing: true, // Mengaktifkan side-server-processing
+            searching: true, // Aktifkan fungsi searching
+            serverSide: true, // Aktifkan server-side processing
+            paging: true, // Mengaktifkan paginasi
+            pageLength: 5, // Menentukan jumlah data per halaman
+            drawCallback: function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            },
+        });
     }
 }

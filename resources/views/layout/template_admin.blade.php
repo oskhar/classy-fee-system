@@ -123,14 +123,10 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- sidebar logo -->
-    <div class="user-panel mt-3 mb-3 pb-3 d-flex">
-      <div class="image">
-        <img src="{{ asset('images/smk3gu0ke.png') }}" class="img-circle elevation-2" alt="User Image">
-      </div>
-      <div class="info">
-        <a href="?page=home" class="d-block text-white">SMK Triguna Utama</a>
-      </div>
-    </div>
+    <a href="{{ url('') }}" class="brand-link mb-4">
+      <img src="{{ asset('images/smk3gu0ke.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">SMK Triguna Utama</span>
+    </a>
     <!-- ./sidebar logo -->
 
     <!-- Sidebar -->
@@ -152,7 +148,7 @@
 
           <!-- li-menu-data-siswa -->
           <li class="nav-item">
-            <a href="{{ route('admin.data_siswa') }}" class="nav-link">
+            <a href="{{ route('admin.data_siswa') }}" class="nav-link @if(strpos(request()->path(), 'admin/data-siswa') !== false) active @endif">
               <i class="nav-icon fas fa-user-graduate"></i>
               <p>
                 Data Siswa
@@ -194,7 +190,7 @@
 
               <!-- data jurusan -->
               <li class="nav-item">
-                <a href="{{ route('admin.data_jurusan') }}" class="nav-link @if(request()->is('admin/data-jurusan')) active @endif">
+                <a href="{{ route('admin.data_jurusan') }}" class="nav-link @if(strpos(request()->path(), 'admin/data-jurusan') !== false) active @endif">
                   <i class="fas fa-minus nav-icon"></i>
                   <p>Data Jurusan</p>
                 </a>

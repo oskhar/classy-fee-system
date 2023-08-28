@@ -3,32 +3,27 @@ import { Core } from "./Core.js";
 class Main extends Core {
     constructor() {
         super();
-        this.inputNamaKelas = $("#nama_kelas");
-        this.inputIdJurusan = $("#id_jurusan");
+        this.inputNamaJurusan = $("#nama_jurusan");
+        this.inputSingkatan = $("#singkatan");
         this.inputStatusData = $("#status_data");
-        this.paramIdKelas = this.getIdKelas();
+        this.paramIdJurusan = this.getIdJurusan();
 
-        this.setInputJurusan();
         this.setFormData();
         this.setListener();
     }
 
     setFormData() {
         const self = this; // Simpan referensi this dalam variabel self
-        let url = `${self.mainURL}/api/kelas/find`;
-        let dataBody = { id_kelas: self.paramIdKelas };
+        let url = `${self.mainURL}/api/jurusan/find`;
+        let dataBody = { id_jurusan: self.paramIdJurusan };
 
         this.doAjax(
             url,
             function (response) {
-                let pilihanIdJurusan =
-                    parseInt(response.data.id_jurusan.replace("J-", "")) - 1;
                 let pilihanStatusData =
                     response.data.status_data == "Aktif" ? 0 : 1;
-                self.inputNamaKelas.val(response.data.nama_kelas);
-                self.inputIdJurusan.val(
-                    $("#id_jurusan option").eq(pilihanIdJurusan).val()
-                );
+                self.inputNamaJurusan.val(response.data.nama_jurusan);
+                self.inputSingkatan.val(response.data.singkatan);
                 self.inputStatusData.val(
                     $("#status_data option").eq(pilihanStatusData).val()
                 );
@@ -37,36 +32,19 @@ class Main extends Core {
         );
     }
 
-    setInputJurusan() {
-        const self = this; // Simpan referensi this dalam variabel self
-
-        // Assigmen data yang diperlukan untuk mengakses API
-        let url = `${self.mainURL}/api/jurusan/untuk-input-option`;
-
-        this.doAjax(url, function (response) {
-            let data;
-            for (let i = 0; i < response.data.length; i++) {
-                data = response.data[i];
-                self.inputIdJurusan.append(
-                    new Option(data.nama_jurusan, data.id_jurusan)
-                );
-            }
-        });
-    }
-
     setListener() {
         const self = this; // Simpan referensi this dalam variabel self
-        $("#form-tambah-kelas").submit(function (event) {
+        $("#form-tambah-jurusan").submit(function (event) {
             // Mencegah pengiriman formulir secara default
             event.preventDefault();
 
             // Assigmen data yang diperlukan untuk mengakses API
-            let url = `${self.mainURL}/api/kelas`;
+            let url = `${self.mainURL}/api/jurusan`;
             let method = "put";
             let dataBody = {
-                id_kelas: self.paramIdKelas,
-                nama_kelas: self.inputNamaKelas.val(),
-                id_jurusan: self.inputIdJurusan.val(),
+                id_jurusan: self.paramIdJurusan,
+                nama_jurusan: self.inputNamaJurusan.val(),
+                singkatan: self.inputSingkatan.val(),
                 status_data: self.inputStatusData.val(),
             };
 
@@ -84,7 +62,7 @@ class Main extends Core {
                         timer: 10000,
                         timerProgressBar: true,
                         icon: "success",
-                        title: `Kelas ${response.data.nama_kelas} berhasil diubah`,
+                        title: `Jurusan ${response.data.nama_jurusan} berhasil diubah`,
                     });
                 },
                 dataBody,
@@ -93,10 +71,10 @@ class Main extends Core {
         });
     }
 
-    getIdKelas() {
+    getIdJurusan() {
         // Ambil url keseluruhan
-        const id_kelas = this.objectURL.searchParams.get("id_kelas");
-        return id_kelas;
+        const id_jurusan = this.objectURL.searchParams.get("id_jurusan");
+        return id_jurusan;
     }
 }
 

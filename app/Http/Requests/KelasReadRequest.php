@@ -14,8 +14,8 @@ class KelasReadRequest extends CoreRequest
     public function rules(): array
     {
         return [
-            'start' => 'required|integer',
-            'length' => 'required|integer',
+            'start' => 'nullable|integer',
+            'length' => 'nullable|integer',
             'search' => 'nullable',
             'orderColumn' => 'nullable',
             'orderDir' => 'nullable',

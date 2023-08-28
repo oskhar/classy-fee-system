@@ -37,6 +37,7 @@ class JurusanModel extends Model
     protected $fillable = [
         'id_jurusan',
         'nama_jurusan',
+        'singkatan',
         'status_data',
     ];
 

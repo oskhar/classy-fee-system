@@ -27,6 +27,12 @@ mix.postCss("resources/css/admin/data_siswa.css", "public/css/admin");
 // START DATA JURUSAN
 mix.js("resources/js/admin/data_jurusan.js", "public/js/admin");
 mix.postCss("resources/css/admin/data_jurusan.css", "public/css/admin");
+
+mix.js("resources/js/admin/data_jurusan_create.js", "public/js/admin");
+mix.postCss("resources/css/admin/data_jurusan_create.css", "public/css/admin");
+
+mix.js("resources/js/admin/data_jurusan_update.js", "public/js/admin");
+mix.postCss("resources/css/admin/data_jurusan_update.css", "public/css/admin");
 // END DATA JURUSAN
 
 // START DATA KELAS

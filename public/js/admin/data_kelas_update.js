@@ -30,7 +30,7 @@ var Core = /*#__PURE__*/function () {
     value: function doAjax(url, fungsiSaatSuccess) {
       var _this = this;
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-      var method = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'get';
+      var method = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "get";
       $.ajax({
         url: url,
         type: method,
@@ -88,9 +88,57 @@ var Core = /*#__PURE__*/function () {
       });
     }
   }, {
+    key: "showInfoMessage",
+    value: function showInfoMessage(message, buttonText) {
+      return Swal.fire({
+        title: message,
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonText: buttonText
+      });
+    }
+  }, {
     key: "objectToString",
     value: function objectToString(object) {
       return Object.values(object).join("<br>");
+    }
+  }, {
+    key: "setDataTable",
+    value: function setDataTable(tableElement, urlAPI, dataColumns) {
+      return tableElement.DataTable({
+        ajax: {
+          url: urlAPI,
+          type: "GET",
+          data: function data(_data) {
+            // Tambahkan parameter pengurutan
+            if (_data.order.length > 0) {
+              _data.orderColumn = _data.order[0].column; // Indeks kolom yang ingin diurutkan
+              _data.orderDir = _data.order[0].dir; // Arah pengurutan (asc atau desc)
+            }
+          }
+        },
+
+        columns: dataColumns,
+        responsive: true,
+        lengthChange: false,
+        autoWidth: false,
+        language: {
+          info: "Last updated data on"
+        },
+        processing: true,
+        // Mengaktifkan side-server-processing
+        searching: true,
+        // Aktifkan fungsi searching
+        serverSide: true,
+        // Aktifkan server-side processing
+        paging: true,
+        // Mengaktifkan paginasi
+        pageLength: 5,
+        // Menentukan jumlah data per halaman
+        drawCallback: function drawCallback() {
+          $('[data-toggle="tooltip"]').tooltip();
+        }
+      });
     }
   }]);
   return Core;
@@ -201,7 +249,7 @@ var Main = /*#__PURE__*/function (_Core) {
         id_kelas: self.paramIdKelas
       };
       this.doAjax(url, function (response) {
-        var pilihanIdJurusan = parseInt(response.data.id_jurusan.replace('J-', '')) - 1;
+        var pilihanIdJurusan = parseInt(response.data.id_jurusan.replace("J-", "")) - 1;
         var pilihanStatusData = response.data.status_data == "Aktif" ? 0 : 1;
         self.inputNamaKelas.val(response.data.nama_kelas);
         self.inputIdJurusan.val($("#id_jurusan option").eq(pilihanIdJurusan).val());
@@ -233,7 +281,7 @@ var Main = /*#__PURE__*/function (_Core) {
 
         // Assigmen data yang diperlukan untuk mengakses API
         var url = "".concat(self.mainURL, "/api/kelas");
-        var method = 'put';
+        var method = "put";
         var dataBody = {
           id_kelas: self.paramIdKelas,
           nama_kelas: self.inputNamaKelas.val(),
@@ -253,7 +301,7 @@ var Main = /*#__PURE__*/function (_Core) {
             timer: 10000,
             timerProgressBar: true,
             icon: "success",
-            title: "Kelas ".concat(response.data.nama_kelas, " berhasil ditambahkan")
+            title: "Kelas ".concat(response.data.nama_kelas, " berhasil diubah")
           });
         }, dataBody, method);
       });
@@ -262,7 +310,7 @@ var Main = /*#__PURE__*/function (_Core) {
     key: "getIdKelas",
     value: function getIdKelas() {
       // Ambil url keseluruhan
-      var id_kelas = this.objectURL.searchParams.get('id_kelas');
+      var id_kelas = this.objectURL.searchParams.get("id_kelas");
       return id_kelas;
     }
   }]);

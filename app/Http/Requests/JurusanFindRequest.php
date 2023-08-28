@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class KelasDeleteRequest extends CoreRequest
+class JurusanFindRequest extends CoreRequest
 {
 
     /**
@@ -13,7 +13,7 @@ class KelasDeleteRequest extends CoreRequest
     public function rules(): array
     {
         return [
-            'id_kelas' => 'required',
+            'id_jurusan' => 'required',
         ];
     }
 }

@@ -3,45 +3,28 @@ import { Core } from "./Core.js";
 class Main extends Core {
     constructor() {
         super();
-        this.inputNamaKelas = $("#nama_kelas");
-        this.inputIdJurusan = $("#id_jurusan");
+        this.inputNamaJurusan = $("#nama_jurusan");
+        this.inputSingkatan = $("#singkatan");
         this.inputStatusData = $("#status_data");
 
-        this.setInputJurusan();
         this.setListener();
-    }
-
-    setInputJurusan() {
-        const self = this; // Simpan referensi this dalam variabel self
-
-        // Assigmen data yang diperlukan untuk mengakses API
-        let url = `${self.mainURL}/api/jurusan/untuk-input-option`;
-
-        this.doAjax(url, function (response) {
-            let data;
-            for (let i = 0; i < response.data.length; i++) {
-                data = response.data[i];
-                self.inputIdJurusan.append(
-                    new Option(data.nama_jurusan, data.id_jurusan)
-                );
-            }
-        });
     }
 
     setListener() {
         const self = this; // Simpan referensi this dalam variabel self
-        $("#form-tambah-kelas").submit(function (event) {
+        $("#form-tambah-jurusan").submit(function (event) {
             // Mencegah pengiriman formulir secara default
             event.preventDefault();
 
             // Assigmen data yang diperlukan untuk mengakses API
-            let url = `${self.mainURL}/api/kelas`;
+            let url = `${self.mainURL}/api/jurusan`;
             let method = "post";
             let dataBody = {
-                nama_kelas: self.inputNamaKelas.val(),
-                id_jurusan: self.inputIdJurusan.val(),
+                nama_jurusan: self.inputNamaJurusan.val(),
+                singkatan: self.inputSingkatan.val(),
                 status_data: self.inputStatusData.val(),
             };
+            console.log(dataBody);
 
             // Jalankan api untuk create data saat submit
             self.doAjax(
@@ -53,16 +36,16 @@ class Main extends Core {
                             "pulihkan"
                         ).then((result) => {
                             if (result.isConfirmed) {
-                                let url = `${self.mainURL}/api/kelas/pulihkan`;
+                                let url = `${self.mainURL}/api/jurusan/pulihkan`;
                                 let method = "put";
                                 let dataBody = {
-                                    id_kelas: response.data.id_kelas,
+                                    id_jurusan: response.data.id_jurusan,
                                 };
                                 self.doAjax(
                                     url,
                                     function (response) {
                                         self.showSuccessMessage(
-                                            `Data ${response.data.nama_kelas} berhasil dipulihkan`
+                                            `Data ${response.data.nama_jurusan} berhasil dipulihkan`
                                         );
                                     },
                                     dataBody,
@@ -72,7 +55,7 @@ class Main extends Core {
                         });
                     } else {
                         self.showSuccessMessage(
-                            `Data ${response.data.nama_kelas} berhasil ditambahkan`
+                            `Data ${response.data.nama_jurusan} berhasil ditambahkan`
                         );
                     }
                 },

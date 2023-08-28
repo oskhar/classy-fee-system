@@ -30,7 +30,7 @@ var Core = /*#__PURE__*/function () {
     value: function doAjax(url, fungsiSaatSuccess) {
       var _this = this;
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-      var method = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'get';
+      var method = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "get";
       $.ajax({
         url: url,
         type: method,
@@ -88,9 +88,57 @@ var Core = /*#__PURE__*/function () {
       });
     }
   }, {
+    key: "showInfoMessage",
+    value: function showInfoMessage(message, buttonText) {
+      return Swal.fire({
+        title: message,
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonText: buttonText
+      });
+    }
+  }, {
     key: "objectToString",
     value: function objectToString(object) {
       return Object.values(object).join("<br>");
+    }
+  }, {
+    key: "setDataTable",
+    value: function setDataTable(tableElement, urlAPI, dataColumns) {
+      return tableElement.DataTable({
+        ajax: {
+          url: urlAPI,
+          type: "GET",
+          data: function data(_data) {
+            // Tambahkan parameter pengurutan
+            if (_data.order.length > 0) {
+              _data.orderColumn = _data.order[0].column; // Indeks kolom yang ingin diurutkan
+              _data.orderDir = _data.order[0].dir; // Arah pengurutan (asc atau desc)
+            }
+          }
+        },
+
+        columns: dataColumns,
+        responsive: true,
+        lengthChange: false,
+        autoWidth: false,
+        language: {
+          info: "Last updated data on"
+        },
+        processing: true,
+        // Mengaktifkan side-server-processing
+        searching: true,
+        // Aktifkan fungsi searching
+        serverSide: true,
+        // Aktifkan server-side processing
+        paging: true,
+        // Mengaktifkan paginasi
+        pageLength: 5,
+        // Menentukan jumlah data per halaman
+        drawCallback: function drawCallback() {
+          $('[data-toggle="tooltip"]').tooltip();
+        }
+      });
     }
   }]);
   return Core;
@@ -183,13 +231,38 @@ var Main = /*#__PURE__*/function (_Core) {
     var _this;
     _classCallCheck(this, Main);
     _this = _super.call(this);
-    _this.dataTableElement = $("#example1");
-    _this.dataTable = _this.setDataTable(_this.dataTableElement);
+    _this.setDataTableKelas();
     _this.setListener();
-    _this.setTooltips();
     return _this;
   }
   _createClass(Main, [{
+    key: "setDataTableKelas",
+    value: function setDataTableKelas() {
+      var _this2 = this;
+      // Data yang dibutuhkan tabel
+      this.dataTableElement = $("#example1");
+      var urlAPI = "".concat(this.mainURL, "/api/kelas/untuk-tabel");
+      var dataColumns = [{
+        data: "nama_kelas"
+      }, {
+        data: "nama_jurusan"
+      }, {
+        data: "status_data",
+        render: function render(data) {
+          var className = data === "Aktif" ? "text-success" : "text-danger";
+          return "<strong class='".concat(className, " px-3'>").concat(data, "</strong>");
+        }
+      }, {
+        data: "id_kelas",
+        render: function render(data, type, row) {
+          return "\n                    <a class=\"btn btn-outline-primary btn-sm\" href=\"".concat(_this2.mainURL, "/admin/data-kelas-detail/").concat(data, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"lihat detai data\">\n                        <i class=\"fas fa-eye\"></i>\n                    </a>\n                    <a class=\"btn btn-outline-warning btn-sm\" href=\"").concat(_this2.mainURL, "/admin/data-kelas-update/?id_kelas=").concat(data, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"ubah data\">\n                        <i class=\"fas fa-edit\"></i>\n                    </a>\n                    <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-id=\"").concat(data, "\" data-nama=\"").concat(row.nama_kelas, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"hapus data\">\n                        <i class=\"fas fa-trash\"></i>\n                    </a>\n                ");
+        }
+      }];
+
+      // Membuat tabel
+      this.dataTable = this.setDataTable(this.dataTableElement, urlAPI, dataColumns);
+    }
+  }, {
     key: "setListener",
     value: function setListener() {
       var self = this; // Simpan referensi this dalam variabel self
@@ -200,63 +273,6 @@ var Main = /*#__PURE__*/function (_Core) {
         var id_kelas = button.data("id");
         var nama_kelas = button.data("nama");
         self.performSoftDelete(id_kelas, nama_kelas); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari kelas Main
-      });
-    }
-  }, {
-    key: "setTooltips",
-    value: function setTooltips() {
-      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-      });
-    }
-  }, {
-    key: "setDataTable",
-    value: function setDataTable(tableElement) {
-      var _this2 = this;
-      return tableElement.DataTable({
-        ajax: {
-          url: "".concat(this.mainURL, "/api/kelas/untuk-tabel"),
-          type: "GET",
-          data: function data(_data) {
-            // Tambahkan parameter pengurutan
-            if (_data.order.length > 0) {
-              _data.orderColumn = _data.order[0].column; // Indeks kolom yang ingin diurutkan
-              _data.orderDir = _data.order[0].dir; // Arah pengurutan (asc atau desc)
-            }
-          }
-        },
-
-        columns: [{
-          data: "nama_kelas"
-        }, {
-          data: "nama_jurusan"
-        }, {
-          data: "status_data",
-          render: function render(data) {
-            var className = data === "Aktif" ? "text-success" : "text-danger";
-            return "<strong class='".concat(className, " px-3'>").concat(data, "</strong>");
-          }
-        }, {
-          data: "id_kelas",
-          render: function render(data, type, row) {
-            return "\n                        <a class=\"btn btn-outline-primary btn-sm\" href=\"".concat(_this2.mainURL, "/admin/data-kelas-detail/").concat(data, "\" data-bs-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"lihat detai data\">\n                            <i class=\"fas fa-eye\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-warning btn-sm\" href=\"").concat(_this2.mainURL, "/admin/data-kelas-update/?id_kelas=").concat(data, "\" data-bs-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"ubah data\">\n                            <i class=\"fas fa-pencil-alt\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-id=\"").concat(data, "\" data-nama=\"").concat(row.nama_kelas, "\" data-bs-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"hapus data\">\n                            <i class=\"fas fa-trash\"></i>\n                        </a>\n                    ");
-          }
-        }],
-        responsive: true,
-        lengthChange: false,
-        autoWidth: false,
-        language: {
-          info: "Last updated data on"
-        },
-        processing: true,
-        searching: true,
-        // Aktifkan fungsi searching
-        serverSide: true,
-        // Aktifkan server-side processing
-        paging: true,
-        // Mengaktifkan paginasi
-        pageLength: 10 // Menentukan jumlah data per halaman
       });
     }
   }, {
