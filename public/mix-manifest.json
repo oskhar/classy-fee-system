@@ -8,6 +8,7 @@
     "/js/admin/data_kelas.js": "/js/admin/data_kelas.js",
     "/js/admin/data_kelas_create.js": "/js/admin/data_kelas_create.js",
     "/js/admin/data_kelas_update.js": "/js/admin/data_kelas_update.js",
+    "/css/admin/data_jurusan_update.css": "/css/admin/data_jurusan_update.css",
     "/css/admin/data_jurusan_create.css": "/css/admin/data_jurusan_create.css",
     "/css/admin/data_jurusan.css": "/css/admin/data_jurusan.css",
     "/css/admin/data_siswa.css": "/css/admin/data_siswa.css",
@@ -15,6 +16,5 @@
     "/css/admin/data_kelas_update.css": "/css/admin/data_kelas_update.css",
     "/css/admin/data_kelas_create.css": "/css/admin/data_kelas_create.css",
     "/css/admin/data_kelas.css": "/css/admin/data_kelas.css",
-    "/images/smk3gu0ke.png": "/images/smk3gu0ke.png",
-    "/css/admin/data_jurusan_update.css": "/css/admin/data_jurusan_update.css"
+    "/images/smk3gu0ke.png": "/images/smk3gu0ke.png"
 }
