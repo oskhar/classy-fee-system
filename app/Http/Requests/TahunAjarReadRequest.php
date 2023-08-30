@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 
-class JurusanReadRequest extends CoreRequest
+class TahunAjarReadRequest extends CoreRequest
 {
 
     /**
@@ -14,7 +14,7 @@ class JurusanReadRequest extends CoreRequest
     public function rules(): array
     {
         return [
-            'id_jurusan' => 'nullable',
+            'id_tahun_ajar' => 'nullable',
             'start' => 'nullable|integer',
             'length' => 'nullable|integer',
             'search' => 'nullable',

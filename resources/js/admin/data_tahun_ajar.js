@@ -10,7 +10,7 @@ class Main extends Core {
     setDataTableTahunAjar() {
         // Data yang dibutuhkan tabel
         this.dataTableElement = $("#example1");
-        const urlAPI = `${this.mainURL}/api/tahun-ajar/untuk-tabel`;
+        const urlAPI = `${this.mainURL}/api/tahun-ajar`;
         const dataColumns = [
             { data: "nama_tahun_ajar" },
             { data: "semester" },
@@ -25,13 +25,21 @@ class Main extends Core {
             {
                 data: "id_tahun_ajar",
                 render: (data, type, row) => `
-                    <a class="btn btn-outline-primary btn-sm" href="${this.mainURL}/admin/data-tahun-ajar-detail/${data}" data-toggle="tooltip" data-bs-placement="top" title="lihat detai data">
+                    <a class="btn btn-outline-primary btn-sm" href="${
+                        this.mainURL
+                    }/admin/data-tahun-ajar-detail/${data}" data-toggle="tooltip" data-bs-placement="top" title="lihat detai data">
                         <i class="fas fa-eye"></i>
                     </a>
-                    <a class="btn btn-outline-warning btn-sm" href="${this.mainURL}/admin/data-tahun-ajar-update/?id_tahun_ajar=${data}" data-toggle="tooltip" data-bs-placement="top" title="ubah data">
+                    <a class="btn btn-outline-warning btn-sm" href="${
+                        this.mainURL
+                    }/admin/data-tahun-ajar-update/${btoa(
+                    data
+                )}" data-toggle="tooltip" data-bs-placement="top" title="ubah data">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <a class="btn btn-outline-danger btn-action btn-sm delete" data-id="${data}" data-nama="${row.nama_tahun_ajar}" data-toggle="tooltip" data-bs-placement="top" title="hapus data">
+                    <a class="btn btn-outline-danger btn-action btn-sm delete" data-id="${data}" data-nama="${
+                    row.nama_tahun_ajar
+                }" data-toggle="tooltip" data-bs-placement="top" title="hapus data">
                         <i class="fas fa-trash"></i>
                     </a>
                 `,

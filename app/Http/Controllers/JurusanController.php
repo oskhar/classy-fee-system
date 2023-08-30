@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\JurusanCreateRequest;
-use App\Http\Requests\JurusanFindRequest;
 use App\Http\Requests\JurusanReadRequest;
 use App\Http\Requests\JurusanUpdateRequest;
 use App\Http\Resources\JurusanResource;
@@ -14,20 +13,15 @@ use Illuminate\Http\Request;
 
 class JurusanController extends Controller
 {
-    // mendapatkan seluruh data
-    public function get (): JsonResponse
+    public function get(JurusanReadRequest $request): JsonResponse
     {
-        $data = JurusanModel::all();
-        return JurusanResource::collection($data)->response()->setStatusCode(200);
-    }
-    public function getUntukTabel(JurusanReadRequest $request): JsonResponse
-    {
-        $query = JurusanModel::select(
-            'id_jurusan',
-            'nama_jurusan',
-            'singkatan',
-            'status_data');
-
+        $query = JurusanModel::select('id_jurusan', 'nama_jurusan', 'singkatan', 'status_data');
+    
+        if ($request->has('id_jurusan')) {
+            $jurusan = $query->find($request->id_jurusan);
+            return (new JurusanResource($jurusan))->response()->setStatusCode(200);
+        }
+    
         $totalRecords = JurusanModel::count();
 
         if ($request->has('start') && $request->has('length')) {
@@ -43,7 +37,7 @@ class JurusanController extends Controller
             $columns = [
                 'id_jurusan',
                 'nama_jurusan',
-                'singkatan'
+                'semester'
             ];
 
             if (isset($columns[$orderByColumn])) {
@@ -156,7 +150,7 @@ class JurusanController extends Controller
         return (new JurusanResource(['nama_jurusan' => $jurusan->nama_jurusan]))->response()->setStatusCode(201);
     }
 
-    public function delete(JurusanFindRequest $request): JsonResponse
+    public function delete(JurusanReadRequest $request): JsonResponse
     {
         $data = $request->validated();
 
@@ -178,27 +172,13 @@ class JurusanController extends Controller
         return (new JurusanResource(['nama_jurusan' => $jurusan->nama_jurusan]))->response()->setStatusCode(200);
     }
 
-    public function restore(JurusanFindRequest $request): JsonResponse
+    public function restore(JurusanReadRequest $request): JsonResponse
     {
         $data = $request->validated();
         $jurusan = JurusanModel::onlyTrashed()->find($data['id_jurusan']); // Ambil data yang sudah dihapus
         $jurusan->update(['status_data' => 'Aktif']);
         $jurusan->restore(); // Memulihkan data
         return (new JurusanResource(['nama_jurusan' => $jurusan->nama_jurusan]))->response()->setStatusCode(200);
-    }
-
-    public function find(JurusanFindRequest $request): JsonResponse
-    {
-        $data = $request->validated();
-        $jurusan = JurusanModel::select(
-            'id_jurusan',
-            'nama_jurusan',
-            'singkatan',
-            'status_data')
-            ->where('id_jurusan', $data['id_jurusan'])
-            ->first();
-        
-        return (new JurusanResource($jurusan))->response()->setStatusCode(200);
     }
 
     public function getUntukInputOption (): JsonResponse

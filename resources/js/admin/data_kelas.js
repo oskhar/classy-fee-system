@@ -10,7 +10,7 @@ class Main extends Core {
     setDataTableKelas() {
         // Data yang dibutuhkan tabel
         this.dataTableElement = $("#example1");
-        const urlAPI = `${this.mainURL}/api/kelas/untuk-tabel`;
+        const urlAPI = `${this.mainURL}/api/kelas`;
         const dataColumns = [
             { data: "nama_kelas" },
             { data: "nama_jurusan" },
@@ -25,13 +25,21 @@ class Main extends Core {
             {
                 data: "id_kelas",
                 render: (data, type, row) => `
-                    <a class="btn btn-outline-primary btn-sm" href="${this.mainURL}/admin/data-kelas-detail/${data}" data-toggle="tooltip" data-bs-placement="top" title="lihat detai data">
+                    <a class="btn btn-outline-primary btn-sm" href="${
+                        this.mainURL
+                    }/admin/data-kelas-detail/${data}" data-toggle="tooltip" data-bs-placement="top" title="lihat detai data">
                         <i class="fas fa-eye"></i>
                     </a>
-                    <a class="btn btn-outline-warning btn-sm" href="${this.mainURL}/admin/data-kelas-update/?id_kelas=${data}" data-toggle="tooltip" data-bs-placement="top" title="ubah data">
+                    <a class="btn btn-outline-warning btn-sm" href="${
+                        this.mainURL
+                    }/admin/data-kelas-update/${btoa(
+                    data
+                )}" data-toggle="tooltip" data-bs-placement="top" title="ubah data">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <a class="btn btn-outline-danger btn-action btn-sm delete" data-id="${data}" data-nama="${row.nama_kelas}" data-toggle="tooltip" data-bs-placement="top" title="hapus data">
+                    <a class="btn btn-outline-danger btn-action btn-sm delete" data-id="${data}" data-nama="${
+                    row.nama_kelas
+                }" data-toggle="tooltip" data-bs-placement="top" title="hapus data">
                         <i class="fas fa-trash"></i>
                     </a>
                 `,

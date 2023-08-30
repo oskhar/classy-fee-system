@@ -1,4 +1,5 @@
 {
+    "/js/admin/dashboard.js": "/js/admin/dashboard.js",
     "/js/admin/Core.js": "/js/admin/Core.js",
     "/js/template_admin.js": "/js/template_admin.js",
     "/js/admin/data_siswa.js": "/js/admin/data_siswa.js",
@@ -10,6 +11,7 @@
     "/js/admin/data_kelas_update.js": "/js/admin/data_kelas_update.js",
     "/js/admin/data_tahun_ajar.js": "/js/admin/data_tahun_ajar.js",
     "/js/admin/data_tahun_ajar_create.js": "/js/admin/data_tahun_ajar_create.js",
+    "/js/admin/data_tahun_ajar_update.js": "/js/admin/data_tahun_ajar_update.js",
     "/css/admin/data_jurusan_update.css": "/css/admin/data_jurusan_update.css",
     "/css/admin/data_jurusan_create.css": "/css/admin/data_jurusan_create.css",
     "/css/admin/data_jurusan.css": "/css/admin/data_jurusan.css",
@@ -20,5 +22,6 @@
     "/css/admin/data_kelas_update.css": "/css/admin/data_kelas_update.css",
     "/css/admin/data_kelas_create.css": "/css/admin/data_kelas_create.css",
     "/css/admin/data_kelas.css": "/css/admin/data_kelas.css",
+    "/images/logo.png": "/images/logo.png",
     "/images/smk3gu0ke.png": "/images/smk3gu0ke.png"
 }

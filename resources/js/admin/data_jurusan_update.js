@@ -14,12 +14,13 @@ class Main extends Core {
 
     setFormData() {
         const self = this; // Simpan referensi this dalam variabel self
-        let url = `${self.mainURL}/api/jurusan/find`;
+        let url = `${self.mainURL}/api/jurusan`;
         let dataBody = { id_jurusan: self.paramIdJurusan };
 
         this.doAjax(
             url,
             function (response) {
+                console.log(response);
                 let pilihanStatusData =
                     response.data.status_data == "Aktif" ? 0 : 1;
                 self.inputNamaJurusan.val(response.data.nama_jurusan);
@@ -73,7 +74,11 @@ class Main extends Core {
 
     getIdJurusan() {
         // Ambil url keseluruhan
-        const id_jurusan = this.objectURL.searchParams.get("id_jurusan");
+        let id_jurusan = this.objectURL.href.replace(
+            `${this.mainURL}/admin/data-jurusan-update/`,
+            ""
+        );
+        id_jurusan = atob(id_jurusan);
         return id_jurusan;
     }
 }

@@ -2,7 +2,7 @@
 
 @section('title', 'Halaman Dashboard')
 @section('mainContent')
-
+@include('depedensi.admin.dashboard')
 <!-- section-header -->
 <section class="content-header">
     <div class="container-fluid">
@@ -183,6 +183,15 @@
             <div class="col-md-12">
                 <div class="callout callout-success">
                     <b>Rincian Pembayaran SPP</b>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="chart">
+                          <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- /.col-informasi-spp -->

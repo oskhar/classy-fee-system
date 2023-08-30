@@ -13,10 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('login');
-});
+})->name('login');
 
+// Route untuk halaman dashboard
 Route::get('/admin', function () {
     return view('admin.dashboard');
 })->name('dashboard');
@@ -28,7 +30,7 @@ Route::get('/admin/data-siswa', function () {
 Route::get('/admin/data-siswa-create', function () {
     return view('admin.data_siswa.create');
 })->name('admin.data_siswa_create');
-Route::get('/admin/data-siswa-update', function () {
+Route::get('/admin/data-siswa-update/{id}', function () {
     return view('admin.data_siswa.update');
 })->name('admin.data_siswa_update');
 
@@ -39,7 +41,7 @@ Route::get('/admin/data-jurusan', function () {
 Route::get('/admin/data-jurusan-create', function () {
     return view('admin.data_jurusan.create');
 })->name('admin.data_jurusan_create');
-Route::get('/admin/data-jurusan-update', function () {
+Route::get('/admin/data-jurusan-update/{id}', function () {
     return view('admin.data_jurusan.update');
 })->name('admin.data_jurusan_update');
 
@@ -50,7 +52,7 @@ Route::get('/admin/data-kelas', function () {
 Route::get('/admin/data-kelas-create', function () {
     return view('admin.data_kelas.create');
 })->name('admin.data_kelas_create');
-Route::get('/admin/data-kelas-update', function () {
+Route::get('/admin/data-kelas-update/{id}', function () {
     return view('admin.data_kelas.update');
 })->name('admin.data_kelas_update');
 
@@ -61,6 +63,6 @@ Route::get('/admin/data-tahun-ajar', function () {
 Route::get('/admin/data-tahun-ajar-create', function () {
     return view('admin.data_tahun_ajar.create');
 })->name('admin.data_tahun_ajar_create');
-Route::get('/admin/data-tahun-ajar-update', function () {
+Route::get('/admin/data-tahun-ajar-update/{id}', function () {
     return view('admin.data_tahun_ajar.update');
 })->name('admin.data_tahun_ajar_update');

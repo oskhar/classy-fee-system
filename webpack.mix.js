@@ -11,6 +11,10 @@ const mix = require("laravel-mix");
  |
  */
 
+// START DASHBOARD
+mix.js("resources/js/admin/dashboard.js", "public/js/admin");
+// END DASHBOARD
+
 // START MAIN SOURCE
 mix.copy("resources/assets/images", "public/images");
 mix.js("resources/js/admin/Core.js", "public/js/admin");
@@ -55,4 +59,6 @@ mix.postCss(
     "resources/css/admin/data_tahun_ajar_create.css",
     "public/css/admin"
 );
+
+mix.js("resources/js/admin/data_tahun_ajar_update.js", "public/js/admin");
 // END DATA TAHUN AJAR

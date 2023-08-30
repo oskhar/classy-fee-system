@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TahunAjarCreateRequest;
-use App\Http\Requests\TahunAjarFindRequest;
 use App\Http\Requests\TahunAjarReadRequest;
+use App\Http\Requests\TahunAjarUpdateRequest;
 use App\Http\Resources\TahunAjarResource;
 use App\Models\TahunAjarModel;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -12,7 +12,7 @@ use Illuminate\Http\JsonResponse;
 
 class TahunAjarController extends Controller
 {
-    public function getUntukTabel(TahunAjarReadRequest $request): JsonResponse
+    public function get(TahunAjarReadRequest $request): JsonResponse
     {
         $query = TahunAjarModel::select(
             'id_tahun_ajar',
@@ -21,6 +21,11 @@ class TahunAjarController extends Controller
             'status_data');
 
         $totalRecords = TahunAjarModel::count();
+    
+        if ($request->has('id_tahun_ajar')) {
+            $tahunAjar = $query->find($request->id_tahun_ajar);
+            return (new TahunAjarResource($tahunAjar))->response()->setStatusCode(200);
+        }
 
         if ($request->has('start') && $request->has('length')) {
             $query = $query->offset($request->start)
@@ -112,14 +117,45 @@ class TahunAjarController extends Controller
         return (new TahunAjarResource(['nama_tahun_ajar' => $tahunAjar->nama_tahun_ajar]))->response()->setStatusCode(201);
     }
 
-    public function delete(TahunAjarFindRequest $request): JsonResponse
+    public function update (TahunAjarUpdateRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+        $tahunAjar = TahunAjarModel::where('id_tahun_ajar', $data['id_tahun_ajar'])->first();
+
+        // Memeriksa apakah nama kelas sudah pernah digunakan
+        $existingTahunAjar = TahunAjarModel::withTrashed()
+            ->where('nama_tahun_ajar', $data['nama_tahun_ajar'])
+            ->exists();
+
+        // Jika sudah, kembalikan respons error
+        if ($existingTahunAjar && $tahunAjar['nama_tahun_ajar'] != $data['nama_tahun_ajar']) {
+            throw new HttpResponseException(response()->json([
+                'errors' => [
+                    'message' => [
+                        'Nama kelas sudah digunakan'
+                    ]
+                ]
+            ])->setStatusCode(400));
+        }
+
+        $tahunAjar->update($data);
+
+        // Jika status data tidak aktif, set deleted_at agar tidak null (soft delete)
+        if ($tahunAjar->status_data == "Tidak Aktif") {
+            (TahunAjarModel::find($data['id_tahun_ajar']))
+                ->delete();
+        }
+        
+        return (new TahunAjarResource(['nama_tahun_ajar' => $tahunAjar->nama_tahun_ajar]))->response()->setStatusCode(201);
+    }
+
+    public function delete(TahunAjarReadRequest $request): JsonResponse
     {
         $data = $request->validated();
 
-        $kelas = TahunAjarModel::where('id_tahun_ajar', $data['id_tahun_ajar'])->first();
-        $kelas->update(['status_data' => 'Tidak Aktif']);
+        $tahunAjar = TahunAjarModel::where('id_tahun_ajar', $data['id_tahun_ajar'])->first();
         
-        if (!$kelas) {
+        if (!$tahunAjar) {
             throw new HttpResponseException(response()->json([
                 'errors' => [
                     'message' => [
@@ -129,17 +165,29 @@ class TahunAjarController extends Controller
             ])->setStatusCode(404));
         }
     
-        $kelas->delete(); // Perform soft delete
+        $tahunAjar->update(['status_data' => 'Tidak Aktif']);
+        $tahunAjar->delete(); // Perform soft delete
         
-        return (new TahunAjarResource(['nama_tahun_ajar' => $kelas->nama_tahun_ajar]))->response()->setStatusCode(200);
+        return (new TahunAjarResource(['nama_tahun_ajar' => $tahunAjar->nama_tahun_ajar]))->response()->setStatusCode(200);
     }
 
-    public function restore(TahunAjarFindRequest $request): JsonResponse
+    public function restore(TahunAjarReadRequest $request): JsonResponse
     {
         $data = $request->validated();
-        $kelas = TahunAjarModel::onlyTrashed()->find($data['id_tahun_ajar']); // Ambil data yang sudah dihapus
-        $kelas->update(['status_data' => 'Aktif']);
-        $kelas->restore(); // Memulihkan data
-        return (new TahunAjarResource(['nama_tahun_ajar' => $kelas->nama_tahun_ajar]))->response()->setStatusCode(200);
+        $tahunAjar = TahunAjarModel::onlyTrashed()->find($data['id_tahun_ajar']); // Ambil data yang sudah dihapus
+        
+        if (!$tahunAjar) {
+            throw new HttpResponseException(response()->json([
+                'errors' => [
+                    'message' => [
+                        'Kelas not found'
+                    ]
+                ]
+            ])->setStatusCode(404));
+        }
+        
+        $tahunAjar->update(['status_data' => 'Aktif']);
+        $tahunAjar->restore(); // Memulihkan data
+        return (new TahunAjarResource(['nama_tahun_ajar' => $tahunAjar->nama_tahun_ajar]))->response()->setStatusCode(200);
     }
 }

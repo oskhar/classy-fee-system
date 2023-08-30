@@ -216,9 +216,9 @@ var Core = /*#__PURE__*/function () {
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!******************************************!*\
-  !*** ./resources/js/admin/data_kelas.js ***!
-  \******************************************/
+/*!******************************************************!*\
+  !*** ./resources/js/admin/data_tahun_ajar_update.js ***!
+  \******************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Core.js */ "./resources/js/admin/Core.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -242,75 +242,73 @@ var Main = /*#__PURE__*/function (_Core) {
     var _this;
     _classCallCheck(this, Main);
     _this = _super.call(this);
-    _this.setDataTableKelas();
+    _this.inputNamaTahunAjar = $("#nama_tahun_ajar");
+    _this.inputSemester = $("#semester");
+    _this.inputStatusData = $("#status_data");
+    _this.paramIdTahunAjar = _this.getIdTahunAjar();
+    _this.setFormData();
     _this.setListener();
     return _this;
   }
   _createClass(Main, [{
-    key: "setDataTableKelas",
-    value: function setDataTableKelas() {
-      var _this2 = this;
-      // Data yang dibutuhkan tabel
-      this.dataTableElement = $("#example1");
-      var urlAPI = "".concat(this.mainURL, "/api/kelas");
-      var dataColumns = [{
-        data: "nama_kelas"
-      }, {
-        data: "nama_jurusan"
-      }, {
-        data: "status_data",
-        render: function render(data) {
-          var className = data === "Aktif" ? "text-success" : "text-danger";
-          return "<strong class='".concat(className, " px-3'>").concat(data, "</strong>");
-        }
-      }, {
-        data: "id_kelas",
-        render: function render(data, type, row) {
-          return "\n                    <a class=\"btn btn-outline-primary btn-sm\" href=\"".concat(_this2.mainURL, "/admin/data-kelas-detail/").concat(data, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"lihat detai data\">\n                        <i class=\"fas fa-eye\"></i>\n                    </a>\n                    <a class=\"btn btn-outline-warning btn-sm\" href=\"").concat(_this2.mainURL, "/admin/data-kelas-update/").concat(btoa(data), "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"ubah data\">\n                        <i class=\"fas fa-edit\"></i>\n                    </a>\n                    <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-id=\"").concat(data, "\" data-nama=\"").concat(row.nama_kelas, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"hapus data\">\n                        <i class=\"fas fa-trash\"></i>\n                    </a>\n                ");
-        }
-      }];
-
-      // Membuat tabel
-      this.dataTable = this.setDataTable(this.dataTableElement, urlAPI, dataColumns);
+    key: "setFormData",
+    value: function setFormData() {
+      var self = this; // Simpan referensi this dalam variabel self
+      var url = "".concat(self.mainURL, "/api/tahun-ajar");
+      var dataBody = {
+        id_tahun_ajar: self.paramIdTahunAjar
+      };
+      this.doAjax(url, function (response) {
+        console.log(response);
+        var pilihanSemester = response.data.semester == "Ganjil" ? 0 : 1;
+        var pilihanStatusData = response.data.status_data == "Aktif" ? 0 : 1;
+        self.inputNamaTahunAjar.val(response.data.nama_tahun_ajar);
+        self.inputSemester.val($("#semester option").eq(pilihanSemester).val());
+        self.inputStatusData.val($("#status_data option").eq(pilihanStatusData).val());
+      }, dataBody);
     }
   }, {
     key: "setListener",
     value: function setListener() {
       var self = this; // Simpan referensi this dalam variabel self
+      $("#form-tambah-tahun-ajar").submit(function (event) {
+        // Mencegah pengiriman formulir secara default
+        event.preventDefault();
 
-      // Event listener untuk tombol delete
-      this.dataTableElement.on("click", ".btn-action.delete", function (event) {
-        var button = $(this);
-        var id_kelas = button.data("id");
-        var nama_kelas = button.data("nama");
-        self.performSoftDelete(id_kelas, nama_kelas); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari kelas Main
-      });
-    }
-  }, {
-    key: "performSoftDelete",
-    value: function performSoftDelete(id_kelas, nama_kelas) {
-      var _this3 = this;
-      this.showWarningMessage("Hapus kelas ".concat(nama_kelas, " ?"), "Hapus").then(function (result) {
-        // Assigmen data yang dibutuhkan untuk mengakses API
-        var urlAPI = "".concat(_this3.mainURL, "/api/kelas");
-        var method = "delete";
+        // Assigmen data yang diperlukan untuk mengakses API
+        var url = "".concat(self.mainURL, "/api/tahun-ajar");
+        var method = "put";
         var dataBody = {
-          id_kelas: id_kelas
+          id_tahun_ajar: self.paramIdTahunAjar,
+          nama_tahun_ajar: self.inputNamaTahunAjar.val(),
+          semester: self.inputSemester.val(),
+          status_data: self.inputStatusData.val()
         };
 
-        // Jalankan api untuk delete data jika tombol hapus diclick
-        if (result.isDenied) {
-          _this3.doAjax(urlAPI, function (response) {
-            _this3.refreshDataTable();
-            _this3.showSuccessMessage("Kelas ".concat(response.data.nama_kelas, " berhasil dihapus"));
-          }, dataBody, method);
-        }
+        // Jalankan api untuk create data saat submit
+        self.doAjax(url, function (response) {
+          Swal.fire({
+            toast: true,
+            position: "top-right",
+            iconColor: "white",
+            color: "white",
+            background: "var(--success)",
+            showConfirmButton: false,
+            timer: 10000,
+            timerProgressBar: true,
+            icon: "success",
+            title: "Tahun ajar ".concat(response.data.nama_tahun_ajar, " berhasil diubah")
+          });
+        }, dataBody, method);
       });
     }
   }, {
-    key: "refreshDataTable",
-    value: function refreshDataTable() {
-      this.dataTable.ajax.reload();
+    key: "getIdTahunAjar",
+    value: function getIdTahunAjar() {
+      // Ambil url keseluruhan
+      var id_tahun_ajar = this.objectURL.href.replace("".concat(this.mainURL, "/admin/data-tahun-ajar-update/"), "");
+      id_tahun_ajar = atob(id_tahun_ajar);
+      return id_tahun_ajar;
     }
   }]);
   return Main;

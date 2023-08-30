@@ -254,11 +254,12 @@ var Main = /*#__PURE__*/function (_Core) {
     key: "setFormData",
     value: function setFormData() {
       var self = this; // Simpan referensi this dalam variabel self
-      var url = "".concat(self.mainURL, "/api/jurusan/find");
+      var url = "".concat(self.mainURL, "/api/jurusan");
       var dataBody = {
         id_jurusan: self.paramIdJurusan
       };
       this.doAjax(url, function (response) {
+        console.log(response);
         var pilihanStatusData = response.data.status_data == "Aktif" ? 0 : 1;
         self.inputNamaJurusan.val(response.data.nama_jurusan);
         self.inputSingkatan.val(response.data.singkatan);
@@ -304,7 +305,8 @@ var Main = /*#__PURE__*/function (_Core) {
     key: "getIdJurusan",
     value: function getIdJurusan() {
       // Ambil url keseluruhan
-      var id_jurusan = this.objectURL.searchParams.get("id_jurusan");
+      var id_jurusan = this.objectURL.href.replace("".concat(this.mainURL, "/admin/data-jurusan-update/"), "");
+      id_jurusan = atob(id_jurusan);
       return id_jurusan;
     }
   }]);

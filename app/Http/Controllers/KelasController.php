@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\KelasCreateRequest;
-use App\Http\Requests\KelasFindRequest;
 use App\Http\Requests\KelasReadRequest;
 use App\Http\Requests\KelasUpdateRequest;
 use App\Http\Resources\KelasResource;
@@ -15,20 +14,20 @@ use Illuminate\Support\Str;
 
 class KelasController extends Controller
 {
-    // mendapatkan seluruh data
-    public function get (): JsonResponse
-    {
-        $data = KelasModel::all();
-        return KelasResource::collection($data)->response()->setStatusCode(200);
-    }
-    public function getUntukTabel(KelasReadRequest $request): JsonResponse
+    public function get(KelasReadRequest $request): JsonResponse
     {
         $query = KelasModel::select(
             'tb_kelas.id_kelas',
             'tb_kelas.nama_kelas',
             'tb_kelas.status_data',
+            'tb_jurusan.id_jurusan',
             'tb_jurusan.nama_jurusan'
             )->join('tb_jurusan', 'tb_kelas.id_jurusan', '=', 'tb_jurusan.id_jurusan');
+    
+        if ($request->has('id_kelas')) {
+            $kelas = $query->find($request->id_kelas);
+            return (new KelasResource($kelas))->response()->setStatusCode(200);
+        }
 
         $totalRecords = KelasModel::count();
 
@@ -154,12 +153,11 @@ class KelasController extends Controller
         return (new KelasResource(['nama_kelas' => $kelas->nama_kelas]))->response()->setStatusCode(201);
     }
 
-    public function delete(KelasFindRequest $request): JsonResponse
+    public function delete(KelasReadRequest $request): JsonResponse
     {
         $data = $request->validated();
 
         $kelas = KelasModel::where('id_kelas', $data['id_kelas'])->first();
-        $kelas->update(['status_data' => 'Tidak Aktif']);
         
         if (!$kelas) {
             throw new HttpResponseException(response()->json([
@@ -171,32 +169,29 @@ class KelasController extends Controller
             ])->setStatusCode(404));
         }
     
+        $kelas->update(['status_data' => 'Tidak Aktif']);
         $kelas->delete(); // Perform soft delete
         
         return (new KelasResource(['nama_kelas' => $kelas->nama_kelas]))->response()->setStatusCode(200);
     }
 
-    public function restore(KelasFindRequest $request): JsonResponse
+    public function restore(KelasReadRequest $request): JsonResponse
     {
         $data = $request->validated();
         $kelas = kelasModel::onlyTrashed()->find($data['id_kelas']); // Ambil data yang sudah dihapus
+        
+        if (!$kelas) {
+            throw new HttpResponseException(response()->json([
+                'errors' => [
+                    'message' => [
+                        'Kelas not found'
+                    ]
+                ]
+            ])->setStatusCode(404));
+        }
         $kelas->update(['status_data' => 'Aktif']);
         $kelas->restore(); // Memulihkan data
         return (new KelasResource(['nama_kelas' => $kelas->nama_kelas]))->response()->setStatusCode(200);
-    }
-
-    public function find(KelasFindRequest $request): JsonResponse
-    {
-        $data = $request->validated();
-        $kelas = KelasModel::select(
-            'id_kelas',
-            'nama_kelas',
-            'status_data',
-            'id_jurusan')
-            ->where('id_kelas', $data['id_kelas'])
-            ->first();
-        
-        return (new KelasResource($kelas))->response()->setStatusCode(200);
     }
 
 }

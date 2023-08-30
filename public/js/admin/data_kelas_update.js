@@ -255,7 +255,7 @@ var Main = /*#__PURE__*/function (_Core) {
     key: "setFormData",
     value: function setFormData() {
       var self = this; // Simpan referensi this dalam variabel self
-      var url = "".concat(self.mainURL, "/api/kelas/find");
+      var url = "".concat(self.mainURL, "/api/kelas");
       var dataBody = {
         id_kelas: self.paramIdKelas
       };
@@ -321,7 +321,8 @@ var Main = /*#__PURE__*/function (_Core) {
     key: "getIdKelas",
     value: function getIdKelas() {
       // Ambil url keseluruhan
-      var id_kelas = this.objectURL.searchParams.get("id_kelas");
+      var id_kelas = this.objectURL.href.replace("".concat(this.mainURL, "/admin/data-kelas-update/"), "");
+      id_kelas = atob(id_kelas);
       return id_kelas;
     }
   }]);

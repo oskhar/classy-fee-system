@@ -26,7 +26,7 @@ class Main extends Core {
     setDataTableJurusan() {
         // Data yang dibutuhkan tabel
         this.dataTableElement = $("#example1");
-        const urlAPI = `${this.mainURL}/api/jurusan/untuk-tabel`;
+        const urlAPI = `${this.mainURL}/api/jurusan`;
         const dataColumns = [
             { data: "nama_jurusan" },
             { data: "singkatan" },
@@ -41,13 +41,21 @@ class Main extends Core {
             {
                 data: "id_jurusan",
                 render: (data, type, row) => `
-                        <a class="btn btn-outline-primary btn-sm" href="${this.mainURL}/admin/data-jurusan-detail/${data}" data-toggle="tooltip" data-bs-placement="top" title="lihat detai data">
+                        <a class="btn btn-outline-primary btn-sm" href="${
+                            this.mainURL
+                        }/admin/data-jurusan-detail/${data}" data-toggle="tooltip" data-bs-placement="top" title="lihat detai data">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a class="btn btn-outline-warning btn-sm" href="${this.mainURL}/admin/data-jurusan-update/?id_jurusan=${data}" data-toggle="tooltip" data-bs-placement="top" title="ubah data">
+                        <a class="btn btn-outline-warning btn-sm" href="${
+                            this.mainURL
+                        }/admin/data-jurusan-update/${btoa(
+                    data
+                )}" data-toggle="tooltip" data-bs-placement="top" title="ubah data">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a class="btn btn-outline-danger btn-action btn-sm delete" data-id="${data}" data-nama="${row.nama_jurusan}" data-toggle="tooltip" data-bs-placement="top" title="hapus data">
+                        <a class="btn btn-outline-danger btn-action btn-sm delete" data-id="${data}" data-nama="${
+                    row.nama_jurusan
+                }" data-toggle="tooltip" data-bs-placement="top" title="hapus data">
                             <i class="fas fa-trash"></i>
                         </a>
                     `,
