@@ -94,7 +94,11 @@ class JurusanController extends Controller
         $deletedJurusan = JurusanModel::onlyTrashed()->where('nama_jurusan', $data['nama_jurusan'])->first();
         if ($deletedJurusan) {
             return (new JurusanResource([
-                'errors' => 'Data dengan nama jurusan serupa sudah ada di tempat sampah! Pulihkan?',
+                'errors' => [
+                    'message' => [
+                        'Data dengan nama jurusan serupa sudah ada di tempat sampah! Pulihkan?'
+                    ]
+                ],
                 'id_jurusan' => $deletedJurusan->id_jurusan,
             ]))->response()->setStatusCode(201);
         }

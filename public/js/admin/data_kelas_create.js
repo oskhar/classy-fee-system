@@ -24,6 +24,10 @@ var Core = /*#__PURE__*/function () {
     _classCallCheck(this, Core);
     this.objectURL = new URL(window.location.href);
     this.mainURL = this.objectURL.origin;
+    this.messageLink = this.getMessage();
+    if (this.messageLink) {
+      this.showSuccessMessage(this.messageLink);
+    }
   }
   _createClass(Core, [{
     key: "doAjax",
@@ -139,6 +143,13 @@ var Core = /*#__PURE__*/function () {
           $('[data-toggle="tooltip"]').tooltip();
         }
       });
+    }
+  }, {
+    key: "getMessage",
+    value: function getMessage() {
+      // Ambil url keseluruhan
+      var message = this.objectURL.searchParams.get("message");
+      return message;
     }
   }]);
   return Core;

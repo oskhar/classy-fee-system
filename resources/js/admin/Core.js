@@ -3,6 +3,10 @@ export class Core {
     constructor() {
         this.objectURL = new URL(window.location.href);
         this.mainURL = this.objectURL.origin;
+        this.messageLink = this.getMessage();
+        if (this.messageLink) {
+            this.showSuccessMessage(this.messageLink);
+        }
     }
 
     doAjax(url, fungsiSaatSuccess, data = {}, method = "get") {
@@ -102,5 +106,11 @@ export class Core {
                 $('[data-toggle="tooltip"]').tooltip();
             },
         });
+    }
+
+    getMessage() {
+        // Ambil url keseluruhan
+        const message = this.objectURL.searchParams.get("message");
+        return message;
     }
 }

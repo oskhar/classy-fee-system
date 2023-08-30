@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
 
 Route::get('/admin', function () {
@@ -53,3 +53,14 @@ Route::get('/admin/data-kelas-create', function () {
 Route::get('/admin/data-kelas-update', function () {
     return view('admin.data_kelas.update');
 })->name('admin.data_kelas_update');
+
+// Router untuk halaman data tahun ajar
+Route::get('/admin/data-tahun-ajar', function () {
+    return view('admin.data_tahun_ajar.read');
+})->name('admin.data_tahun_ajar');
+Route::get('/admin/data-tahun-ajar-create', function () {
+    return view('admin.data_tahun_ajar.create');
+})->name('admin.data_tahun_ajar_create');
+Route::get('/admin/data-tahun-ajar-update', function () {
+    return view('admin.data_tahun_ajar.update');
+})->name('admin.data_tahun_ajar_update');
