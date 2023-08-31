@@ -31,18 +31,35 @@ export class Core {
         });
     }
 
-    showSuccessMessage(message) {
+    showSuccessMessage(message, timer = 2000) {
         Swal.fire({
             toast: true,
-            position: "top-right",
+            position: "top",
             iconColor: "white",
             color: "white",
             background: "var(--success)",
             showConfirmButton: false,
-            timer: 2000,
+            timer: timer,
             timerProgressBar: true,
             icon: "success",
             title: message,
+        });
+    }
+
+    showSuccessAndRedirect(message, url, timer = 1200) {
+        Swal.fire({
+            toast: true,
+            position: "top",
+            iconColor: "white",
+            color: "white",
+            background: "var(--success)",
+            showConfirmButton: false,
+            timer: timer,
+            timerProgressBar: true,
+            icon: "success",
+            title: message,
+        }).then(() => {
+            window.location.href = url;
         });
     }
 

@@ -49,7 +49,11 @@ class Main extends Core {
                                         self.doAjax(
                                             url,
                                             function (response) {
-                                                window.location.href = `${self.mainURL}/admin/data-tahun-ajar`;
+                                                self.showSuccessAndRedirect(
+                                                    response.data.success
+                                                        .message,
+                                                    `${self.mainURL}/admin/data-tahun-ajar`
+                                                );
                                             },
                                             dataBody,
                                             method
@@ -57,9 +61,9 @@ class Main extends Core {
                                     }
                                 });
                             } else {
-                                const message = `Data ${response.data.nama_tahun_ajar} berhasil ditambahkan`;
-                                self.showSuccessMessage(message);
-                                window.location.href = `${self.mainURL}/admin/data-tahun-ajar?message=${message}`;
+                                self.showSuccessMessage(
+                                    response.data.success.message
+                                );
                             }
                         },
                         dataBody,

@@ -74,18 +74,10 @@ class Main extends Core {
             self.doAjax(
                 url,
                 function (response) {
-                    Swal.fire({
-                        toast: true,
-                        position: "top-right",
-                        iconColor: "white",
-                        color: "white",
-                        background: "var(--success)",
-                        showConfirmButton: false,
-                        timer: 10000,
-                        timerProgressBar: true,
-                        icon: "success",
-                        title: `Kelas ${response.data.nama_kelas} berhasil diubah`,
-                    });
+                    self.showSuccessAndRedirect(
+                        response.data.success.message,
+                        `${self.mainURL}/admin/data-kelas`
+                    );
                 },
                 dataBody,
                 method

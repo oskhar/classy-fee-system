@@ -60,7 +60,10 @@ class Main extends Core {
             self.doAjax(
                 url,
                 function (response) {
-                    let message = `Tahun ajar ${response.data.nama_tahun_ajar} berhasil diubah`;
+                    self.showSuccessAndRedirect(
+                        response.data.success.message,
+                        `${self.mainURL}/admin/data-tahun-ajar`
+                    );
                 },
                 dataBody,
                 method

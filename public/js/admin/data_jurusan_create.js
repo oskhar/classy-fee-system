@@ -58,17 +58,37 @@ var Core = /*#__PURE__*/function () {
   }, {
     key: "showSuccessMessage",
     value: function showSuccessMessage(message) {
+      var timer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2000;
       Swal.fire({
         toast: true,
-        position: "top-right",
+        position: "top",
         iconColor: "white",
         color: "white",
         background: "var(--success)",
         showConfirmButton: false,
-        timer: 2000,
+        timer: timer,
         timerProgressBar: true,
         icon: "success",
         title: message
+      });
+    }
+  }, {
+    key: "showSuccessAndRedirect",
+    value: function showSuccessAndRedirect(message, url) {
+      var timer = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1200;
+      Swal.fire({
+        toast: true,
+        position: "top",
+        iconColor: "white",
+        color: "white",
+        background: "var(--success)",
+        showConfirmButton: false,
+        timer: timer,
+        timerProgressBar: true,
+        icon: "success",
+        title: message
+      }).then(function () {
+        window.location.href = url;
       });
     }
   }, {
@@ -276,12 +296,12 @@ var Main = /*#__PURE__*/function (_Core) {
                   id_jurusan: response.data.id_jurusan
                 };
                 self.doAjax(_url, function (response) {
-                  self.showSuccessMessage("Data ".concat(response.data.nama_jurusan, " berhasil dipulihkan"));
+                  self.showSuccessAndRedirect(response.data.success.message, "".concat(self.mainURL, "/admin/data-jurusan"));
                 }, _dataBody, _method);
               }
             });
           } else {
-            self.showSuccessMessage("Data ".concat(response.data.nama_jurusan, " berhasil ditambahkan"));
+            self.showSuccessMessage(response.data.success.message);
           }
         }, dataBody, method);
       });

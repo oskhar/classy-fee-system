@@ -233,17 +233,37 @@ var Core = /*#__PURE__*/function () {
   }, {
     key: "showSuccessMessage",
     value: function showSuccessMessage(message) {
+      var timer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2000;
       Swal.fire({
         toast: true,
-        position: "top-right",
+        position: "top",
         iconColor: "white",
         color: "white",
         background: "var(--success)",
         showConfirmButton: false,
-        timer: 2000,
+        timer: timer,
         timerProgressBar: true,
         icon: "success",
         title: message
+      });
+    }
+  }, {
+    key: "showSuccessAndRedirect",
+    value: function showSuccessAndRedirect(message, url) {
+      var timer = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1200;
+      Swal.fire({
+        toast: true,
+        position: "top",
+        iconColor: "white",
+        color: "white",
+        background: "var(--success)",
+        showConfirmButton: false,
+        timer: timer,
+        timerProgressBar: true,
+        icon: "success",
+        title: message
+      }).then(function () {
+        window.location.href = url;
       });
     }
   }, {
@@ -2309,14 +2329,12 @@ var Main = /*#__PURE__*/function (_Core) {
                       id_tahun_ajar: response.data.id_tahun_ajar
                     };
                     self.doAjax(_url, function (response) {
-                      window.location.href = "".concat(self.mainURL, "/admin/data-tahun-ajar");
+                      self.showSuccessAndRedirect(response.data.success.message, "".concat(self.mainURL, "/admin/data-tahun-ajar"));
                     }, _dataBody, _method);
                   }
                 });
               } else {
-                var _message = "Data ".concat(response.data.nama_tahun_ajar, " berhasil ditambahkan");
-                self.showSuccessMessage(_message);
-                window.location.href = "".concat(self.mainURL, "/admin/data-tahun-ajar?message=").concat(_message);
+                self.showSuccessMessage(response.data.success.message);
               }
             }, dataBody, method);
           }

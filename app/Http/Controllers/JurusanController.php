@@ -114,7 +114,7 @@ class JurusanController extends Controller
         // Kembalikan dengan respon
         return (new JurusanResource([
             'success' => [
-                'message' => "Data $jurusan->nama_jurusan berhasil ditambahkan"
+                'message' => "Jurusan $jurusan->nama_jurusan berhasil ditambahkan"
             ]
         ]))->response()->setStatusCode(201);
     }
@@ -153,7 +153,7 @@ class JurusanController extends Controller
 
         return (new JurusanResource([
             'success' => [
-                'message' => "Data $jurusan->nama_jurusan berhasil diubah"
+                'message' => "Jurusan $jurusan->nama_jurusan berhasil diubah"
             ]
         ]))->response()->setStatusCode(201);
     }
@@ -179,7 +179,7 @@ class JurusanController extends Controller
         
         return (new JurusanResource([
             'success' => [
-                'message' => "Data $jurusan->nama_jurusan berhasil dihapus"
+                'message' => "Jurusan $jurusan->nama_jurusan berhasil dihapus"
             ]
         ]))->response()->setStatusCode(200);
     }
@@ -203,7 +203,7 @@ class JurusanController extends Controller
         $jurusan->restore(); // Memulihkan data
         return (new JurusanResource([
             'success' => [
-                'message' => "Data $jurusan->nama_jurusan berhasil dipulihkan"
+                'message' => "Jurusan $jurusan->nama_jurusan berhasil dipulihkan"
             ]
         ]))->response()->setStatusCode(200);
     }

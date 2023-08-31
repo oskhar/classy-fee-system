@@ -86,9 +86,7 @@ class Main extends Core {
                     urlAPI,
                     (response) => {
                         this.refreshDataTable();
-                        this.showSuccessMessage(
-                            `jurusan ${response.data.nama_jurusan} berhasil dihapus`
-                        );
+                        this.showSuccessMessage(response.data.success.message);
                     },
                     dataBody,
                     method

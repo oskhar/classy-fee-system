@@ -85,7 +85,7 @@ class Main extends Core {
                         (response) => {
                             this.refreshDataTable();
                             this.showSuccessMessage(
-                                `Kelas ${response.data.nama_kelas} berhasil dihapus`
+                                response.data.success.message
                             );
                         },
                         dataBody,

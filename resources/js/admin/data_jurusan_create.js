@@ -43,8 +43,9 @@ class Main extends Core {
                                 self.doAjax(
                                     url,
                                     function (response) {
-                                        self.showSuccessMessage(
-                                            `Data ${response.data.nama_jurusan} berhasil dipulihkan`
+                                        self.showSuccessAndRedirect(
+                                            response.data.success.message,
+                                            `${self.mainURL}/admin/data-jurusan`
                                         );
                                     },
                                     dataBody,
@@ -53,9 +54,7 @@ class Main extends Core {
                             }
                         });
                     } else {
-                        self.showSuccessMessage(
-                            `Data ${response.data.nama_jurusan} berhasil ditambahkan`
-                        );
+                        self.showSuccessMessage(response.data.success.message);
                     }
                 },
                 dataBody,

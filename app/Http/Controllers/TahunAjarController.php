@@ -118,7 +118,11 @@ class TahunAjarController extends Controller
         }
 
         // Kembalikan dengan respon
-        return (new TahunAjarResource(['nama_tahun_ajar' => $tahunAjar->nama_tahun_ajar]))->response()->setStatusCode(201);
+        return (new TahunAjarResource([
+            'success' => [
+                'message' => "Tahun ajar $tahunAjar->nama_tahun_ajar berhasil ditambahkan"
+            ]
+        ]))->response()->setStatusCode(201);
     }
 
     public function update (TahunAjarUpdateRequest $request): JsonResponse
@@ -150,7 +154,11 @@ class TahunAjarController extends Controller
                 ->delete();
         }
         
-        return (new TahunAjarResource(['nama_tahun_ajar' => $tahunAjar->nama_tahun_ajar]))->response()->setStatusCode(201);
+        return (new TahunAjarResource([
+            'success' => [
+                'message' => "Tahun ajar $tahunAjar->nama_tahun_ajar berhasil diubah"
+            ]
+        ]))->response()->setStatusCode(201);
     }
 
     public function delete(TahunAjarReadRequest $request): JsonResponse
@@ -172,7 +180,11 @@ class TahunAjarController extends Controller
         $tahunAjar->update(['status_data' => 'Tidak Aktif']);
         $tahunAjar->delete(); // Perform soft delete
         
-        return (new TahunAjarResource(['nama_tahun_ajar' => $tahunAjar->nama_tahun_ajar]))->response()->setStatusCode(200);
+        return (new TahunAjarResource([
+            'success' => [
+                'message' => "Tahun ajar $tahunAjar->nama_tahun_ajar berhasil dihapus"
+            ]
+        ]))->response()->setStatusCode(200);
     }
 
     public function restore(TahunAjarReadRequest $request): JsonResponse
@@ -192,6 +204,10 @@ class TahunAjarController extends Controller
         
         $tahunAjar->update(['status_data' => 'Aktif']);
         $tahunAjar->restore(); // Memulihkan data
-        return (new TahunAjarResource(['nama_tahun_ajar' => $tahunAjar->nama_tahun_ajar]))->response()->setStatusCode(200);
+        return (new TahunAjarResource([
+            'success' => [
+                'message' => "Tahun ajar $tahunAjar->nama_tahun_ajar berhasil dipulihkan"
+            ]
+        ]))->response()->setStatusCode(200);
     }
 }
