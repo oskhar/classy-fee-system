@@ -33,6 +33,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        // Data yang akan dihapus saat migration:rollback
+        Schema::dropIfExists('tb_tahun_ajar');
     }
 };
