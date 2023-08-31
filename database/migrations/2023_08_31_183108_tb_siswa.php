@@ -11,7 +11,28 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        // Tabel yang akan dibuat saat migration
+        Schema::create('tb_siswa', function (Blueprint $table) {
+            $table->string('nis')->primary();
+            $table->string('nisn')->unique();
+
+            $table->string('id_wali_siswa');
+            $table->foreign('id_wali_siswa')->references('id_wali_siswa')->on('tb_wali_siswa')->onDelete('cascade');
+            
+            $table->string('nama');
+            $table->string('jenis_kelamin');
+            $table->string('agama');
+            $table->string('tempat_lahir');
+            $table->string('tanggal_lahir');
+            $table->string('alamat');
+
+            $table->string('status_data')->default('Aktif');
+
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at')->nullable();
+            $table->timestamp('deleted_at')->nullable();
+
+        });
     }
 
     /**
