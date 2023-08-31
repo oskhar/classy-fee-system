@@ -155,7 +155,6 @@ class JurusanController extends Controller
         $data = $request->validated();
 
         $jurusan = JurusanModel::where('id_jurusan', $data['id_jurusan'])->first();
-        $jurusan->update(['status_data' => 'Tidak Aktif']);
         
         if (!$jurusan) {
             throw new HttpResponseException(response()->json([
@@ -167,6 +166,7 @@ class JurusanController extends Controller
             ])->setStatusCode(404));
         }
     
+        $jurusan->update(['status_data' => 'Tidak Aktif']);
         $jurusan->delete(); // Perform soft delete
         
         return (new JurusanResource(['nama_jurusan' => $jurusan->nama_jurusan]))->response()->setStatusCode(200);
@@ -176,6 +176,17 @@ class JurusanController extends Controller
     {
         $data = $request->validated();
         $jurusan = JurusanModel::onlyTrashed()->find($data['id_jurusan']); // Ambil data yang sudah dihapus
+        
+        if (!$jurusan) {
+            throw new HttpResponseException(response()->json([
+                'errors' => [
+                    'message' => [
+                        'jurusan not found'
+                    ]
+                ]
+            ])->setStatusCode(404));
+        }
+        
         $jurusan->update(['status_data' => 'Aktif']);
         $jurusan->restore(); // Memulihkan data
         return (new JurusanResource(['nama_jurusan' => $jurusan->nama_jurusan]))->response()->setStatusCode(200);

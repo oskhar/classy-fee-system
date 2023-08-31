@@ -240,7 +240,7 @@ var Core = /*#__PURE__*/function () {
         color: "white",
         background: "var(--success)",
         showConfirmButton: false,
-        timer: 10000,
+        timer: 2000,
         timerProgressBar: true,
         icon: "success",
         title: message
@@ -2301,7 +2301,7 @@ var Main = /*#__PURE__*/function (_Core) {
             // Jalankan api untuk create data saat submit
             self.doAjax(url, function (response) {
               if (response.data.errors) {
-                self.showInfoMessage(response.data.errors, "pulihkan").then(function (result) {
+                self.showInfoMessage(self.objectToString(response.data.errors), "pulihkan").then(function (result) {
                   if (result.isConfirmed) {
                     var _url = "".concat(self.mainURL, "/api/tahun-ajar/pulihkan");
                     var _method = "put";

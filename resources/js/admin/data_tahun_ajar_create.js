@@ -36,7 +36,7 @@ class Main extends Core {
                         function (response) {
                             if (response.data.errors) {
                                 self.showInfoMessage(
-                                    response.data.errors,
+                                    self.objectToString(response.data.errors),
                                     "pulihkan"
                                 ).then((result) => {
                                     if (result.isConfirmed) {

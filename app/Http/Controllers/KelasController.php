@@ -98,7 +98,11 @@ class KelasController extends Controller
 
         if ($deletedKelas) {
             return (new KelasResource([
-                'errors' => 'Data dengan nama kelas serupa sudah ada di tempat sampah! Pulihkan?',
+                'errors' => [
+                    'message' => [
+                        'Data dengan nama jurusan serupa sudah ada di tempat sampah! Pulihkan?'
+                    ]
+                ],
                 'id_kelas' => $deletedKelas->id_kelas,
             ]))->response()->setStatusCode(201);
         }

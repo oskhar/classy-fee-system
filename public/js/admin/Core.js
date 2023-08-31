@@ -94,7 +94,7 @@ var Core = /*#__PURE__*/function () {
         color: "white",
         background: "var(--success)",
         showConfirmButton: false,
-        timer: 10000,
+        timer: 2000,
         timerProgressBar: true,
         icon: "success",
         title: message

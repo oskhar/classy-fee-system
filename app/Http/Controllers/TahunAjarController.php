@@ -94,7 +94,11 @@ class TahunAjarController extends Controller
 
         if ($deletedTahunAjar) {
             return (new TahunAjarResource([
-                'errors' => 'Data dengan nama tahun ajar serupa sudah ada di tempat sampah! Pulihkan?',
+                'errors' => [
+                    'message' => [
+                        'Data dengan nama jurusan serupa sudah ada di tempat sampah! Pulihkan?'
+                    ]
+                ],
                 'id_tahun_ajar' => $deletedTahunAjar->id_tahun_ajar,
             ]))->response()->setStatusCode(201);
         }
