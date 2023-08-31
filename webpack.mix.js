@@ -23,10 +23,12 @@ mix.js("resources/js/template_admin.js", "public/js");
 mix.postCss("resources/css/template_admin.css", "public/css");
 // END MAIN SOURCE
 
-// START DATA KELAS
+// START DATA SISWA
 mix.js("resources/js/admin/data_siswa.js", "public/js/admin");
 mix.postCss("resources/css/admin/data_siswa.css", "public/css/admin");
-// END DATA KELAS
+
+mix.js("resources/js/admin/data_siswa_create.js", "public/js/admin");
+// END DATA SISWA
 
 // START DATA JURUSAN
 mix.js("resources/js/admin/data_jurusan.js", "public/js/admin");
