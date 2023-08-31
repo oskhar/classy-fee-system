@@ -259,11 +259,11 @@ var Main = /*#__PURE__*/function (_Core) {
         id_jurusan: self.paramIdJurusan
       };
       this.doAjax(url, function (response) {
-        console.log(response);
-        var pilihanStatusData = response.data.status_data == "Aktif" ? 0 : 1;
         self.inputNamaJurusan.val(response.data.nama_jurusan);
         self.inputSingkatan.val(response.data.singkatan);
-        self.inputStatusData.val($("#status_data option").eq(pilihanStatusData).val());
+
+        // Pilih opsi yang memiliki value sesuai dengan status_data
+        self.inputStatusData.find('option[value="' + pilihanStatusData + '"]').prop("selected", true);
       }, dataBody);
     }
   }, {

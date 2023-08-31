@@ -13,7 +13,7 @@ class Main extends Core {
     }
 
     setFormData() {
-        const self = this; // Simpan referensi this dalam variabel self
+        const self = this;
         let url = `${self.mainURL}/api/tahun-ajar`;
         let dataBody = { id_tahun_ajar: self.paramIdTahunAjar };
 
@@ -21,17 +21,20 @@ class Main extends Core {
             url,
             function (response) {
                 console.log(response);
-                let pilihanSemester =
-                    response.data.semester == "Ganjil" ? 0 : 1;
-                let pilihanStatusData =
-                    response.data.status_data == "Aktif" ? 0 : 1;
+
                 self.inputNamaTahunAjar.val(response.data.nama_tahun_ajar);
-                self.inputSemester.val(
-                    $("#semester option").eq(pilihanSemester).val()
-                );
-                self.inputStatusData.val(
-                    $("#status_data option").eq(pilihanStatusData).val()
-                );
+
+                // Pilih opsi yang memiliki teks yang sesuai dengan semester
+                self.inputSemester
+                    .find('option:contains("' + response.data.semester + '")')
+                    .prop("selected", true);
+
+                // Pilih opsi yang memiliki teks yang sesuai dengan status_data
+                self.inputStatusData
+                    .find(
+                        'option:contains("' + response.data.status_data + '")'
+                    )
+                    .prop("selected", true);
             },
             dataBody
         );
@@ -57,18 +60,7 @@ class Main extends Core {
             self.doAjax(
                 url,
                 function (response) {
-                    Swal.fire({
-                        toast: true,
-                        position: "top-right",
-                        iconColor: "white",
-                        color: "white",
-                        background: "var(--success)",
-                        showConfirmButton: false,
-                        timer: 10000,
-                        timerProgressBar: true,
-                        icon: "success",
-                        title: `Tahun ajar ${response.data.nama_tahun_ajar} berhasil diubah`,
-                    });
+                    let message = `Tahun ajar ${response.data.nama_tahun_ajar} berhasil diubah`;
                 },
                 dataBody,
                 method

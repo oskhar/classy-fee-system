@@ -253,18 +253,20 @@ var Main = /*#__PURE__*/function (_Core) {
   _createClass(Main, [{
     key: "setFormData",
     value: function setFormData() {
-      var self = this; // Simpan referensi this dalam variabel self
+      var self = this;
       var url = "".concat(self.mainURL, "/api/tahun-ajar");
       var dataBody = {
         id_tahun_ajar: self.paramIdTahunAjar
       };
       this.doAjax(url, function (response) {
         console.log(response);
-        var pilihanSemester = response.data.semester == "Ganjil" ? 0 : 1;
-        var pilihanStatusData = response.data.status_data == "Aktif" ? 0 : 1;
         self.inputNamaTahunAjar.val(response.data.nama_tahun_ajar);
-        self.inputSemester.val($("#semester option").eq(pilihanSemester).val());
-        self.inputStatusData.val($("#status_data option").eq(pilihanStatusData).val());
+
+        // Pilih opsi yang memiliki teks yang sesuai dengan semester
+        self.inputSemester.find('option:contains("' + response.data.semester + '")').prop("selected", true);
+
+        // Pilih opsi yang memiliki teks yang sesuai dengan status_data
+        self.inputStatusData.find('option:contains("' + response.data.status_data + '")').prop("selected", true);
       }, dataBody);
     }
   }, {
@@ -287,18 +289,7 @@ var Main = /*#__PURE__*/function (_Core) {
 
         // Jalankan api untuk create data saat submit
         self.doAjax(url, function (response) {
-          Swal.fire({
-            toast: true,
-            position: "top-right",
-            iconColor: "white",
-            color: "white",
-            background: "var(--success)",
-            showConfirmButton: false,
-            timer: 10000,
-            timerProgressBar: true,
-            icon: "success",
-            title: "Tahun ajar ".concat(response.data.nama_tahun_ajar, " berhasil diubah")
-          });
+          var message = "Tahun ajar ".concat(response.data.nama_tahun_ajar, " berhasil diubah");
         }, dataBody, method);
       });
     }

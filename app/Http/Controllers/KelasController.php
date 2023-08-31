@@ -122,7 +122,11 @@ class KelasController extends Controller
         }
 
         // Kembalikan dengan respon
-        return (new KelasResource(['nama_kelas' => $kelas->nama_kelas]))->response()->setStatusCode(201);
+        return (new KelasResource([
+            'success' => [
+                'message' => "Kelas $kelas->nama_kelas berhasil ditambahkan"
+            ]
+        ]))->response()->setStatusCode(201);
     }
 
     public function update (KelasUpdateRequest $request): JsonResponse
@@ -154,7 +158,11 @@ class KelasController extends Controller
                 ->delete();
         }
         
-        return (new KelasResource(['nama_kelas' => $kelas->nama_kelas]))->response()->setStatusCode(201);
+        return (new KelasResource([
+            'success' => [
+                'message' => "Kelas $kelas->nama_kelas berhasil diubah"
+            ]
+        ]))->response()->setStatusCode(201);
     }
 
     public function delete(KelasReadRequest $request): JsonResponse
@@ -176,7 +184,11 @@ class KelasController extends Controller
         $kelas->update(['status_data' => 'Tidak Aktif']);
         $kelas->delete(); // Perform soft delete
         
-        return (new KelasResource(['nama_kelas' => $kelas->nama_kelas]))->response()->setStatusCode(200);
+        return (new KelasResource([
+            'success' => [
+                'message' => "Kelas $kelas->nama_kelas berhasil dihapus"
+            ]
+        ]))->response()->setStatusCode(200);
     }
 
     public function restore(KelasReadRequest $request): JsonResponse
@@ -195,7 +207,11 @@ class KelasController extends Controller
         }
         $kelas->update(['status_data' => 'Aktif']);
         $kelas->restore(); // Memulihkan data
-        return (new KelasResource(['nama_kelas' => $kelas->nama_kelas]))->response()->setStatusCode(200);
+        return (new KelasResource([
+            'success' => [
+                'message' => "Kelas $kelas->nama_kelas berhasil dipulihkan"
+            ]
+        ]))->response()->setStatusCode(200);
     }
 
 }

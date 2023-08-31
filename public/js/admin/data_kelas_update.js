@@ -254,17 +254,19 @@ var Main = /*#__PURE__*/function (_Core) {
   _createClass(Main, [{
     key: "setFormData",
     value: function setFormData() {
-      var self = this; // Simpan referensi this dalam variabel self
+      var self = this;
       var url = "".concat(self.mainURL, "/api/kelas");
       var dataBody = {
         id_kelas: self.paramIdKelas
       };
       this.doAjax(url, function (response) {
-        var pilihanIdJurusan = parseInt(response.data.id_jurusan.replace("J-", "")) - 1;
-        var pilihanStatusData = response.data.status_data == "Aktif" ? 0 : 1;
         self.inputNamaKelas.val(response.data.nama_kelas);
-        self.inputIdJurusan.val($("#id_jurusan option").eq(pilihanIdJurusan).val());
-        self.inputStatusData.val($("#status_data option").eq(pilihanStatusData).val());
+
+        // Pilih opsi yang memiliki value sesuai dengan id_jurusan
+        self.inputIdJurusan.find('option[value="' + response.data.id_jurusan + '"]').prop("selected", true);
+
+        // Pilih opsi yang memiliki value sesuai dengan status_data
+        self.inputStatusData.find('option[value="' + response.data.status_data + '"]').prop("selected", true);
       }, dataBody);
     }
   }, {

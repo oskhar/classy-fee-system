@@ -112,7 +112,11 @@ class JurusanController extends Controller
         }
 
         // Kembalikan dengan respon
-        return (new JurusanResource(['nama_jurusan' => $jurusan->nama_jurusan]))->response()->setStatusCode(201);
+        return (new JurusanResource([
+            'success' => [
+                'message' => "Data $jurusan->nama_jurusan berhasil ditambahkan"
+            ]
+        ]))->response()->setStatusCode(201);
     }
 
     public function update (JurusanUpdateRequest $request): JsonResponse
@@ -147,7 +151,11 @@ class JurusanController extends Controller
                 ->delete();
         }
 
-        return (new JurusanResource(['nama_jurusan' => $jurusan->nama_jurusan]))->response()->setStatusCode(201);
+        return (new JurusanResource([
+            'success' => [
+                'message' => "Data $jurusan->nama_jurusan berhasil diubah"
+            ]
+        ]))->response()->setStatusCode(201);
     }
 
     public function delete(JurusanReadRequest $request): JsonResponse
@@ -169,7 +177,11 @@ class JurusanController extends Controller
         $jurusan->update(['status_data' => 'Tidak Aktif']);
         $jurusan->delete(); // Perform soft delete
         
-        return (new JurusanResource(['nama_jurusan' => $jurusan->nama_jurusan]))->response()->setStatusCode(200);
+        return (new JurusanResource([
+            'success' => [
+                'message' => "Data $jurusan->nama_jurusan berhasil dihapus"
+            ]
+        ]))->response()->setStatusCode(200);
     }
 
     public function restore(JurusanReadRequest $request): JsonResponse
@@ -189,7 +201,11 @@ class JurusanController extends Controller
         
         $jurusan->update(['status_data' => 'Aktif']);
         $jurusan->restore(); // Memulihkan data
-        return (new JurusanResource(['nama_jurusan' => $jurusan->nama_jurusan]))->response()->setStatusCode(200);
+        return (new JurusanResource([
+            'success' => [
+                'message' => "Data $jurusan->nama_jurusan berhasil dipulihkan"
+            ]
+        ]))->response()->setStatusCode(200);
     }
 
     public function getUntukInputOption (): JsonResponse
