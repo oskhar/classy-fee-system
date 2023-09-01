@@ -84,7 +84,6 @@ paths:
                   type: string
                 status_data:
                   type: string
-
       responses:
         200:
           description: OK
@@ -136,7 +135,6 @@ paths:
                   type: string
                 status_data:
                   type: string
-
       responses:
         200:
           description: OK
@@ -182,7 +180,6 @@ paths:
               properties:
                 id_jurusan:
                   type: string
-
       responses:
         204:
           description: OK
@@ -199,7 +196,6 @@ paths:
               example:
                 success:
                   message: "Jurusan nama_jurusan berhasil dihapus"
-
   /jurusan/pulihkan:
     put:
       tags:
@@ -215,7 +211,6 @@ paths:
               properties:
                 id_jurusan:
                   type: string
-
       responses:
         204:
           description: OK
@@ -232,3 +227,218 @@ paths:
               example:
                 success:
                   message: "Jurusan nama_jurusan berhasil dipulihkan"
+
+  /kelas:
+    get:
+      tags:
+        - Data kelas
+      summary: MENDAPATKAN data kelas
+      parameters:
+        - name: id_kelas
+          in: query
+          description: Menampilkan spesifik kelas berdasarkan idnya
+          schema:
+            type: string
+            nullable: true # Parameter bisa bernilai null (opsional)
+        - name: length
+          in: query
+          description: Jumlah item yang akan ditampilkan
+          schema:
+            type: number
+            nullable: true # Parameter bisa bernilai null (opsional)
+        - name: start
+          in: query
+          description: Indeks awal data yang akan ditampilkan
+          schema:
+            type: number
+            nullable: true # Parameter bisa bernilai null (opsional)
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  draw:
+                    type: number
+                  recordsTotal:
+                    type: number
+                  recordsFiltered:
+                    type: number
+                  data:
+                    type: array # Perubahan: Objek data adalah array
+                    items:
+                      type: object
+                      properties:
+                        id_kelas:
+                          type: string
+                        nama_kelas:
+                          type: string
+                        id_jurusan:
+                          type: string
+                        nama_jurusan:
+                          type: string
+                        status_data:
+                          type: string
+    post:
+      tags:
+        - Data kelas
+      summary: MENAMBAHKAN data kelas
+      requestBody:
+        description: Data kelas untuk menambahkan data kelas
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nama_kelas:
+                  type: string
+                id_jurusan:
+                  type: string
+                status_data:
+                  type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+              example:
+                errors:
+                  message: "Data dengan nama kelas serupa sudah ada di tempat sampah! Pulihkan?"
+        201:
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+              example:
+                success:
+                  message: "Kelas nama_kelas berhasil ditambahkan"
+    put:
+      tags:
+        - Data kelas
+      summary: MENGUBAH data kelas
+      requestBody:
+        description: Data kelas untuk menambahkan data kelas
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_kelas:
+                  type: string
+                nama_kelas:
+                  type: string
+                singkatan:
+                  type: string
+                status_data:
+                  type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+              example:
+                success:
+                  message: "Kelas nama_kelas berhasil ditambahkan"
+        400:
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+              example:
+                errors:
+                  message: "Nama kelas sudah pernah digunakan"
+    delete:
+      tags:
+        - Data kelas
+      summary: MENGHAPUS data kelas
+      requestBody:
+        description: Menghapus kelas sesuai idnya
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_kelas:
+                  type: string
+      responses:
+        204:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+              example:
+                success:
+                  message: "Kelas nama_kelas berhasil dihapus"
+  /kelas/pulihkan:
+    put:
+      tags:
+        - Data kelas
+      summary: MEMULIHKAN data kelas
+      requestBody:
+        description: Menghapus kelas sesuai idnya
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_kelas:
+                  type: string
+      responses:
+        204:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+              example:
+                success:
+                  message: "Kelas nama_kelas berhasil dipulihkan"
