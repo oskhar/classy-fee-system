@@ -17,8 +17,18 @@
                         <form method='POST' enctype='multipart/form-data' class="row" id="form-tambah-siswa">
                             @csrf
                             <div class='form-group col-sm-12'>
-                                <label for='nama_siswa'>Nama Siswa</label>
-                                <input type='text' class='form-control' id='nama_siswa' name='nama_siswa' placeholder='Nama Jurusan'>
+                                <label for='nama'>Nama Siswa</label>
+                                <input type='text' class='form-control' id='nama' name='nama' placeholder='Nama Siswa'>
+                            </div>
+
+                            <div class='form-group col-sm-12'>
+                                <label for='nis'>NIS</label>
+                                <input type='text' class='form-control' id='nis' name='nis' placeholder='NIS'>
+                            </div>
+
+                            <div class='form-group col-sm-12'>
+                                <label for='nisn'>NISN</label>
+                                <input type='text' class='form-control' id='nisn' name='nisn' placeholder='NISN'>
                             </div>
                             
                             <div class='form-group col-sm-6' id="provinceFormGroup">
@@ -27,6 +37,7 @@
                                     <option value="">Pilih Provinsi</option>
                                 </select>
                             </div>
+                            
                             <div class='form-group col-sm-6' id="regencyFormGroup" style="display: none;">
                                 <label class="text-muted">Kota</label>
                                 <select id="regencySelect" class="form-control">
@@ -62,6 +73,7 @@
                             </div>
                         </form>
                     </div>
+                    <button id="printAlamat">print alamat</button>
                 </div>
             </div>
         </div>

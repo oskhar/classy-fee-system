@@ -1,0 +1,234 @@
+openapi: "3.0.2"
+
+info:
+  title: API SMK Triguna Utama
+  version: "1.0"
+  description: API ini digunakan untuk mengelola seluruh data pada sekolah SMK Triguna Utama
+
+servers:
+  - url: http://localhost:8000/api
+
+tags:
+  - name: Data Jurusan
+    description: Pengelolaan data jurusan SMK Triguna Utama
+  - name: Data Kelas
+    description: Pengelolaan data kelas SMK Triguna Utama
+
+paths:
+  /jurusan:
+    get:
+      tags:
+        - Data Jurusan
+      summary: MENDAPATKAN data jurusan
+      parameters:
+        - name: id_jurusan
+          in: query
+          description: Menampilkan spesifik jurusan berdasarkan idnya
+          schema:
+            type: string
+            nullable: true # Parameter bisa bernilai null (opsional)
+        - name: length
+          in: query
+          description: Jumlah item yang akan ditampilkan
+          schema:
+            type: number
+            nullable: true # Parameter bisa bernilai null (opsional)
+        - name: start
+          in: query
+          description: Indeks awal data yang akan ditampilkan
+          schema:
+            type: number
+            nullable: true # Parameter bisa bernilai null (opsional)
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  draw:
+                    type: number
+                  recordsTotal:
+                    type: number
+                  recordsFiltered:
+                    type: number
+                  data:
+                    type: array # Perubahan: Objek data adalah array
+                    items:
+                      type: object
+                      properties:
+                        id_jurusan:
+                          type: string
+                        nama_jurusan:
+                          type: string
+                        singkatan:
+                          type: string
+                        status_data:
+                          type: string
+    post:
+      tags:
+        - Data Jurusan
+      summary: MENAMBAHKAN data jurusan
+      requestBody:
+        description: Data jurusan untuk menambahkan data jurusan
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nama_jurusan:
+                  type: string
+                singkatan:
+                  type: string
+                status_data:
+                  type: string
+
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+              example:
+                errors:
+                  message: "Data dengan nama jurusan serupa sudah ada di tempat sampah! Pulihkan?"
+        201:
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+              example:
+                success:
+                  message: "Jurusan nama_kelas berhasil ditambahkan"
+    put:
+      tags:
+        - Data Jurusan
+      summary: MENGUBAH data jurusan
+      requestBody:
+        description: Data jurusan untuk menambahkan data jurusan
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_jurusan:
+                  type: string
+                nama_jurusan:
+                  type: string
+                singkatan:
+                  type: string
+                status_data:
+                  type: string
+
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+              example:
+                success:
+                  message: "Jurusan nama_kelas berhasil ditambahkan"
+        400:
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+              example:
+                errors:
+                  message: "Nama jurusan sudah pernah digunakan"
+    delete:
+      tags:
+        - Data Jurusan
+      summary: MENGHAPUS data jurusan
+      requestBody:
+        description: Menghapus jurusan sesuai idnya
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_jurusan:
+                  type: string
+
+      responses:
+        204:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+              example:
+                success:
+                  message: "Jurusan nama_jurusan berhasil dihapus"
+
+  /jurusan/pulihkan:
+    put:
+      tags:
+        - Data Jurusan
+      summary: MEMULIHKAN data jurusan
+      requestBody:
+        description: Menghapus jurusan sesuai idnya
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_jurusan:
+                  type: string
+
+      responses:
+        204:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+              example:
+                success:
+                  message: "Jurusan nama_jurusan berhasil dipulihkan"

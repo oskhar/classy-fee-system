@@ -81,7 +81,7 @@ class JurusanController extends Controller
                         'Nama Jurusan sudah pernah digunakan!'
                     ]
                 ]
-            ], 409);
+            ], 400);
         }
 
         // Check apakah data Jurusan sudah ada di sampah
@@ -94,7 +94,7 @@ class JurusanController extends Controller
                     ]
                 ],
                 'id_jurusan' => $deletedJurusan->id_jurusan,
-            ]))->response()->setStatusCode(201);
+            ]))->response()->setStatusCode(200);
         }
 
         // Membuat id secara otomatis
@@ -155,7 +155,7 @@ class JurusanController extends Controller
             'success' => [
                 'message' => "Jurusan $jurusan->nama_jurusan berhasil diubah"
             ]
-        ]))->response()->setStatusCode(201);
+        ]))->response()->setStatusCode(200);
     }
 
     public function delete(JurusanReadRequest $request): JsonResponse
@@ -181,7 +181,7 @@ class JurusanController extends Controller
             'success' => [
                 'message' => "Jurusan $jurusan->nama_jurusan berhasil dihapus"
             ]
-        ]))->response()->setStatusCode(200);
+        ]))->response()->setStatusCode(204);
     }
 
     public function restore(JurusanReadRequest $request): JsonResponse
@@ -205,7 +205,7 @@ class JurusanController extends Controller
             'success' => [
                 'message' => "Jurusan $jurusan->nama_jurusan berhasil dipulihkan"
             ]
-        ]))->response()->setStatusCode(200);
+        ]))->response()->setStatusCode(204);
     }
 
     public function getUntukInputOption (): JsonResponse
