@@ -15,13 +15,13 @@ return new class extends Migration
         Schema::create('tb_wali_siswa', function (Blueprint $table) {
             $table->string('id_wali_siswa')->primary();
 
-            $table->string('nama_ayah');
-            $table->string('pekerjaan_ayah');
-            $table->string('penghasilan_ayah');
+            $table->string('nama_ayah')->nullable();
+            $table->string('pekerjaan_ayah')->nullable();
+            $table->integer('penghasilan_ayah')->nullable();
             
-            $table->string('nama_ibu');
-            $table->string('pekerjaan_ibu');
-            $table->string('pnghasilann_ibu');
+            $table->string('nama_ibu')->nullable();
+            $table->string('pekerjaan_ibu')->nullable();
+            $table->integer('penghasilan_ibu')->nullable();
 
             $table->string('telp_rumah');
 

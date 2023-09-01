@@ -16,19 +16,53 @@
                     <div class='card-body'>
                         <form method='POST' enctype='multipart/form-data' class="row" id="form-tambah-siswa">
                             @csrf
+                            <h3>Input Data Siswa</h3>
                             <div class='form-group col-sm-12'>
                                 <label for='nama'>Nama Siswa</label>
                                 <input type='text' class='form-control' id='nama' name='nama' placeholder='Nama Siswa'>
                             </div>
 
-                            <div class='form-group col-sm-12'>
+                            <div class='form-group col-sm-6'>
                                 <label for='nis'>NIS</label>
                                 <input type='text' class='form-control' id='nis' name='nis' placeholder='NIS'>
                             </div>
 
-                            <div class='form-group col-sm-12'>
+                            <div class='form-group col-sm-6'>
                                 <label for='nisn'>NISN</label>
                                 <input type='text' class='form-control' id='nisn' name='nisn' placeholder='NISN'>
+                            </div>
+
+                            <div class='form-group col-sm-6'>
+                                <label for='agama'>Agama</label>
+                                <select id="agama" class="form-control">
+                                    <option value="" selected disabled>Pilih Agama</option>
+                                    <option value="Islam">Islam</option>
+                                    <option value="Kristen">Kristen</option>
+                                    <option value="Hindu">Hindu</option>
+                                    <option value="Budha">Budha</option>
+                                    <option value="Konghucu">Konghucu</option>
+                                </select>
+                            </div>
+
+                            <div class='form-group col-sm-6'>
+                                <label for='tempat_lahir'>Tempat Lahir</label>
+                                <input type='text' class='form-control' id='tempat_lahir' name='tempat_lahir' placeholder='tempat_lahir'>
+                            </div>
+
+                            <div class='form-group col-sm-6'>
+                                <label for='tanggal_lahir'>Tanggal Lahir</label>
+                                <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                    <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir">
+                                </div>
+                            </div>
+
+                            <div class='form-group col-sm-6'>
+                                <label for='jenis_kelamin'>Jenis Kelamin</label>
+                                <select id="jenis_kelamin" class="form-control">
+                                    <option value="" selected disabled>Pilih Jenis Kelamin</option>
+                                    <option value="Laki Laki">Laki Laki</option>
+                                    <option value="Perempuan">Perempuan</option>
+                                </select>
                             </div>
                             
                             <div class='form-group col-sm-6' id="provinceFormGroup">
@@ -73,7 +107,6 @@
                             </div>
                         </form>
                     </div>
-                    <button id="printAlamat">print alamat</button>
                 </div>
             </div>
         </div>

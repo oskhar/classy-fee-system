@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('jenis_kelamin');
             $table->string('agama');
             $table->string('tempat_lahir');
-            $table->string('tanggal_lahir');
+            $table->date('tanggal_lahir');
             $table->string('alamat');
 
             $table->string('status_data')->default('Aktif');
