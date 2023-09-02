@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('id_wali_siswa');
             $table->foreign('id_wali_siswa')->references('id_wali_siswa')->on('tb_wali_siswa')->onDelete('cascade');
             
-            $table->string('nama');
+            $table->string('nama_siswa');
             $table->string('jenis_kelamin');
             $table->string('agama');
             $table->string('tempat_lahir');

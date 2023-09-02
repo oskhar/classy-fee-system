@@ -17,7 +17,6 @@
         public function definition(): array
         {
             return [
-                'id_wali_siswa' => $this->faker->unique()->uuid, // Menghasilkan UUID unik
                 'nama_ayah' => $this->faker->name,
                 'pekerjaan_ayah' => $this->faker->jobTitle,
                 'penghasilan_ayah' => $this->faker->numberBetween(1000000, 10000000),

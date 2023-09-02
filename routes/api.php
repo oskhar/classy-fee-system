@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SiswaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JurusanController;
@@ -16,6 +17,14 @@ use App\Http\Controllers\TahunAjarController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+// START DATA SISWA
+Route::get('/siswa', [SiswaController::class, 'get']);
+Route::post('/siswa', [SiswaController::class, 'create']);
+Route::put('/siswa', [SiswaController::class, 'update']);
+Route::put('/siswa/pulihkan', [SiswaController::class, 'restore']);
+Route::delete('/siswa', [SiswaController::class, 'delete']);
+// END DATA SISWA
 
 // START DATA KELAS
 Route::get('/kelas', [KelasController::class, 'get']);

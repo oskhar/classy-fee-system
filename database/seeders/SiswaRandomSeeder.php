@@ -18,12 +18,18 @@ class SiswaRandomSeeder extends Seeder
         $jumlahData = 2160; // Ganti dengan jumlah yang diinginkan
 
         for ($i = 0; $i < $jumlahData; $i++) {
+
+            $banyakData = WaliSiswaModel::withTrashed()->count();
+            $idWaliSiswa = "WS-" . str_pad(($banyakData + 1), 8, '0', STR_PAD_LEFT);
+
             // Membuat data wali siswa
-            $waliSiswa = WaliSiswaModel::factory()->create();
+            WaliSiswaModel::factory()->create([
+                'id_wali_siswa' => $idWaliSiswa,
+            ]);
 
             // Menggunakan ID wali siswa yang baru saja dibuat untuk membuat data siswa
             SiswaModel::factory()->create([
-                'id_wali_siswa' => $waliSiswa->id_wali_siswa,
+                'id_wali_siswa' => $idWaliSiswa,
             ]);
         }
     }

@@ -4,9 +4,34 @@ export class Core {
         this.objectURL = new URL(window.location.href);
         this.mainURL = this.objectURL.origin;
         this.messageLink = this.getMessage();
-        if (this.messageLink) {
-            this.showSuccessMessage(this.messageLink);
-        }
+        this.namaBulan = {
+            1: "Januari",
+            2: "Februari",
+            3: "Maret",
+            4: "April",
+            5: "Mei",
+            6: "Juni",
+            7: "Juli",
+            8: "Agustus",
+            9: "September",
+            10: "Oktober",
+            11: "November",
+            12: "Desember",
+        };
+    }
+
+    convertTanggal(tanggal) {
+        // Memecah tanggal menjadi tahun, bulan, dan hari
+        let tanggalArray = tanggal.split("-");
+        let tahun = tanggalArray[0];
+        let bulan = tanggalArray[1];
+        let hari = tanggalArray[2];
+
+        // Mengonversi bulan menjadi kata
+        let bulanKata = this.namaBulan[parseInt(bulan)];
+
+        // Hasil akhir
+        return hari + " " + bulanKata + " " + tahun;
     }
 
     doAjax(url, fungsiSaatSuccess, data = {}, method = "get") {

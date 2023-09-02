@@ -36,7 +36,7 @@ class SiswaModel extends Model
         'nis',
         'nisn',
         'id_wali_siswa',
-        'nama',
+        'nama_siswa',
         'jenis_kelamin',
         'agama',
         'tempat_lahir',

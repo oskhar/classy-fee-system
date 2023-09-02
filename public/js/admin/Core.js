@@ -54,11 +54,37 @@ var Core = /*#__PURE__*/function () {
     this.objectURL = new URL(window.location.href);
     this.mainURL = this.objectURL.origin;
     this.messageLink = this.getMessage();
-    if (this.messageLink) {
-      this.showSuccessMessage(this.messageLink);
-    }
+    this.namaBulan = {
+      1: "Januari",
+      2: "Februari",
+      3: "Maret",
+      4: "April",
+      5: "Mei",
+      6: "Juni",
+      7: "Juli",
+      8: "Agustus",
+      9: "September",
+      10: "Oktober",
+      11: "November",
+      12: "Desember"
+    };
   }
   _createClass(Core, [{
+    key: "convertTanggal",
+    value: function convertTanggal(tanggal) {
+      // Memecah tanggal menjadi tahun, bulan, dan hari
+      var tanggalArray = tanggal.split("-");
+      var tahun = tanggalArray[0];
+      var bulan = tanggalArray[1];
+      var hari = tanggalArray[2];
+
+      // Mengonversi bulan menjadi kata
+      var bulanKata = this.namaBulan[parseInt(bulan)];
+
+      // Hasil akhir
+      return hari + " " + bulanKata + " " + tahun;
+    }
+  }, {
     key: "doAjax",
     value: function doAjax(url, fungsiSaatSuccess) {
       var _this = this;

@@ -45,13 +45,12 @@
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>
-                        <th>No</th>
                         <th>NIS</th>
                         <th>NISN</th>
                         <th>Nama Lengkap</th>
-                        <th>Gender</th>
-                        <th>Agama</th>
-                        <th>Nomor Telepon</th>
+                        <th>Jenis Kelamin</th>
+                        <th>Tempat Lahir</th>
+                        <th>Tanggal Lahir</th>
                         <th>Status Data</th>
                         <th>Aksi</th>
                       </tr>
