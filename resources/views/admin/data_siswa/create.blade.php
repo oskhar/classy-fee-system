@@ -90,6 +90,51 @@
                                     <option value="">Pilih Kelurahan/Desa</option>
                                 </select>
                             </div>
+
+                            <h3 class="col-sm-12 text-left mt-4">Input Data Wali Siswa</h3>
+
+                            <div class='form-group col-sm-6'>
+                                <label for='nama_ayah'>Nama Ayah</label>
+                                <input type='text' class='form-control' id='nama_ayah' name='nama_ayah' placeholder='nama_ayah'>
+                            </div>
+
+                            <div class='form-group col-sm-6'>
+                                <label for='pekerjaan_ayah'>Pekerjaan Ayah</label>
+                                <input type='text' class='form-control' id='pekerjaan_ayah' name='pekerjaan_ayah' placeholder='pekerjaan_ayah'>
+                            </div>
+
+                            <div class='form-group col-sm-6'>
+                                <label for='penghasilan_ayah'>Penghasilan Ayah</label>
+                                <input type='number' class='form-control' id='penghasilan_ayah' name='penghasilan_ayah' placeholder='penghasilan_ayah'>
+                            </div>
+
+                            <div class='form-group col-sm-6'>
+                                <label for='nama_ibu'>Nama Ibu</label>
+                                <input type='text' class='form-control' id='nama_ibu' name='nama_ibu' placeholder='nama_ibu'>
+                            </div>
+
+                            <div class='form-group col-sm-6'>
+                                <label for='pekerjaan_ibu'>Pekerjaan Ibu</label>
+                                <input type='text' class='form-control' id='pekerjaan_ibu' name='pekerjaan_ibu' placeholder='pekerjaan_ibu'>
+                            </div>
+
+                            <div class='form-group col-sm-6'>
+                                <label for='penghasilan_ibu'>Penghasilan Ibu</label>
+                                <input type='number' class='form-control' id='penghasilan_ibu' name='penghasilan_ibu' placeholder='penghasilan_ibu'>
+                            </div>
+
+                            <!-- text input -->
+                            <div class="form-group col-sm-6">
+                                <label for="telp_rumah">No telepon rumah</label>
+        
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text"><strong>+62</strong></span>
+                                    </div>
+                                    <input type="text" class="form-control" data-inputmask="'mask': ['999-9999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask="" inputmode="text" placeholder="___-___-____ " id="telp_rumah" name="telp_rumah">
+                                </div>
+                                <!-- /.input group -->
+                            </div>
                             
                             <div class="col-sm-12 row">
                               <div class='form-group col-sm-6'>

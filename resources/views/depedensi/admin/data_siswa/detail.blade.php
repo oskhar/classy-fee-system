@@ -1,0 +1,1 @@
+<script src="{{ asset('js/admin/data_siswa_detail.js') }}"></script>

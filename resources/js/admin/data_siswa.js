@@ -39,7 +39,7 @@ class Main extends Core {
                 render: (data, type, row) => `
                     <a class="btn btn-outline-primary btn-sm" href="${
                         this.mainURL
-                    }/admin/data-siswa-detail/${data}" data-toggle="tooltip" data-bs-placement="top" title="lihat detai data">
+                    }/admin/data-siswa-detail" data-toggle="tooltip" data-bs-placement="top" title="lihat detai data">
                         <i class="fas fa-eye"></i>
                     </a>
                     <a class="btn btn-outline-warning btn-sm" href="${

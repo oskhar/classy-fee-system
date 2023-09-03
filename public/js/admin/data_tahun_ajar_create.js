@@ -216,6 +216,13 @@ var Core = /*#__PURE__*/function () {
     };
   }
   _createClass(Core, [{
+    key: "toTitleCase",
+    value: function toTitleCase(str) {
+      return str.toLowerCase().replace(/^(.)|\s+(.)/g, function ($1) {
+        return $1.toUpperCase();
+      });
+    }
+  }, {
     key: "convertTanggal",
     value: function convertTanggal(tanggal) {
       // Memecah tanggal menjadi tahun, bulan, dan hari

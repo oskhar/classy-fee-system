@@ -37,6 +37,9 @@ Route::get('/admin/data-siswa-update/{id}', function () {
 Route::get('/admin/data-siswa-import/', function () {
     return view('admin.data_siswa.import');
 })->name('admin.data_siswa_import');
+Route::get('/admin/data-siswa-detail/', function () {
+    return view('admin.data_siswa.detail');
+})->name('admin.data_siswa_detail');
 
 // Router untuk halaman data jurusan
 Route::get('/admin/data-jurusan', function () {

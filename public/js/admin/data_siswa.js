@@ -41,6 +41,13 @@ var Core = /*#__PURE__*/function () {
     };
   }
   _createClass(Core, [{
+    key: "toTitleCase",
+    value: function toTitleCase(str) {
+      return str.toLowerCase().replace(/^(.)|\s+(.)/g, function ($1) {
+        return $1.toUpperCase();
+      });
+    }
+  }, {
     key: "convertTanggal",
     value: function convertTanggal(tanggal) {
       // Memecah tanggal menjadi tahun, bulan, dan hari
@@ -326,7 +333,7 @@ var Main = /*#__PURE__*/function (_Core) {
       }, {
         data: "nis",
         render: function render(data, type, row) {
-          return "\n                    <a class=\"btn btn-outline-primary btn-sm\" href=\"".concat(_this2.mainURL, "/admin/data-siswa-detail/").concat(data, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"lihat detai data\">\n                        <i class=\"fas fa-eye\"></i>\n                    </a>\n                    <a class=\"btn btn-outline-warning btn-sm\" href=\"").concat(_this2.mainURL, "/admin/data-siswa-update/").concat(btoa(data), "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"ubah data\">\n                        <i class=\"fas fa-edit\"></i>\n                    </a>\n                    <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-id=\"").concat(data, "\" data-nama=\"").concat(row.nama_siswa, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"hapus data\">\n                        <i class=\"fas fa-trash\"></i>\n                    </a>\n                ");
+          return "\n                    <a class=\"btn btn-outline-primary btn-sm\" href=\"".concat(_this2.mainURL, "/admin/data-siswa-detail\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"lihat detai data\">\n                        <i class=\"fas fa-eye\"></i>\n                    </a>\n                    <a class=\"btn btn-outline-warning btn-sm\" href=\"").concat(_this2.mainURL, "/admin/data-siswa-update/").concat(btoa(data), "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"ubah data\">\n                        <i class=\"fas fa-edit\"></i>\n                    </a>\n                    <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-id=\"").concat(data, "\" data-nama=\"").concat(row.nama_siswa, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"hapus data\">\n                        <i class=\"fas fa-trash\"></i>\n                    </a>\n                ");
         }
       }];
 

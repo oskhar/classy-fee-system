@@ -20,6 +20,12 @@ export class Core {
         };
     }
 
+    toTitleCase(str) {
+        return str.toLowerCase().replace(/^(.)|\s+(.)/g, function ($1) {
+            return $1.toUpperCase();
+        });
+    }
+
     convertTanggal(tanggal) {
         // Memecah tanggal menjadi tahun, bulan, dan hari
         let tanggalArray = tanggal.split("-");

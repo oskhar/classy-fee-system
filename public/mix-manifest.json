@@ -4,6 +4,7 @@
     "/js/template_admin.js": "/js/template_admin.js",
     "/js/admin/data_siswa.js": "/js/admin/data_siswa.js",
     "/js/admin/data_siswa_create.js": "/js/admin/data_siswa_create.js",
+    "/js/admin/data_siswa_detail.js": "/js/admin/data_siswa_detail.js",
     "/js/admin/data_jurusan.js": "/js/admin/data_jurusan.js",
     "/js/admin/data_jurusan_create.js": "/js/admin/data_jurusan_create.js",
     "/js/admin/data_jurusan_update.js": "/js/admin/data_jurusan_update.js",

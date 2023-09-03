@@ -269,17 +269,17 @@ var Core = /*#__PURE__*/function () {
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!******************************************************!*\
-  !*** ./resources/js/admin/data_tahun_ajar_update.js ***!
-  \******************************************************/
+/*!*************************************************!*\
+  !*** ./resources/js/admin/data_siswa_detail.js ***!
+  \*************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Core.js */ "./resources/js/admin/Core.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
@@ -295,67 +295,14 @@ var Main = /*#__PURE__*/function (_Core) {
     var _this;
     _classCallCheck(this, Main);
     _this = _super.call(this);
-    _this.inputNamaTahunAjar = $("#nama_tahun_ajar");
-    _this.inputSemester = $("#semester");
-    _this.inputStatusData = $("#status_data");
-    _this.paramIdTahunAjar = _this.getIdTahunAjar();
-    _this.setFormData();
-    _this.setListener();
+    _this.doAjax("".concat(_this.mainURL, "/api/siswa"), function (response) {
+      console.log(response);
+    }, {
+      nis: "087392"
+    });
     return _this;
   }
-  _createClass(Main, [{
-    key: "setFormData",
-    value: function setFormData() {
-      var self = this;
-      var url = "".concat(self.mainURL, "/api/tahun-ajar");
-      var dataBody = {
-        id_tahun_ajar: self.paramIdTahunAjar
-      };
-      this.doAjax(url, function (response) {
-        console.log(response);
-        self.inputNamaTahunAjar.val(response.data.nama_tahun_ajar);
-
-        // Pilih opsi yang memiliki teks yang sesuai dengan semester
-        self.inputSemester.find('option:contains("' + response.data.semester + '")').prop("selected", true);
-
-        // Pilih opsi yang memiliki teks yang sesuai dengan status_data
-        self.inputStatusData.find('option:contains("' + response.data.status_data + '")').prop("selected", true);
-      }, dataBody);
-    }
-  }, {
-    key: "setListener",
-    value: function setListener() {
-      var self = this; // Simpan referensi this dalam variabel self
-      $("#form-tambah-tahun-ajar").submit(function (event) {
-        // Mencegah pengiriman formulir secara default
-        event.preventDefault();
-
-        // Assigmen data yang diperlukan untuk mengakses API
-        var url = "".concat(self.mainURL, "/api/tahun-ajar");
-        var method = "put";
-        var dataBody = {
-          id_tahun_ajar: self.paramIdTahunAjar,
-          nama_tahun_ajar: self.inputNamaTahunAjar.val(),
-          semester: self.inputSemester.val(),
-          status_data: self.inputStatusData.val()
-        };
-
-        // Jalankan api untuk create data saat submit
-        self.doAjax(url, function (response) {
-          self.showSuccessAndRedirect(response.data.success.message, "".concat(self.mainURL, "/admin/data-tahun-ajar"));
-        }, dataBody, method);
-      });
-    }
-  }, {
-    key: "getIdTahunAjar",
-    value: function getIdTahunAjar() {
-      // Ambil url keseluruhan
-      var id_tahun_ajar = this.objectURL.href.replace("".concat(this.mainURL, "/admin/data-tahun-ajar-update/"), "");
-      id_tahun_ajar = atob(id_tahun_ajar);
-      return id_tahun_ajar;
-    }
-  }]);
-  return Main;
+  return _createClass(Main);
 }(_Core_js__WEBPACK_IMPORTED_MODULE_0__.Core);
 $(function () {
   new Main();
