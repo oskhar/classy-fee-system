@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\TahunAjarController;
+use App\Http\Controllers\ImportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,3 +51,6 @@ Route::put('/tahun-ajar', [TahunAjarController::class, 'update']);
 Route::put('/tahun-ajar/pulihkan', [TahunAjarController::class, 'restore']);
 Route::delete('/tahun-ajar', [TahunAjarController::class, 'delete']);
 // END DATA TAHUN AJAR
+
+// IMPORT
+Route::post('/import/siswa', [ImportController::class, 'importSiswa'])->name('import.siswa');

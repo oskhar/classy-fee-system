@@ -333,7 +333,7 @@ var Main = /*#__PURE__*/function (_Core) {
       }, {
         data: "nis",
         render: function render(data, type, row) {
-          return "\n                    <a class=\"btn btn-outline-primary btn-sm\" href=\"".concat(_this2.mainURL, "/admin/data-siswa-detail\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"lihat detai data\">\n                        <i class=\"fas fa-eye\"></i>\n                    </a>\n                    <a class=\"btn btn-outline-warning btn-sm\" href=\"").concat(_this2.mainURL, "/admin/data-siswa-update/").concat(btoa(data), "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"ubah data\">\n                        <i class=\"fas fa-edit\"></i>\n                    </a>\n                    <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-id=\"").concat(data, "\" data-nama=\"").concat(row.nama_siswa, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"hapus data\">\n                        <i class=\"fas fa-trash\"></i>\n                    </a>\n                ");
+          return "\n                    <a class=\"btn btn-outline-primary btn-sm\" href=\"".concat(_this2.mainURL, "/admin/data-siswa-detail/").concat(btoa(data), "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"lihat detai data\">\n                        <i class=\"fas fa-eye\"></i>\n                    </a>\n                    <a class=\"btn btn-outline-warning btn-sm\" href=\"").concat(_this2.mainURL, "/admin/data-siswa-update/").concat(btoa(data), "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"ubah data\">\n                        <i class=\"fas fa-edit\"></i>\n                    </a>\n                    <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-nis=\"").concat(data, "\" data-nama=\"").concat(row.nama_siswa, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"hapus data\">\n                        <i class=\"fas fa-trash\"></i>\n                    </a>\n                ");
         }
       }];
 
@@ -348,21 +348,21 @@ var Main = /*#__PURE__*/function (_Core) {
       // Event listener untuk tombol delete
       this.dataTableElement.on("click", ".btn-action.delete", function (event) {
         var button = $(this);
-        var id_siswa = button.data("id");
+        var nis = button.data("nis");
         var nama_siswa = button.data("nama");
-        self.performSoftDelete(id_siswa, nama_siswa); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari Siswa Main
+        self.performSoftDelete(nis, nama_siswa); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari Siswa Main
       });
     }
   }, {
     key: "performSoftDelete",
-    value: function performSoftDelete(id_siswa, nama_siswa) {
+    value: function performSoftDelete(nis, nama_siswa) {
       var _this3 = this;
       this.showWarningMessage("Hapus Siswa ".concat(nama_siswa, " ?"), "Hapus").then(function (result) {
         // Assigmen data yang dibutuhkan untuk mengakses API
         var urlAPI = "".concat(_this3.mainURL, "/api/siswa");
         var method = "delete";
         var dataBody = {
-          id_siswa: id_siswa
+          nis: nis
         };
 
         // Jalankan api untuk delete data jika tombol hapus diclick

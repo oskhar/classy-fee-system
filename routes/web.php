@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExportController;
-use App\Http\Controllers\ImportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,7 +36,7 @@ Route::get('/admin/data-siswa-update/{id}', function () {
 Route::get('/admin/data-siswa-import/', function () {
     return view('admin.data_siswa.import');
 })->name('admin.data_siswa_import');
-Route::get('/admin/data-siswa-detail/', function () {
+Route::get('/admin/data-siswa-detail/{id}', function () {
     return view('admin.data_siswa.detail');
 })->name('admin.data_siswa_detail');
 
@@ -76,5 +75,3 @@ Route::get('/admin/data-tahun-ajar-update/{id}', function () {
 
 // Router untuk export excel
 Route::get('/export/siswa', [ExportController::class, 'exportSiswaExcel'])->name('export.siswa');
-
-Route::post('/import/siswa', [ImportController::class, 'importSiswa'])->name('import.siswa');

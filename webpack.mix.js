@@ -29,7 +29,9 @@ mix.js("resources/js/admin/data_siswa.js", "public/js/admin");
 mix.postCss("resources/css/admin/data_siswa.css", "public/css/admin");
 
 mix.js("resources/js/admin/data_siswa_create.js", "public/js/admin");
+mix.js("resources/js/admin/data_siswa_update.js", "public/js/admin");
 mix.js("resources/js/admin/data_siswa_detail.js", "public/js/admin");
+mix.js("resources/js/admin/data_siswa_import.js", "public/js/admin");
 // END DATA SISWA
 
 // START DATA JURUSAN

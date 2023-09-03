@@ -3,7 +3,7 @@
 @section('title', 'Tambah data siswa')
 @section('mainContent')
 
-  @include('depedensi.admin.data_siswa.create')
+  @include('depedensi.admin.data_siswa.update')
   <section class="content">
     <div class="container-fluid">
         <div class='row'>
@@ -15,12 +15,12 @@
             <div class='col-md-12'>
                 <div class='card'>
                     <div class='card-body'>
-                        <form method='POST' enctype='multipart/form-data' class="row" id="form-tambah-siswa">
+                        <form method='POST' enctype='multipart/form-data' class="row" id="form-ubah-siswa">
                             @csrf
                             <h3>Input Data Siswa</h3>
                             <div class='form-group col-sm-12'>
-                                <label for='nama'>Nama Siswa</label>
-                                <input type='text' class='form-control' id='nama' name='nama' placeholder='Nama Siswa'>
+                                <label for='nama_siswa'>Nama Siswa</label>
+                                <input type='text' class='form-control' id='nama_siswa' name='nama_siswa' placeholder='Nama Siswa'>
                             </div>
 
                             <div class='form-group col-sm-6'>
@@ -94,7 +94,7 @@
 
                             <div class='form-group col-sm-12' id="detailFormGroup" style="display: none;">
                                 <label for='detailAlamat' class="text-muted">Alamat Siswa</label>
-                                <input type='text' class='form-control' id='detailAlamat' name='detailAlamat' placeholder='Detail alamat'>
+                                <input type='text' class='form-control' id='detailAlamat' name='detailAlamat' placeholder='Detail Alamat'>
                             </div>
 
                             <h3 class="col-sm-12 text-left mt-4">Input Data Wali Siswa</h3>

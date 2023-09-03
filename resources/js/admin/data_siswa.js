@@ -39,7 +39,9 @@ class Main extends Core {
                 render: (data, type, row) => `
                     <a class="btn btn-outline-primary btn-sm" href="${
                         this.mainURL
-                    }/admin/data-siswa-detail" data-toggle="tooltip" data-bs-placement="top" title="lihat detai data">
+                    }/admin/data-siswa-detail/${btoa(
+                    data
+                )}" data-toggle="tooltip" data-bs-placement="top" title="lihat detai data">
                         <i class="fas fa-eye"></i>
                     </a>
                     <a class="btn btn-outline-warning btn-sm" href="${
@@ -49,7 +51,7 @@ class Main extends Core {
                 )}" data-toggle="tooltip" data-bs-placement="top" title="ubah data">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <a class="btn btn-outline-danger btn-action btn-sm delete" data-id="${data}" data-nama="${
+                    <a class="btn btn-outline-danger btn-action btn-sm delete" data-nis="${data}" data-nama="${
                     row.nama_siswa
                 }" data-toggle="tooltip" data-bs-placement="top" title="hapus data">
                         <i class="fas fa-trash"></i>
@@ -75,20 +77,20 @@ class Main extends Core {
             ".btn-action.delete",
             function (event) {
                 const button = $(this);
-                const id_siswa = button.data("id");
+                const nis = button.data("nis");
                 const nama_siswa = button.data("nama");
-                self.performSoftDelete(id_siswa, nama_siswa); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari Siswa Main
+                self.performSoftDelete(nis, nama_siswa); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari Siswa Main
             }
         );
     }
 
-    performSoftDelete(id_siswa, nama_siswa) {
+    performSoftDelete(nis, nama_siswa) {
         this.showWarningMessage(`Hapus Siswa ${nama_siswa} ?`, "Hapus").then(
             (result) => {
                 // Assigmen data yang dibutuhkan untuk mengakses API
                 let urlAPI = `${this.mainURL}/api/siswa`;
                 let method = "delete";
-                let dataBody = { id_siswa: id_siswa };
+                let dataBody = { nis: nis };
 
                 // Jalankan api untuk delete data jika tombol hapus diclick
                 if (result.isDenied) {

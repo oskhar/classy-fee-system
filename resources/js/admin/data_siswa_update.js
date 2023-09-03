@@ -15,8 +15,59 @@ class Main extends Core {
         this.detailAlamat = $("#detailAlamat");
         this.printButton = $("#printAlamat");
 
-        this.setListeners();
         this.fetchProvinces();
+        this.setListeners();
+        this.setFormData();
+    }
+
+    setFormData() {
+        const self = this;
+        let url = `${self.mainURL}/api/siswa`;
+        let dataBody = { nis: self.getIdSiswa() };
+        console.log(dataBody);
+
+        self.doAjax(
+            url,
+            function (response) {
+                console.log(response);
+                let alamat = response.data.alamat.split(", ", "");
+                self.provinceSelect
+                    .find('option[value="' + alamat[0] + '"]')
+                    .prop("selected", true);
+                self.regencySelect
+                    .find('option[value="' + alamat[1] + '"]')
+                    .prop("selected", true);
+                self.districtSelect
+                    .find('option[value="' + alamat[2] + '"]')
+                    .prop("selected", true);
+                self.villageSelect
+                    .find('option[value="' + alamat[3] + '"]')
+                    .prop("selected", true);
+                $("#nama_siswa").val(response.data.nama_siswa); // Ubah sesuai dengan ID input yang sesuai
+                $("#nis").val(response.data.nis);
+                $("#nisn").val(response.data.nisn);
+                $("#agama")
+                    .find('option[value="' + response.data.agama + '"]')
+                    .prop("selected", true);
+                $("#tempat_lahir").val(response.data.tempat_lahir);
+                $("#tanggal_lahir").val(response.data.tanggal_lahir);
+                $("#jenis_kelamin")
+                    .find('option[value="' + response.data.jenis_kelamin + '"]')
+                    .prop("selected", true);
+                $("#nama_ayah").val(response.data.nama_ayah);
+                $("#pekerjaan_ayah").val(response.data.pekerjaan_ayah);
+                $("#penghasilan_ayah").val(response.data.penghasilan_ayah);
+                $("#nama_ibu").val(response.data.nama_ibu);
+                $("#pekerjaan_ibu").val(response.data.pekerjaan_ibu);
+                $("#penghasilan_ibu").val(response.data.penghasilan_ibu);
+                $("#telp_rumah").val(response.data.telp_rumah); // Ubah sesuai dengan ID input yang sesuai
+                $("#status_data")
+                    .val(response.data.status_data)
+                    .find('option[value="' + response.data.status_data + '"]')
+                    .prop("selected", true);
+            },
+            dataBody
+        );
     }
 
     setListeners() {
@@ -73,7 +124,7 @@ class Main extends Core {
             let url = `${self.mainURL}/api/siswa`;
             let method = "post";
             let dataBody = {
-                nama_siswa: $("#nama").val(), // Ubah sesuai dengan ID input yang sesuai
+                nama_siswa: $("#nama_siswa").val(), // Ubah sesuai dengan ID input yang sesuai
                 nis: $("#nis").val(),
                 nisn: $("#nisn").val(),
                 agama: $("#agama").val(),
@@ -186,6 +237,16 @@ class Main extends Core {
         }
 
         return this.toTitleCase(fullAddress);
+    }
+
+    getIdSiswa() {
+        // Ambil url keseluruhan
+        let nis = this.objectURL.href.replace(
+            `${this.mainURL}/admin/data-siswa-update/`,
+            ""
+        );
+        nis = atob(nis);
+        return nis;
     }
 }
 

@@ -270,9 +270,12 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 /*!*************************************************!*\
-  !*** ./resources/js/admin/data_siswa_create.js ***!
+  !*** ./resources/js/admin/data_siswa_import.js ***!
   \*************************************************/
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Main: () => (/* binding */ Main)
+/* harmony export */ });
 /* harmony import */ var _Core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Core.js */ "./resources/js/admin/Core.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -295,174 +298,57 @@ var Main = /*#__PURE__*/function (_Core) {
     var _this;
     _classCallCheck(this, Main);
     _this = _super.call(this);
-    _this.provinceSelect = $("#provinceSelect");
-    _this.regencySelect = $("#regencySelect");
-    _this.districtSelect = $("#districtSelect");
-    _this.villageSelect = $("#villageSelect");
-    _this.provinceFormGroup = $("#provinceFormGroup");
-    _this.regencyFormGroup = $("#regencyFormGroup");
-    _this.districtFormGroup = $("#districtFormGroup");
-    _this.villageFormGroup = $("#villageFormGroup");
-    _this.detailFormGroup = $("#detailFormGroup");
-    _this.detailAlamat = $("#detailAlamat");
-    _this.printButton = $("#printAlamat");
-    _this.setListeners();
-    _this.fetchProvinces();
+    _this.form = $("#import-form");
+    _this.loadingMessage = $("#loading");
+    // this.setListeners();
     return _this;
   }
   _createClass(Main, [{
     key: "setListeners",
     value: function setListeners() {
       var self = this;
-      self.provinceSelect.on("change", function () {
-        var selectedProvinceId = $(this).val();
-        self.regencyFormGroup.hide();
-        self.districtFormGroup.hide();
-        self.villageFormGroup.hide();
-        if (selectedProvinceId) {
-          self.fetchRegencies(selectedProvinceId);
-        }
-      });
-      self.regencySelect.on("change", function () {
-        var selectedRegencyId = $(this).val();
-        self.districtFormGroup.hide();
-        self.villageFormGroup.hide();
-        if (selectedRegencyId) {
-          self.fetchDistricts(selectedRegencyId);
-        }
-      });
-      self.districtSelect.on("change", function () {
-        var selectedDistrictId = $(this).val();
-        self.villageFormGroup.hide();
-        if (selectedDistrictId) {
-          self.fetchVillages(selectedDistrictId);
-        }
-      });
-      self.villageSelect.on("change", function () {
-        self.detailFormGroup.show();
-      });
-    }
-  }, {
-    key: "fetchProvinces",
-    value: function fetchProvinces() {
-      var self = this;
-      var url = "".concat(self.mainURL, "/api-wilayah-indonesia/provinces.json");
-      self.doAjax(url, function (data) {
-        self.populateSelect(self.provinceSelect, data);
-        self.provinceFormGroup.show();
-      });
-      $("#form-tambah-siswa").submit(function (event) {
+      self.form.submit(function (event) {
         // Mencegah pengiriman formulir secara default
         event.preventDefault();
+        console.log("test");
+        // Menampilkan pesan loading saat proses impor dimulai
+        self.loadingMessage.css("display", "block");
 
-        // Assigmen data yang diperlukan untuk mengakses API
-        var url = "".concat(self.mainURL, "/api/siswa");
-        var method = "post";
-        var dataBody = {
-          nama_siswa: $("#nama").val(),
-          // Ubah sesuai dengan ID input yang sesuai
-          nis: $("#nis").val(),
-          nisn: $("#nisn").val(),
-          agama: $("#agama").val(),
-          tempat_lahir: $("#tempat_lahir").val(),
-          tanggal_lahir: $("#tanggal_lahir").val(),
-          jenis_kelamin: $("#jenis_kelamin").val(),
-          alamat: self.getAlamatSelected(),
-          // Gunakan metode yang sudah Anda definisikan untuk mendapatkan alamat
-          nama_ayah: $("#nama_ayah").val(),
-          pekerjaan_ayah: $("#pekerjaan_ayah").val(),
-          penghasilan_ayah: $("#penghasilan_ayah").val(),
-          nama_ibu: $("#nama_ibu").val(),
-          pekerjaan_ibu: $("#pekerjaan_ibu").val(),
-          penghasilan_ibu: $("#penghasilan_ibu").val(),
-          telp_rumah: $("#telp_rumah").val(),
-          // Ubah sesuai dengan ID input yang sesuai
-          status_data: $("#status_data").val()
-        };
+        // Menggunakan FormData untuk mengirimkan file Excel
+        var formData = new FormData(self.form[0]);
 
-        // Jalankan api untuk create data saat submit
-        self.doAjax(url, function (response) {
-          if (response.data.errors) {
-            self.showInfoMessage(self.objectToString(response.data.errors), "pulihkan").then(function (result) {
-              if (result.isConfirmed) {
-                var _url = "".concat(self.mainURL, "/api/siswa/pulihkan");
-                var _method = "put";
-                var _dataBody = {
-                  id_siswa: response.data.id_siswa
-                };
-                self.doAjax(_url, function (response) {
-                  self.showSuccessAndRedirect(response.data.success.message, "".concat(self.mainURL, "/admin/data-siswa"));
-                }, _dataBody, _method);
-              }
-            });
+        // Menggunakan metode post untuk mengirim data ke server
+        self.doAjax("".concat(self.mainURL, "/api/import/siswa"), function (response) {
+          // Menghilangkan pesan loading setelah proses impor selesai
+          self.loadingMessage.css("display", "none");
+          console.log(response);
+          // Menampilkan pesan sukses atau kesalahan berdasarkan respons dari server
+          if (response.success) {
+            // Tampilkan pesan sukses dan redirect jika berhasil
+            self.showSuccessAndRedirect(response.success.message, "".concat(self.mainURL, "/data-siswa"));
           } else {
-            self.showSuccessMessage(response.data.success.message);
+            // Tampilkan pesan kesalahan jika ada masalah saat impor
+            self.showErrorMessage("Terjadi kesalahan saat mengimpor data.");
           }
-        }, dataBody, method);
+        }, formData, "post"); // Menggunakan metode POST untuk mengirim file
       });
-    }
-  }, {
-    key: "fetchRegencies",
-    value: function fetchRegencies(provinceId) {
-      var self = this;
-      var url = "".concat(self.mainURL, "/api-wilayah-indonesia/regencies/").concat(provinceId, ".json");
-      self.doAjax(url, function (data) {
-        self.populateSelect(self.regencySelect, data);
-        self.regencyFormGroup.show();
+
+      // Menambahkan event listener untuk mendengarkan perubahan pada input file
+      var inputFile = $("#excel_file");
+      var fileLabel = $("#file-label");
+      inputFile.on("change", function () {
+        var _self$files$;
+        // Mengambil nama file yang dipilih oleh pengguna
+        var selectedFileName = ((_self$files$ = self.files[0]) === null || _self$files$ === void 0 ? void 0 : _self$files$.name) || "Pilih file";
+
+        // Mengganti teks label dengan nama file yang dipilih
+        fileLabel.text(selectedFileName);
       });
-    }
-  }, {
-    key: "fetchDistricts",
-    value: function fetchDistricts(regencyId) {
-      var self = this;
-      var url = "".concat(self.mainURL, "/api-wilayah-indonesia/districts/").concat(regencyId, ".json");
-      self.doAjax(url, function (data) {
-        self.populateSelect(self.districtSelect, data);
-        self.districtFormGroup.show();
-      });
-    }
-  }, {
-    key: "fetchVillages",
-    value: function fetchVillages(districtId) {
-      var self = this;
-      var url = "".concat(self.mainURL, "/api-wilayah-indonesia/villages/").concat(districtId, ".json");
-      self.doAjax(url, function (data) {
-        self.populateSelect(self.villageSelect, data);
-        self.villageFormGroup.show();
-      });
-    }
-  }, {
-    key: "populateSelect",
-    value: function populateSelect(selectElement, data) {
-      selectElement.html('<option value="" selected disabled>Pilih</option>');
-      $.each(data, function (index, item) {
-        selectElement.append($("<option>", {
-          value: item.id,
-          text: item.name
-        }));
-      });
-      selectElement.show();
-    }
-  }, {
-    key: "getAlamatSelected",
-    value: function getAlamatSelected() {
-      var selectedProvince = this.provinceSelect.find(":selected").text();
-      var selectedRegency = this.regencySelect.find(":selected").text();
-      var selectedDistrict = this.districtSelect.find(":selected").text();
-      var selectedVillage = this.villageSelect.find(":selected").text();
-      var selectedDetail = this.detailAlamat.find(":selected").text();
-      var fullAddress = "".concat(selectedProvince, ", ").concat(selectedRegency, ", ").concat(selectedDistrict, ", ").concat(selectedVillage, ", ").concat(selectedDetail);
-      if (fullAddress.includes("Pilih")) {
-        return "";
-      }
-      return this.toTitleCase(fullAddress);
     }
   }]);
   return Main;
 }(_Core_js__WEBPACK_IMPORTED_MODULE_0__.Core);
 $(function () {
-  // Inisialisasi masker inputmask
-  $("[data-inputmask]").inputmask();
   new Main();
 });
 })();

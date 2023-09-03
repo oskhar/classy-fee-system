@@ -3,7 +3,7 @@
 @section('title', 'Halaman Dashboard')
 @section('mainContent')
 
-  @include('depedensi.admin.data_siswa.read')
+  @include('depedensi.admin.data_siswa.import')
 
   <!-- Content Header (Page header) -->
   <section class="content-header">
@@ -38,22 +38,19 @@
           <h3 class="card-title">Import Data Siswa SMK Triguna Utama</h3>
         </div>
         <div class="card-body">
-          <form id="import-form" action="{{ route('import.siswa') }}" method="post" enctype="multipart/form-data">
+          <form id="import-form" method="post" action="{{ url('api/import/siswa') }}" enctype="multipart/form-data">
               @csrf
               <div class="form-group">
                 <label for="excel_file">Pilih file Excel:</label>
                 <div class="custom-file">
-                  <input type="file" class="custom-file-input" name="excel_file" id="excel_file" accept=".xlsx, .xls">
+                  <input type="file" class="custom-file-input" name="excel_file" id="excel_file" accept=".xlsx, .xls" required>
                   <label class="custom-file-label" for="excel_file">Pilih file</label>
                 </div>
               </div>
               <button type="submit" class="btn btn-primary" id="import-button">Impor</button>
           </form>
-          <div id="loading" style="display: none;">
+          <div id="loading" class="mt-3" style="display: none;">
               Sedang mengimpor data... Mohon tunggu.
-          </div>
-          <div id="upload-status" style="display: none;">
-              File berhasil diunggah.
           </div>
         </div>
       </div>

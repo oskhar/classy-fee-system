@@ -270,7 +270,7 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 /*!*************************************************!*\
-  !*** ./resources/js/admin/data_siswa_create.js ***!
+  !*** ./resources/js/admin/data_siswa_update.js ***!
   \*************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Core.js */ "./resources/js/admin/Core.js");
@@ -306,11 +306,45 @@ var Main = /*#__PURE__*/function (_Core) {
     _this.detailFormGroup = $("#detailFormGroup");
     _this.detailAlamat = $("#detailAlamat");
     _this.printButton = $("#printAlamat");
-    _this.setListeners();
     _this.fetchProvinces();
+    _this.setListeners();
+    _this.setFormData();
     return _this;
   }
   _createClass(Main, [{
+    key: "setFormData",
+    value: function setFormData() {
+      var self = this;
+      var url = "".concat(self.mainURL, "/api/siswa");
+      var dataBody = {
+        nis: self.getIdSiswa()
+      };
+      console.log(dataBody);
+      self.doAjax(url, function (response) {
+        console.log(response);
+        var alamat = response.data.alamat.split(", ", "");
+        self.provinceSelect.find('option[value="' + alamat[0] + '"]').prop("selected", true);
+        self.regencySelect.find('option[value="' + alamat[1] + '"]').prop("selected", true);
+        self.districtSelect.find('option[value="' + alamat[2] + '"]').prop("selected", true);
+        self.villageSelect.find('option[value="' + alamat[3] + '"]').prop("selected", true);
+        $("#nama_siswa").val(response.data.nama_siswa); // Ubah sesuai dengan ID input yang sesuai
+        $("#nis").val(response.data.nis);
+        $("#nisn").val(response.data.nisn);
+        $("#agama").find('option[value="' + response.data.agama + '"]').prop("selected", true);
+        $("#tempat_lahir").val(response.data.tempat_lahir);
+        $("#tanggal_lahir").val(response.data.tanggal_lahir);
+        $("#jenis_kelamin").find('option[value="' + response.data.jenis_kelamin + '"]').prop("selected", true);
+        $("#nama_ayah").val(response.data.nama_ayah);
+        $("#pekerjaan_ayah").val(response.data.pekerjaan_ayah);
+        $("#penghasilan_ayah").val(response.data.penghasilan_ayah);
+        $("#nama_ibu").val(response.data.nama_ibu);
+        $("#pekerjaan_ibu").val(response.data.pekerjaan_ibu);
+        $("#penghasilan_ibu").val(response.data.penghasilan_ibu);
+        $("#telp_rumah").val(response.data.telp_rumah); // Ubah sesuai dengan ID input yang sesuai
+        $("#status_data").val(response.data.status_data).find('option[value="' + response.data.status_data + '"]').prop("selected", true);
+      }, dataBody);
+    }
+  }, {
     key: "setListeners",
     value: function setListeners() {
       var self = this;
@@ -359,7 +393,7 @@ var Main = /*#__PURE__*/function (_Core) {
         var url = "".concat(self.mainURL, "/api/siswa");
         var method = "post";
         var dataBody = {
-          nama_siswa: $("#nama").val(),
+          nama_siswa: $("#nama_siswa").val(),
           // Ubah sesuai dengan ID input yang sesuai
           nis: $("#nis").val(),
           nisn: $("#nisn").val(),
@@ -456,6 +490,14 @@ var Main = /*#__PURE__*/function (_Core) {
         return "";
       }
       return this.toTitleCase(fullAddress);
+    }
+  }, {
+    key: "getIdSiswa",
+    value: function getIdSiswa() {
+      // Ambil url keseluruhan
+      var nis = this.objectURL.href.replace("".concat(this.mainURL, "/admin/data-siswa-update/"), "");
+      nis = atob(nis);
+      return nis;
     }
   }]);
   return Main;

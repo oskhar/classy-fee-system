@@ -275,11 +275,11 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Core.js */ "./resources/js/admin/Core.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
@@ -296,13 +296,39 @@ var Main = /*#__PURE__*/function (_Core) {
     _classCallCheck(this, Main);
     _this = _super.call(this);
     _this.doAjax("".concat(_this.mainURL, "/api/siswa"), function (response) {
-      console.log(response);
+      var _response$data$nama_i, _response$data$nama_s, _response$data$nis, _response$data$nisn, _response$data$agama, _response$data$tempat, _response$data$tangga, _response$data$jenis_, _response$data$alamat, _response$data$nama_a, _response$data$pekerj, _response$data$pengha, _response$data$nama_i2, _response$data$pekerj2, _response$data$pengha2, _response$data$telp_r, _response$data$status;
+      console.log((_response$data$nama_i = response.data.nama_ibu) !== null && _response$data$nama_i !== void 0 ? _response$data$nama_i : "kosong");
+      $("#nama_siswa #isi").text((_response$data$nama_s = response.data.nama_siswa) !== null && _response$data$nama_s !== void 0 ? _response$data$nama_s : "-");
+      $("#nis #isi").text((_response$data$nis = response.data.nis) !== null && _response$data$nis !== void 0 ? _response$data$nis : "-");
+      $("#nisn #isi").text((_response$data$nisn = response.data.nisn) !== null && _response$data$nisn !== void 0 ? _response$data$nisn : "-");
+      $("#agama #isi").text((_response$data$agama = response.data.agama) !== null && _response$data$agama !== void 0 ? _response$data$agama : "-");
+      $("#tempat_lahir #isi").text((_response$data$tempat = response.data.tempat_lahir) !== null && _response$data$tempat !== void 0 ? _response$data$tempat : "-");
+      $("#tanggal_lahir #isi").text((_response$data$tangga = response.data.tanggal_lahir) !== null && _response$data$tangga !== void 0 ? _response$data$tangga : "-");
+      $("#jenis_kelamin #isi").text((_response$data$jenis_ = response.data.jenis_kelamin) !== null && _response$data$jenis_ !== void 0 ? _response$data$jenis_ : "-");
+      $("#alamat #isi").text((_response$data$alamat = response.data.alamat) !== null && _response$data$alamat !== void 0 ? _response$data$alamat : "-");
+      $("#nama_ayah #isi").text((_response$data$nama_a = response.data.nama_ayah) !== null && _response$data$nama_a !== void 0 ? _response$data$nama_a : "-");
+      $("#pekerjaan_ayah #isi").text((_response$data$pekerj = response.data.pekerjaan_ayah) !== null && _response$data$pekerj !== void 0 ? _response$data$pekerj : "-");
+      $("#penghasilan_ayah #isi").text((_response$data$pengha = response.data.penghasilan_ayah) !== null && _response$data$pengha !== void 0 ? _response$data$pengha : "-");
+      $("#nama_ibu #isi").text((_response$data$nama_i2 = response.data.nama_ibu) !== null && _response$data$nama_i2 !== void 0 ? _response$data$nama_i2 : "-");
+      $("#pekerjaan_ibu #isi").text((_response$data$pekerj2 = response.data.pekerjaan_ibu) !== null && _response$data$pekerj2 !== void 0 ? _response$data$pekerj2 : "-");
+      $("#penghasilan_ibu #isi").text((_response$data$pengha2 = response.data.penghasilan_ibu) !== null && _response$data$pengha2 !== void 0 ? _response$data$pengha2 : "-");
+      $("#telp_rumah #isi").text((_response$data$telp_r = response.data.telp_rumah) !== null && _response$data$telp_r !== void 0 ? _response$data$telp_r : "-");
+      $("#status_data #isi").text((_response$data$status = response.data.status_data) !== null && _response$data$status !== void 0 ? _response$data$status : "-");
     }, {
-      nis: "087392"
+      nis: _this.getIdSiswa()
     });
     return _this;
   }
-  return _createClass(Main);
+  _createClass(Main, [{
+    key: "getIdSiswa",
+    value: function getIdSiswa() {
+      // Ambil url keseluruhan
+      var nis = this.objectURL.href.replace("".concat(this.mainURL, "/admin/data-siswa-detail/"), "");
+      nis = atob(nis);
+      return nis;
+    }
+  }]);
+  return Main;
 }(_Core_js__WEBPACK_IMPORTED_MODULE_0__.Core);
 $(function () {
   new Main();

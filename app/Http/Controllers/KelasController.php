@@ -188,7 +188,7 @@ class KelasController extends Controller
             'success' => [
                 'message' => "Kelas $kelas->nama_kelas berhasil dihapus"
             ]
-        ]))->response()->setStatusCode(200);
+        ]))->response()->setStatusCode(204);
     }
 
     public function restore(KelasReadRequest $request): JsonResponse
@@ -211,7 +211,7 @@ class KelasController extends Controller
             'success' => [
                 'message' => "Kelas $kelas->nama_kelas berhasil dipulihkan"
             ]
-        ]))->response()->setStatusCode(200);
+        ]))->response()->setStatusCode(204);
     }
 
 }
