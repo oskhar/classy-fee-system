@@ -17,6 +17,7 @@ mix.js("resources/js/admin/dashboard.js", "public/js/admin");
 
 // START MAIN SOURCE
 mix.copy("resources/assets/images", "public/images");
+mix.copy("resources/assets/template_excel", "public/template_excel");
 mix.js("resources/js/admin/Core.js", "public/js/admin");
 
 mix.js("resources/js/template_admin.js", "public/js");
