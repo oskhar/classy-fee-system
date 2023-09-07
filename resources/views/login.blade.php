@@ -42,6 +42,7 @@
                   <option value='' selected disabled>Pilih Satu Opsi</option>
                   <option value="Administrator">Administrator</option>
                   <option value="Pembayaran SPP">Pembayaran SPP</option>
+                  <option value="E-Raport">E-Raport</option>
               </select>
               <div class="input-group-append">
                 <div class="input-group-text">

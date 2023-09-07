@@ -111,9 +111,15 @@
         <!-- div-row -->
         <div class="row mb-4">
             
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="callout callout-success">
-                    <b>Informasi Pembayaran SPP</b>
+                    <b>Unit SMK - Informasi Pembayaran SPP</b>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="callout callout-success">
+                    <b>Unit SMA - Informasi Pembayaran SPP</b>
                 </div>
             </div>
             <!-- /.col-informasi-spp -->
@@ -135,7 +141,7 @@
                 <div class="info-box">
                     <span class="info-box-icon bg-danger"><i class="fas fa-money-check-dollar"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Total Pengeluaran</span>
+                        <span class="info-box-text">Total Tagihan</span>
                         <span class="info-box-number">Rp. 0,-</span>
                     </div>
                     <!-- /.info-box-content -->
@@ -148,7 +154,7 @@
                 <div class="info-box">
                     <span class="info-box-icon bg-success"><i class="fas fa-wallet"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Total Saldo</span>
+                        <span class="info-box-text">Total Pemasukan</span>
                         <span class="info-box-number">Rp. 10.000.000,-</span>
                     </div>
                     <!-- /.info-box-content -->
@@ -187,9 +193,19 @@
             </div>
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-body">
-                        <div class="chart">
-                          <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    <div class="card-body row">
+                        <div class="col-sm-6">
+                            <select name="unit" id="unit" class="form-control">
+                                <option value="Semua Unit">Semua Unit</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <select name="unit" id="unit" class="form-control">
+                                <option value="Tahun Ajar">Tahun Ajar</option>
+                            </select>
+                        </div>
+                        <div class="chart col-lg-12">
+                          <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 300px; max-width: 100%;"></canvas>
                         </div>
                     </div>
                 </div>

@@ -125,7 +125,7 @@ export class Core {
         return Object.values(object).join("<br>");
     }
 
-    setDataTable(tableElement, urlAPI, dataColumns) {
+    setDataTable(tableElement, urlAPI, dataColumns, limit = 5) {
         return tableElement.DataTable({
             ajax: {
                 url: urlAPI,
@@ -149,7 +149,7 @@ export class Core {
             searching: true, // Aktifkan fungsi searching
             serverSide: true, // Aktifkan server-side processing
             paging: true, // Mengaktifkan paginasi
-            pageLength: 5, // Menentukan jumlah data per halaman
+            pageLength: limit, // Menentukan jumlah data per halaman
             drawCallback: function () {
                 $('[data-toggle="tooltip"]').tooltip();
             },

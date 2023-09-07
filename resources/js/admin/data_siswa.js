@@ -64,7 +64,8 @@ class Main extends Core {
         this.dataTable = this.setDataTable(
             this.dataTableElement,
             urlAPI,
-            dataColumns
+            dataColumns,
+            40
         );
     }
 

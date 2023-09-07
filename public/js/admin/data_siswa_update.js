@@ -162,6 +162,7 @@ var Core = /*#__PURE__*/function () {
   }, {
     key: "setDataTable",
     value: function setDataTable(tableElement, urlAPI, dataColumns) {
+      var limit = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 5;
       return tableElement.DataTable({
         ajax: {
           url: urlAPI,
@@ -190,7 +191,7 @@ var Core = /*#__PURE__*/function () {
         // Aktifkan server-side processing
         paging: true,
         // Mengaktifkan paginasi
-        pageLength: 5,
+        pageLength: limit,
         // Menentukan jumlah data per halaman
         drawCallback: function drawCallback() {
           $('[data-toggle="tooltip"]').tooltip();
@@ -321,8 +322,9 @@ var Main = /*#__PURE__*/function (_Core) {
       };
       console.log(dataBody);
       self.doAjax(url, function (response) {
-        console.log(response);
-        var alamat = response.data.alamat.split(", ", "");
+        var alamat = response.data.alamat;
+        console.log(alamat.split(", ", ""));
+        console.log(response.data.alamat);
         self.provinceSelect.find('option[value="' + alamat[0] + '"]').prop("selected", true);
         self.regencySelect.find('option[value="' + alamat[1] + '"]').prop("selected", true);
         self.districtSelect.find('option[value="' + alamat[2] + '"]').prop("selected", true);
@@ -348,51 +350,15 @@ var Main = /*#__PURE__*/function (_Core) {
     key: "setListeners",
     value: function setListeners() {
       var self = this;
-      self.provinceSelect.on("change", function () {
-        var selectedProvinceId = $(this).val();
-        self.regencyFormGroup.hide();
-        self.districtFormGroup.hide();
-        self.villageFormGroup.hide();
-        if (selectedProvinceId) {
-          self.fetchRegencies(selectedProvinceId);
-        }
-      });
-      self.regencySelect.on("change", function () {
-        var selectedRegencyId = $(this).val();
-        self.districtFormGroup.hide();
-        self.villageFormGroup.hide();
-        if (selectedRegencyId) {
-          self.fetchDistricts(selectedRegencyId);
-        }
-      });
-      self.districtSelect.on("change", function () {
-        var selectedDistrictId = $(this).val();
-        self.villageFormGroup.hide();
-        if (selectedDistrictId) {
-          self.fetchVillages(selectedDistrictId);
-        }
-      });
-      self.villageSelect.on("change", function () {
-        self.detailFormGroup.show();
-      });
-    }
-  }, {
-    key: "fetchProvinces",
-    value: function fetchProvinces() {
-      var self = this;
-      var url = "".concat(self.mainURL, "/api-wilayah-indonesia/provinces.json");
-      self.doAjax(url, function (data) {
-        self.populateSelect(self.provinceSelect, data);
-        self.provinceFormGroup.show();
-      });
-      $("#form-tambah-siswa").submit(function (event) {
+      $("#form-ubah-siswa").submit(function (event) {
         // Mencegah pengiriman formulir secara default
         event.preventDefault();
 
         // Assigmen data yang diperlukan untuk mengakses API
         var url = "".concat(self.mainURL, "/api/siswa");
-        var method = "post";
+        var method = "put";
         var dataBody = {
+          id_wali_siswa: self.getIdSiswa(),
           nama_siswa: $("#nama_siswa").val(),
           // Ubah sesuai dengan ID input yang sesuai
           nis: $("#nis").val(),
@@ -433,6 +399,43 @@ var Main = /*#__PURE__*/function (_Core) {
             self.showSuccessMessage(response.data.success.message);
           }
         }, dataBody, method);
+      });
+      self.provinceSelect.on("change", function () {
+        var selectedProvinceId = $(this).val();
+        self.regencyFormGroup.hide();
+        self.districtFormGroup.hide();
+        self.villageFormGroup.hide();
+        if (selectedProvinceId) {
+          self.fetchRegencies(selectedProvinceId);
+        }
+      });
+      self.regencySelect.on("change", function () {
+        var selectedRegencyId = $(this).val();
+        self.districtFormGroup.hide();
+        self.villageFormGroup.hide();
+        if (selectedRegencyId) {
+          self.fetchDistricts(selectedRegencyId);
+        }
+      });
+      self.districtSelect.on("change", function () {
+        var selectedDistrictId = $(this).val();
+        self.villageFormGroup.hide();
+        if (selectedDistrictId) {
+          self.fetchVillages(selectedDistrictId);
+        }
+      });
+      self.villageSelect.on("change", function () {
+        self.detailFormGroup.show();
+      });
+    }
+  }, {
+    key: "fetchProvinces",
+    value: function fetchProvinces() {
+      var self = this;
+      var url = "".concat(self.mainURL, "/api-wilayah-indonesia/provinces.json");
+      self.doAjax(url, function (data) {
+        self.populateSelect(self.provinceSelect, data);
+        self.provinceFormGroup.show();
       });
     }
   }, {

@@ -162,6 +162,7 @@ var Core = /*#__PURE__*/function () {
   }, {
     key: "setDataTable",
     value: function setDataTable(tableElement, urlAPI, dataColumns) {
+      var limit = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 5;
       return tableElement.DataTable({
         ajax: {
           url: urlAPI,
@@ -190,7 +191,7 @@ var Core = /*#__PURE__*/function () {
         // Aktifkan server-side processing
         paging: true,
         // Mengaktifkan paginasi
-        pageLength: 5,
+        pageLength: limit,
         // Menentukan jumlah data per halaman
         drawCallback: function drawCallback() {
           $('[data-toggle="tooltip"]').tooltip();
