@@ -14,10 +14,9 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'api',
         'passwords' => 'users',
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -36,15 +35,12 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
+        'api' => [
+            'driver' => 'jwt',
             'provider' => 'users',
         ],
-        'siswa' => [
-            'driver' => 'session',
-            'provider' => 'siswa',
-        ],
     ],
+    
 
     /*
     |--------------------------------------------------------------------------
@@ -67,11 +63,6 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
-        ],
-
-        'siswa' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Siswa::class,
         ],
     ],
 
@@ -100,13 +91,6 @@ return [
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
-        ],
-        'siswa' => [
-            'provider' => 'siswa',
-            'table' => 'password_resets',
-            'expire' => 60,
-            'throttle' => 60,
-            'email' => 'auth.emails.password',
         ],
     ],
 

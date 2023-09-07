@@ -77,6 +77,7 @@ class TahunAjarController extends Controller
 
         // Check apakah data tahun ajar sudah digunakan
         $existingTahunAjar = TahunAjarModel::where('nama_tahun_ajar', $data['nama_tahun_ajar'])
+            ->where('semester', $data['semester'])
             ->first();
         if ($existingTahunAjar) {
             return response()->json([
@@ -90,6 +91,7 @@ class TahunAjarController extends Controller
 
         // Check apakah data tahun ajar sudah ada di sampah
         $deletedTahunAjar = TahunAjarModel::onlyTrashed()->where('nama_tahun_ajar', $data['nama_tahun_ajar'])
+            ->where('semester', $data['semester'])
             ->first();
 
         if ($deletedTahunAjar) {
@@ -105,7 +107,7 @@ class TahunAjarController extends Controller
 
         // Membuat id secara otomatis
         $banyakData = TahunAjarModel::withTrashed()->count();
-        $data['id_tahun_ajar'] = "K-" . str_pad(($banyakData + 1), 3, '0', STR_PAD_LEFT);
+        $data['id_tahun_ajar'] = "TA-" . str_pad(($banyakData + 1), 3, '0', STR_PAD_LEFT);
 
         // Insert data ke tabel
         $tahunAjar = new TahunAjarModel($data);

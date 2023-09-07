@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('tb_tahun_ajar', function (Blueprint $table) {
             $table->string('id_tahun_ajar')->primary();
 
-            $table->string('nama_tahun_ajar')->unique();
+            $table->string('nama_tahun_ajar');
 
             $table->string('semester');
 
