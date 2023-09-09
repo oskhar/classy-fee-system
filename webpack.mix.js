@@ -18,11 +18,17 @@ mix.js("resources/js/admin/dashboard.js", "public/js/admin");
 // START MAIN SOURCE
 mix.copy("resources/assets/images", "public/images");
 mix.copy("resources/assets/template_excel", "public/template_excel");
+
 mix.js("resources/js/admin/Core.js", "public/js/admin");
+mix.js("resources/js/auth/Core.js", "public/js/auth");
 
 mix.js("resources/js/template_admin.js", "public/js");
 mix.postCss("resources/css/template_admin.css", "public/css");
 // END MAIN SOURCE
+
+// START PROSSES LOGIN
+mix.js("resources/js/auth/login_admin.js", "public/js/auth");
+// END PROSSES LOGIN
 
 // START DATA SISWA
 mix.js("resources/js/admin/data_siswa.js", "public/js/admin");

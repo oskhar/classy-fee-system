@@ -1,7 +1,9 @@
 {
     "/js/admin/dashboard.js": "/js/admin/dashboard.js",
     "/js/admin/Core.js": "/js/admin/Core.js",
+    "/js/auth/Core.js": "/js/auth/Core.js",
     "/js/template_admin.js": "/js/template_admin.js",
+    "/js/auth/login_admin.js": "/js/auth/login_admin.js",
     "/js/admin/data_siswa.js": "/js/admin/data_siswa.js",
     "/js/admin/data_siswa_create.js": "/js/admin/data_siswa_create.js",
     "/js/admin/data_siswa_update.js": "/js/admin/data_siswa_update.js",

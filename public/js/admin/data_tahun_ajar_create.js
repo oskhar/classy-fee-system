@@ -200,6 +200,15 @@ var Core = /*#__PURE__*/function () {
     this.objectURL = new URL(window.location.href);
     this.mainURL = this.objectURL.origin;
     this.messageLink = this.getMessage();
+    this.token = localStorage.getItem("jwtToken");
+    console.log(this.token);
+    this.doAjax("".concat(this.mainURL, "/api/login"), function (response) {
+      localStorage.setItem("jwtToken", response.access_token);
+    }, {
+      jenis_login: "admin",
+      username: "admin",
+      password: "admin"
+    }, "post");
     this.namaBulan = {
       1: "Januari",
       2: "Februari",
@@ -214,7 +223,6 @@ var Core = /*#__PURE__*/function () {
       11: "November",
       12: "Desember"
     };
-    this.token = localStorage.getItem("jwtToken");
   }
   _createClass(Core, [{
     key: "toTitleCase",
@@ -262,7 +270,11 @@ var Core = /*#__PURE__*/function () {
           } else {
             errors = _this.objectToString(xhr.responseJSON);
           }
-          _this.showErrorMessage(errors);
+          _this.showErrorMessage(errors).then(function () {
+            if (xhr.status == 401) {
+              window.location.href = "/";
+            }
+          });
         }
       });
     }
@@ -305,9 +317,10 @@ var Core = /*#__PURE__*/function () {
   }, {
     key: "showErrorMessage",
     value: function showErrorMessage(message) {
-      Swal.fire({
+      return Swal.fire({
         title: message,
         icon: "error",
+        allowOutsideClick: false,
         confirmButtonText: "Ok"
       });
     }
@@ -341,19 +354,38 @@ var Core = /*#__PURE__*/function () {
     key: "setDataTable",
     value: function setDataTable(tableElement, urlAPI, dataColumns) {
       var limit = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 5;
+      var self = this;
       return tableElement.DataTable({
         ajax: {
           url: urlAPI,
           type: "GET",
+          beforeSend: function beforeSend(request) {
+            // Mengatur header Authorization secara manual
+            request.setRequestHeader("Authorization", "Bearer " + self.token);
+          },
           data: function data(_data) {
             // Tambahkan parameter pengurutan
             if (_data.order.length > 0) {
               _data.orderColumn = _data.order[0].column; // Indeks kolom yang ingin diurutkan
               _data.orderDir = _data.order[0].dir; // Arah pengurutan (asc atau desc)
             }
+          },
+
+          error: function error(xhr) {
+            // Handle kesalahan yang terjadi saat pengambilan data
+            var errors;
+            if (xhr.responseJSON.errors) {
+              errors = self.objectToString(xhr.responseJSON.errors);
+            } else {
+              errors = self.objectToString(xhr.responseJSON);
+            }
+            self.showErrorMessage(errors + " ".concat(self.token)).then(function () {
+              if (xhr.status == 401) {
+                window.location.href = "/";
+              }
+            });
           }
         },
-
         columns: dataColumns,
         responsive: true,
         lengthChange: false,

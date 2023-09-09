@@ -30,7 +30,7 @@ Route::group(['middleware' => 'api'], function ($router) {
 });
 
 
-Route::group(['middleware' => 'auth:admin'], function ($router) {
+Route::group(['middleware' => 'auth.api'], function ($router) {
     // START DATA SISWA
     Route::get('/siswa', [SiswaController::class, 'get']);
     Route::post('/siswa', [SiswaController::class, 'create']);

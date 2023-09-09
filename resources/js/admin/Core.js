@@ -4,6 +4,16 @@ export class Core {
         this.objectURL = new URL(window.location.href);
         this.mainURL = this.objectURL.origin;
         this.messageLink = this.getMessage();
+        this.token = localStorage.getItem("jwtToken");
+        console.log(this.token);
+        this.doAjax(
+            `${this.mainURL}/api/login`,
+            function (response) {
+                localStorage.setItem("jwtToken", response.access_token);
+            },
+            { jenis_login: "admin", username: "admin", password: "admin" },
+            "post"
+        );
         this.namaBulan = {
             1: "Januari",
             2: "Februari",
@@ -18,7 +28,6 @@ export class Core {
             11: "November",
             12: "Desember",
         };
-        this.token = localStorage.getItem("jwtToken");
     }
 
     toTitleCase(str) {
@@ -59,7 +68,11 @@ export class Core {
                 } else {
                     errors = this.objectToString(xhr.responseJSON);
                 }
-                this.showErrorMessage(errors);
+                this.showErrorMessage(errors).then(() => {
+                    if (xhr.status == 401) {
+                        window.location.href = "/";
+                    }
+                });
             },
         });
     }
@@ -97,9 +110,10 @@ export class Core {
     }
 
     showErrorMessage(message) {
-        Swal.fire({
+        return Swal.fire({
             title: message,
             icon: "error",
+            allowOutsideClick: false,
             confirmButtonText: "Ok",
         });
     }
@@ -128,16 +142,40 @@ export class Core {
     }
 
     setDataTable(tableElement, urlAPI, dataColumns, limit = 5) {
+        const self = this;
         return tableElement.DataTable({
             ajax: {
                 url: urlAPI,
                 type: "GET",
+                beforeSend: function (request) {
+                    // Mengatur header Authorization secara manual
+                    request.setRequestHeader(
+                        "Authorization",
+                        "Bearer " + self.token
+                    );
+                },
                 data: function (data) {
                     // Tambahkan parameter pengurutan
                     if (data.order.length > 0) {
                         data.orderColumn = data.order[0].column; // Indeks kolom yang ingin diurutkan
                         data.orderDir = data.order[0].dir; // Arah pengurutan (asc atau desc)
                     }
+                },
+                error: function (xhr) {
+                    // Handle kesalahan yang terjadi saat pengambilan data
+                    let errors;
+                    if (xhr.responseJSON.errors) {
+                        errors = self.objectToString(xhr.responseJSON.errors);
+                    } else {
+                        errors = self.objectToString(xhr.responseJSON);
+                    }
+                    self.showErrorMessage(errors + ` ${self.token}`).then(
+                        () => {
+                            if (xhr.status == 401) {
+                                window.location.href = "/";
+                            }
+                        }
+                    );
                 },
             },
             columns: dataColumns,

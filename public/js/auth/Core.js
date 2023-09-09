@@ -34,9 +34,9 @@
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-/*!************************************!*\
-  !*** ./resources/js/admin/Core.js ***!
-  \************************************/
+/*!***********************************!*\
+  !*** ./resources/js/auth/Core.js ***!
+  \***********************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Core: () => (/* binding */ Core)
@@ -51,56 +51,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 var Core = /*#__PURE__*/function () {
   function Core() {
     _classCallCheck(this, Core);
-    this.objectURL = new URL(window.location.href);
-    this.mainURL = this.objectURL.origin;
-    this.messageLink = this.getMessage();
-    this.token = localStorage.getItem("jwtToken");
-    console.log(this.token);
-    this.doAjax("".concat(this.mainURL, "/api/login"), function (response) {
-      localStorage.setItem("jwtToken", response.access_token);
-    }, {
-      jenis_login: "admin",
-      username: "admin",
-      password: "admin"
-    }, "post");
-    this.namaBulan = {
-      1: "Januari",
-      2: "Februari",
-      3: "Maret",
-      4: "April",
-      5: "Mei",
-      6: "Juni",
-      7: "Juli",
-      8: "Agustus",
-      9: "September",
-      10: "Oktober",
-      11: "November",
-      12: "Desember"
-    };
   }
   _createClass(Core, [{
-    key: "toTitleCase",
-    value: function toTitleCase(str) {
-      return str.toLowerCase().replace(/^(.)|\s+(.)/g, function ($1) {
-        return $1.toUpperCase();
-      });
-    }
-  }, {
-    key: "convertTanggal",
-    value: function convertTanggal(tanggal) {
-      // Memecah tanggal menjadi tahun, bulan, dan hari
-      var tanggalArray = tanggal.split("-");
-      var tahun = tanggalArray[0];
-      var bulan = tanggalArray[1];
-      var hari = tanggalArray[2];
-
-      // Mengonversi bulan menjadi kata
-      var bulanKata = this.namaBulan[parseInt(bulan)];
-
-      // Hasil akhir
-      return hari + " " + bulanKata + " " + tahun;
-    }
-  }, {
     key: "doAjax",
     value: function doAjax(url, fungsiSaatSuccess) {
       var _this = this;
@@ -150,25 +102,6 @@ var Core = /*#__PURE__*/function () {
       });
     }
   }, {
-    key: "showSuccessAndRedirect",
-    value: function showSuccessAndRedirect(message, url) {
-      var timer = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1200;
-      Swal.fire({
-        toast: true,
-        position: "top",
-        iconColor: "white",
-        color: "white",
-        background: "var(--success)",
-        showConfirmButton: false,
-        timer: timer,
-        timerProgressBar: true,
-        icon: "success",
-        title: message
-      }).then(function () {
-        window.location.href = url;
-      });
-    }
-  }, {
     key: "showErrorMessage",
     value: function showErrorMessage(message) {
       return Swal.fire({
@@ -179,95 +112,9 @@ var Core = /*#__PURE__*/function () {
       });
     }
   }, {
-    key: "showWarningMessage",
-    value: function showWarningMessage(message, buttonText) {
-      return Swal.fire({
-        title: message,
-        showConfirmButton: false,
-        showDenyButton: true,
-        showCancelButton: true,
-        denyButtonText: buttonText
-      });
-    }
-  }, {
-    key: "showInfoMessage",
-    value: function showInfoMessage(message, buttonText) {
-      return Swal.fire({
-        title: message,
-        showConfirmButton: true,
-        showCancelButton: true,
-        confirmButtonText: buttonText
-      });
-    }
-  }, {
     key: "objectToString",
     value: function objectToString(object) {
       return Object.values(object).join("<br>");
-    }
-  }, {
-    key: "setDataTable",
-    value: function setDataTable(tableElement, urlAPI, dataColumns) {
-      var limit = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 5;
-      var self = this;
-      return tableElement.DataTable({
-        ajax: {
-          url: urlAPI,
-          type: "GET",
-          beforeSend: function beforeSend(request) {
-            // Mengatur header Authorization secara manual
-            request.setRequestHeader("Authorization", "Bearer " + self.token);
-          },
-          data: function data(_data) {
-            // Tambahkan parameter pengurutan
-            if (_data.order.length > 0) {
-              _data.orderColumn = _data.order[0].column; // Indeks kolom yang ingin diurutkan
-              _data.orderDir = _data.order[0].dir; // Arah pengurutan (asc atau desc)
-            }
-          },
-
-          error: function error(xhr) {
-            // Handle kesalahan yang terjadi saat pengambilan data
-            var errors;
-            if (xhr.responseJSON.errors) {
-              errors = self.objectToString(xhr.responseJSON.errors);
-            } else {
-              errors = self.objectToString(xhr.responseJSON);
-            }
-            self.showErrorMessage(errors + " ".concat(self.token)).then(function () {
-              if (xhr.status == 401) {
-                window.location.href = "/";
-              }
-            });
-          }
-        },
-        columns: dataColumns,
-        responsive: true,
-        lengthChange: false,
-        autoWidth: false,
-        language: {
-          info: "Last updated data on"
-        },
-        processing: true,
-        // Mengaktifkan side-server-processing
-        searching: true,
-        // Aktifkan fungsi searching
-        serverSide: true,
-        // Aktifkan server-side processing
-        paging: true,
-        // Mengaktifkan paginasi
-        pageLength: limit,
-        // Menentukan jumlah data per halaman
-        drawCallback: function drawCallback() {
-          $('[data-toggle="tooltip"]').tooltip();
-        }
-      });
-    }
-  }, {
-    key: "getMessage",
-    value: function getMessage() {
-      // Ambil url keseluruhan
-      var message = this.objectURL.searchParams.get("message");
-      return message;
     }
   }]);
   return Core;
