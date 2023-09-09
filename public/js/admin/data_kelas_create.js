@@ -39,6 +39,7 @@ var Core = /*#__PURE__*/function () {
       11: "November",
       12: "Desember"
     };
+    this.token = localStorage.getItem("jwtToken");
   }
   _createClass(Core, [{
     key: "toTitleCase",
@@ -68,10 +69,12 @@ var Core = /*#__PURE__*/function () {
       var _this = this;
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
       var method = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "get";
+      var dataHeader = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {};
       $.ajax({
         url: url,
         type: method,
         data: data,
+        headers: dataHeader,
         dataType: "json",
         success: function success(response) {
           fungsiSaatSuccess(response);

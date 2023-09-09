@@ -39,6 +39,18 @@ return [
             'driver' => 'jwt',
             'provider' => 'users',
         ],
+        'siswa' => [
+            'driver' => 'jwt',
+            'provider' => 'siswa',
+        ],
+        'guru' => [
+            'driver' => 'jwt',
+            'provider' => 'guru',
+        ],
+        'admin' => [
+            'driver' => 'jwt',
+            'provider' => 'admin',
+        ],
     ],
     
 
@@ -63,6 +75,18 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        'siswa' => [
+            'driver' => 'eloquent',
+            'model' => \App\Models\SiswaModel::class,
+        ],
+        'guru' => [
+            'driver' => 'eloquent',
+            'model' => \App\Models\GuruModel::class,
+        ],
+        'admin' => [
+            'driver' => 'eloquent',
+            'model' => \App\Models\AdminModel::class,
         ],
     ],
 

@@ -5,9 +5,27 @@ class Main extends Core {
         super();
         this.setDataTableSiswa();
         this.setListener();
-        this.doAjax(`${this.mainURL}/api/siswa`, function (response) {
-            console.log(response);
-        });
+        this.doAjax(
+            `${this.mainURL}/api/login`,
+            function (response) {
+                localStorage.setItem("jwtToken", response.access_token);
+            },
+            { jenis_login: "admin", username: "admin", password: "admin" },
+            "post"
+        );
+        const jwtToken = localStorage.getItem("jwtToken");
+        console.log(jwtToken);
+        this.doAjax(
+            `${this.mainURL}/api/me`,
+            function (response) {
+                console.log(response);
+            },
+            {},
+            "post",
+            {
+                Authorization: `Bearer ${jwtToken}`,
+            }
+        );
     }
 
     setDataTableSiswa() {

@@ -18,6 +18,7 @@ export class Core {
             11: "November",
             12: "Desember",
         };
+        this.token = localStorage.getItem("jwtToken");
     }
 
     toTitleCase(str) {
@@ -40,11 +41,12 @@ export class Core {
         return hari + " " + bulanKata + " " + tahun;
     }
 
-    doAjax(url, fungsiSaatSuccess, data = {}, method = "get") {
+    doAjax(url, fungsiSaatSuccess, data = {}, method = "get", dataHeader = {}) {
         $.ajax({
             url: url,
             type: method,
             data: data,
+            headers: dataHeader,
             dataType: "json",
             success: (response) => {
                 fungsiSaatSuccess(response);
