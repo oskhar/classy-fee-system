@@ -51,6 +51,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 var Core = /*#__PURE__*/function () {
   function Core() {
     _classCallCheck(this, Core);
+    this.objectURL = new URL(window.location.href);
+    this.mainURL = this.objectURL.origin;
   }
   _createClass(Core, [{
     key: "doAjax",
@@ -59,6 +61,7 @@ var Core = /*#__PURE__*/function () {
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
       var method = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "get";
       var dataHeader = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {};
+      var hapusJwtTokenJikaError = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
       $.ajax({
         url: url,
         type: method,
@@ -76,11 +79,16 @@ var Core = /*#__PURE__*/function () {
           } else {
             errors = _this.objectToString(xhr.responseJSON);
           }
-          _this.showErrorMessage(errors).then(function () {
-            if (xhr.status == 401) {
-              window.location.href = "/";
-            }
-          });
+
+          /**
+           * Untuk memeriksa apakah jwt token
+           * harus dihapus? jika true maka
+           * jwt token akan dihapus
+           */
+          if (hapusJwtTokenJikaError) {
+            localStorage.removeItem("jwtToken");
+          }
+          _this.showErrorMessage(errors);
         }
       });
     }

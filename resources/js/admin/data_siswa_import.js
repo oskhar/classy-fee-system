@@ -5,7 +5,7 @@ export class Main extends Core {
         super();
         this.form = $("#import-form");
         this.loadingMessage = $("#loading");
-        // this.setListeners();
+        this.setListeners();
     }
 
     setListeners() {
@@ -14,19 +14,23 @@ export class Main extends Core {
         self.form.submit(function (event) {
             // Mencegah pengiriman formulir secara default
             event.preventDefault();
-            console.log("test");
+
             // Menampilkan pesan loading saat proses impor dimulai
-            self.loadingMessage.css("display", "block");
+            self.loadingMessage.show();
 
             // Menggunakan FormData untuk mengirimkan file Excel
-            const formData = new FormData(self.form[0]);
-
+            var formData = new FormData();
+            formData.append("excel_file", $("#excel-file")[0].files[0]);
+            formData.append("jenis_login", "admin");
             // Menggunakan metode post untuk mengirim data ke server
-            self.doAjax(
-                `${self.mainURL}/api/import/siswa`,
-                (response) => {
+            $.ajax({
+                url: `${self.mainURL}/api/import/siswa`,
+                type: "post",
+                data: formData,
+                dataType: "json",
+                success: (response) => {
                     // Menghilangkan pesan loading setelah proses impor selesai
-                    self.loadingMessage.css("display", "none");
+                    self.loadingMessage.hide();
 
                     console.log(response);
                     // Menampilkan pesan sukses atau kesalahan berdasarkan respons dari server
@@ -34,7 +38,7 @@ export class Main extends Core {
                         // Tampilkan pesan sukses dan redirect jika berhasil
                         self.showSuccessAndRedirect(
                             response.success.message,
-                            `${self.mainURL}/data-siswa`
+                            `${self.mainURL}/admin/data-siswa`
                         );
                     } else {
                         // Tampilkan pesan kesalahan jika ada masalah saat impor
@@ -43,18 +47,34 @@ export class Main extends Core {
                         );
                     }
                 },
-                formData,
-                "post"
-            ); // Menggunakan metode POST untuk mengirim file
+                error: (xhr) => {
+                    // Menampilkan pesan error AJAX
+                    let errors;
+                    console.log(xhr);
+                    if (xhr.responseJSON.errors) {
+                        errors = self.objectToString(xhr.responseJSON.errors);
+                    } else {
+                        errors = self.objectToString(xhr.responseJSON);
+                    }
+                    self.showErrorMessage(errors).then(() => {
+                        if (xhr.status == 401) {
+                            window.location.href = "/";
+                        }
+                    });
+                },
+                // Tambahan untuk mengirimkan file dengan benar
+                processData: false,
+                contentType: false,
+            });
         });
 
         // Menambahkan event listener untuk mendengarkan perubahan pada input file
-        const inputFile = $("#excel_file");
+        const inputFile = $("#excel-file");
         const fileLabel = $("#file-label");
 
         inputFile.on("change", function () {
             // Mengambil nama file yang dipilih oleh pengguna
-            const selectedFileName = self.files[0]?.name || "Pilih file";
+            const selectedFileName = this.files[0]?.name || "Pilih file";
 
             // Mengganti teks label dengan nama file yang dipilih
             fileLabel.text(selectedFileName);

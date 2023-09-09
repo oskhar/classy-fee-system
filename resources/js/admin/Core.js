@@ -1,19 +1,10 @@
 // Kelas utama untuk semua
 export class Core {
     constructor() {
+        this.setAjaxHeader();
         this.objectURL = new URL(window.location.href);
         this.mainURL = this.objectURL.origin;
-        this.messageLink = this.getMessage();
         this.token = localStorage.getItem("jwtToken");
-        console.log(this.token);
-        this.doAjax(
-            `${this.mainURL}/api/login`,
-            function (response) {
-                localStorage.setItem("jwtToken", response.access_token);
-            },
-            { jenis_login: "admin", username: "admin", password: "admin" },
-            "post"
-        );
         this.namaBulan = {
             1: "Januari",
             2: "Februari",
@@ -28,6 +19,19 @@ export class Core {
             11: "November",
             12: "Desember",
         };
+    }
+
+    setAjaxHeader() {
+        const self = this;
+        $.ajaxSetup({
+            beforeSend: function (request) {
+                // Send Authentication header with each request
+                request.setRequestHeader(
+                    "Authorization",
+                    "Bearer " + self.token
+                );
+            },
+        });
     }
 
     toTitleCase(str) {
@@ -54,7 +58,7 @@ export class Core {
         $.ajax({
             url: url,
             type: method,
-            data: data,
+            data: Object.assign(data, { jenis_login: "admin" }),
             headers: dataHeader,
             dataType: "json",
             success: (response) => {
@@ -147,18 +151,12 @@ export class Core {
             ajax: {
                 url: urlAPI,
                 type: "GET",
-                beforeSend: function (request) {
-                    // Mengatur header Authorization secara manual
-                    request.setRequestHeader(
-                        "Authorization",
-                        "Bearer " + self.token
-                    );
-                },
                 data: function (data) {
                     // Tambahkan parameter pengurutan
                     if (data.order.length > 0) {
                         data.orderColumn = data.order[0].column; // Indeks kolom yang ingin diurutkan
                         data.orderDir = data.order[0].dir; // Arah pengurutan (asc atau desc)
+                        data.jenis_login = "admin";
                     }
                 },
                 error: function (xhr) {
@@ -169,13 +167,11 @@ export class Core {
                     } else {
                         errors = self.objectToString(xhr.responseJSON);
                     }
-                    self.showErrorMessage(errors + ` ${self.token}`).then(
-                        () => {
-                            if (xhr.status == 401) {
-                                window.location.href = "/";
-                            }
+                    self.showErrorMessage(errors).then(() => {
+                        if (xhr.status == 401) {
+                            window.location.href = "/";
                         }
-                    );
+                    });
                 },
             },
             columns: dataColumns,
@@ -194,11 +190,5 @@ export class Core {
                 $('[data-toggle="tooltip"]').tooltip();
             },
         });
-    }
-
-    getMessage() {
-        // Ambil url keseluruhan
-        const message = this.objectURL.searchParams.get("message");
-        return message;
     }
 }

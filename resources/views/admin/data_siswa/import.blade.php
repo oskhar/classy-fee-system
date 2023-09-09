@@ -38,13 +38,13 @@
           <h3 class="card-title">Import Data Siswa SMK Triguna Utama</h3>
         </div>
         <div class="card-body">
-          <form id="import-form" method="post" action="{{ url('api/import/siswa') }}" enctype="multipart/form-data">
+          <form id="import-form" enctype="multipart/form-data">
               @csrf
               <div class="form-group">
-                <label for="excel_file">Pilih file Excel:</label>
+                <label for="excel-file">Pilih file Excel:</label>
                 <div class="custom-file">
-                  <input type="file" class="custom-file-input" name="excel_file" id="excel_file" accept=".xlsx, .xls" required>
-                  <label class="custom-file-label" for="excel_file">Pilih file</label>
+                  <input type="file" class="custom-file-input" name="excel-file" id="excel-file" accept=".xlsx, .xls" required>
+                  <label class="custom-file-label" id="file-label" for="excel-file">Pilih file</label>
                 </div>
               </div>
               <button type="submit" class="btn btn-primary" id="import-button">Impor</button>

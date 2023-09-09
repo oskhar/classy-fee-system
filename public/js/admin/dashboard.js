@@ -35,7 +35,6 @@ $(function () {
       data: [32, 61, 12, 39, 6, 62, 21]
     }]
   };
-  console.log(areaChartData);
   var barChartCanvas = $("#barChart").text("tesdoang");
   var barChartData = $.extend(true, {}, areaChartData);
   for (var i = 0; i < areaChartData.datasets.length; i++) {

@@ -51,18 +51,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 var Core = /*#__PURE__*/function () {
   function Core() {
     _classCallCheck(this, Core);
+    this.setAjaxHeader();
     this.objectURL = new URL(window.location.href);
     this.mainURL = this.objectURL.origin;
-    this.messageLink = this.getMessage();
     this.token = localStorage.getItem("jwtToken");
-    console.log(this.token);
-    this.doAjax("".concat(this.mainURL, "/api/login"), function (response) {
-      localStorage.setItem("jwtToken", response.access_token);
-    }, {
-      jenis_login: "admin",
-      username: "admin",
-      password: "admin"
-    }, "post");
     this.namaBulan = {
       1: "Januari",
       2: "Februari",
@@ -79,6 +71,17 @@ var Core = /*#__PURE__*/function () {
     };
   }
   _createClass(Core, [{
+    key: "setAjaxHeader",
+    value: function setAjaxHeader() {
+      var self = this;
+      $.ajaxSetup({
+        beforeSend: function beforeSend(request) {
+          // Send Authentication header with each request
+          request.setRequestHeader("Authorization", "Bearer " + self.token);
+        }
+      });
+    }
+  }, {
     key: "toTitleCase",
     value: function toTitleCase(str) {
       return str.toLowerCase().replace(/^(.)|\s+(.)/g, function ($1) {
@@ -110,7 +113,9 @@ var Core = /*#__PURE__*/function () {
       $.ajax({
         url: url,
         type: method,
-        data: data,
+        data: Object.assign(data, {
+          jenis_login: "admin"
+        }),
         headers: dataHeader,
         dataType: "json",
         success: function success(response) {
@@ -213,18 +218,14 @@ var Core = /*#__PURE__*/function () {
         ajax: {
           url: urlAPI,
           type: "GET",
-          beforeSend: function beforeSend(request) {
-            // Mengatur header Authorization secara manual
-            request.setRequestHeader("Authorization", "Bearer " + self.token);
-          },
           data: function data(_data) {
             // Tambahkan parameter pengurutan
             if (_data.order.length > 0) {
               _data.orderColumn = _data.order[0].column; // Indeks kolom yang ingin diurutkan
               _data.orderDir = _data.order[0].dir; // Arah pengurutan (asc atau desc)
+              _data.jenis_login = "admin";
             }
           },
-
           error: function error(xhr) {
             // Handle kesalahan yang terjadi saat pengambilan data
             var errors;
@@ -233,7 +234,7 @@ var Core = /*#__PURE__*/function () {
             } else {
               errors = self.objectToString(xhr.responseJSON);
             }
-            self.showErrorMessage(errors + " ".concat(self.token)).then(function () {
+            self.showErrorMessage(errors).then(function () {
               if (xhr.status == 401) {
                 window.location.href = "/";
               }
@@ -261,13 +262,6 @@ var Core = /*#__PURE__*/function () {
           $('[data-toggle="tooltip"]').tooltip();
         }
       });
-    }
-  }, {
-    key: "getMessage",
-    value: function getMessage() {
-      // Ambil url keseluruhan
-      var message = this.objectURL.searchParams.get("message");
-      return message;
     }
   }]);
   return Core;

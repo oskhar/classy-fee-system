@@ -231,12 +231,13 @@
           <!-- ./menu-pengaturan-sistem -->
 
           <!-- li-keluar -->
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-sign-out"></i>
-              <p>Keluar</p>
+          <li id="logout-admin" class="nav-item">
+            <a class="nav-link">
+                <i class="nav-icon fas fa-sign-out"></i>
+                <p>Keluar</p>
             </a>
           </li>
+        
           <!-- /. li-keluar -->
 
         </ul>

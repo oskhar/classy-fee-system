@@ -26,6 +26,9 @@ mix.js("resources/js/template_admin.js", "public/js");
 mix.postCss("resources/css/template_admin.css", "public/css");
 // END MAIN SOURCE
 
+// START ROUTE SISWA
+// END ROUTE SISWA
+
 // START PROSSES LOGIN
 mix.js("resources/js/auth/login_admin.js", "public/js/auth");
 // END PROSSES LOGIN

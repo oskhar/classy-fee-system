@@ -3,34 +3,36 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Exception;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ApiAuthMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
-    
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         try {
-            $user = JWTAuth::parseToken()->authenticate();
+            // Mendapatkan jenis login dari permintaan
+            $jenisLogin = $request->input('jenis_login');
 
-            if (!$user) {
-                return response()->json([
-                    'message' => 'Anda belum login !! Login terlebih dahulu untuk mengakses halaman ini'
-                ])->setStatusCode(401);
+            if (!$jenisLogin) {
+                return response()->json(['error' => 'Jenis login tidak diberikan'], 400);
             }
 
+            if (!$user = auth($jenisLogin)->user()) {
+                return response()->json(['error' => 'Token not provided'], 401);
+            }
+
+            if (!$user) {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+
+            $request->auth = $user;
+
             return $next($request);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Anda belum login !! Login terlebih dahulu untuk mengakses halaman ini'
-            ])->setStatusCode(401);
+        } catch (Exception $e) {
+            // Tangani kesalahan autentikasi JWT
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
     }
 }

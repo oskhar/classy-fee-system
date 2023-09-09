@@ -9,18 +9,28 @@ use App\Imports\SiswaImport;
 
 class ImportController extends Controller
 {
-    //
     public function importSiswa(Request $request): JsonResponse
     {
-        $file = $request->file('excel_file'); // Ambil file Excel dari form input
+        $file = $request->file('excel_file');
 
-        // Proses impor file Excel dengan menggunakan kelas SiswaImport
-        Excel::import(new SiswaImport, $file);
+        if (!$file) {
+            return response()->json([
+                'error' => 'File tidak ditemukan.'
+            ])->setStatusCode(400);
+        }
 
-        return response()->json([
-            'success' => [
-                "message" => "Data berhasil diimport"
-            ]
-        ])->setStatusCode(204); // Redirect ke halaman sebelumnya dengan pesan sukses
+        try {
+            Excel::import(new SiswaImport, $file);
+            
+            return response()->json([
+                'success' => [
+                    "message" => "Data berhasil diimport"
+                ]
+            ])->setStatusCode(200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Terjadi kesalahan saat mengimpor data.'
+            ])->setStatusCode(500);
+        }
     }
 }

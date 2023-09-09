@@ -1,8 +1,18 @@
 // Kelas utama untuk semua
 export class Core {
-    constructor() {}
+    constructor() {
+        this.objectURL = new URL(window.location.href);
+        this.mainURL = this.objectURL.origin;
+    }
 
-    doAjax(url, fungsiSaatSuccess, data = {}, method = "get", dataHeader = {}) {
+    doAjax(
+        url,
+        fungsiSaatSuccess,
+        data = {},
+        method = "get",
+        dataHeader = {},
+        hapusJwtTokenJikaError = false
+    ) {
         $.ajax({
             url: url,
             type: method,
@@ -20,11 +30,16 @@ export class Core {
                 } else {
                     errors = this.objectToString(xhr.responseJSON);
                 }
-                this.showErrorMessage(errors).then(() => {
-                    if (xhr.status == 401) {
-                        window.location.href = "/";
-                    }
-                });
+
+                /**
+                 * Untuk memeriksa apakah jwt token
+                 * harus dihapus? jika true maka
+                 * jwt token akan dihapus
+                 */
+                if (hapusJwtTokenJikaError) {
+                    localStorage.removeItem("jwtToken");
+                }
+                this.showErrorMessage(errors);
             },
         });
     }

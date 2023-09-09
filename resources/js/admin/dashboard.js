@@ -37,7 +37,6 @@ $(function () {
             },
         ],
     };
-    console.log(areaChartData);
 
     var barChartCanvas = $("#barChart").text("tesdoang");
     var barChartData = $.extend(true, {}, areaChartData);

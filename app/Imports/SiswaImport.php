@@ -37,8 +37,7 @@ class SiswaImport implements ToModel, WithStartRow
                 'penghasilan_ibu' => $row[14],
                 'status_data' => $row[8],
                 'telp_rumah' => $row[15],
-                'id_wali_siswa' => $idWaliSiswa,
-                // Tambahkan kolom lain yang sesuai
+                'id_wali_siswa' => $idWaliSiswa
             ]);
 
             // Simpan data ke tabel WaliSiswaModel
@@ -54,17 +53,12 @@ class SiswaImport implements ToModel, WithStartRow
                 'tanggal_lahir' => $row[6],
                 'alamat' => $row[7],
                 'status_data' => $row[8],
-                'id_wali_siswa' => $idWaliSiswa,
-                // Tambahkan kolom lain yang sesuai
+                'id_wali_siswa' => $idWaliSiswa
             ]);
 
             $siswa->save();
         }
-
-        // Anda juga dapat menghubungkan data wali siswa dengan siswa yang sesuai di sini
-        // Misalnya: $siswa->waliSiswa()->save($waliSiswa);
-
-        // Mengembalikan data siswa atau wali siswa (sesuai dengan kebutuhan Anda)
+        
         return $siswa;
     }
 }

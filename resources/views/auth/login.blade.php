@@ -5,24 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Log in SMK Triguna Utama</title>
     <link rel="shortcut icon" href="{{ asset('images/smk3gu0ke.png') }}" type="image/x-icon">
-
-    <!-- Google Font: Source Sans Pro -->
-    {{-- <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
-    /> --}}
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="{{ asset('adminLTE/plugins/fontawesome-free/css/all.min.css') }}"
-    />
-    <!-- icheck bootstrap -->
-    <link
-      rel="stylesheet"
-      href="{{ asset('adminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}"
-    />
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('adminLTE/dist/css/adminlte.min.css') }}" />
+    @include('depedensi.auth.login')
   </head>
   <body class="hold-transition login-page">
     <div class="login-box">
@@ -38,9 +21,9 @@
 
           <form class="col-sm-11" id="form-login">
             <div class="input-group mb-3">
-              <select class='form-control' id='id_jurusan' name='id_jurusan'>
+              <select class='form-control' id='jenis_login' name='jenis_login'>
                   <option value='' selected disabled>Pilih Satu Opsi</option>
-                  <option value="Administrator">Administrator</option>
+                  <option value="admin">Administrator</option>
                   <option value="Pembayaran SPP">Pembayaran SPP</option>
                   <option value="E-Raport">E-Raport</option>
               </select>
@@ -50,7 +33,7 @@
               </div>
             </div>
             <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="Username / Email" />
+              <input type="text" class="form-control" placeholder="Username / Email" id="username" required/>
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-envelope"></span>
@@ -62,6 +45,8 @@
                 type="password"
                 class="form-control"
                 placeholder="Password"
+                id="password"
+                required
               />
               <div class="input-group-append">
                 <div class="input-group-text">
@@ -95,12 +80,5 @@
       </div>
     </div>
     <!-- /.login-box -->
-
-    <!-- jQuery -->
-    <script src="{{ asset('adminLTE/plugins/jquery/jquery.min.js') }}"></script>
-    <!-- Bootstrap 4 -->
-    <script src="{{ asset('adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <!-- AdminLTE App -->
-    <script src="{{ asset('adminLTE/dist/js/adminlte.min.js') }}"></script>
   </body>
 </html>

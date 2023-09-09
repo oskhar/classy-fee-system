@@ -1,0 +1,1 @@
+<script src="{{ asset('js/siswa/home.js') }}"></script>

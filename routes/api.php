@@ -20,7 +20,7 @@ use App\Http\Controllers\ImportController;
 |
 */
 
-Route::group(['middleware' => 'api'], function ($router) {
+Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -29,8 +29,7 @@ Route::group(['middleware' => 'api'], function ($router) {
 
 });
 
-
-Route::group(['middleware' => 'auth.api'], function ($router) {
+Route::group(['middleware' => 'apiauthmid'], function ($router) {
     // START DATA SISWA
     Route::get('/siswa', [SiswaController::class, 'get']);
     Route::post('/siswa', [SiswaController::class, 'create']);

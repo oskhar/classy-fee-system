@@ -60,3 +60,39 @@
   <script src="{{ asset('adminLTE/dist/js/adminlte.js') }}"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="{{ asset('adminLTE/dist/js/pages/dashboard.js') }}"></script>
+
+  <script>
+
+$(document).ready(function () {
+    $("#logout-admin").click(function () {
+        const jwtToken = localStorage.getItem("jwtToken");
+        $.ajax({
+            url: `/api/auth/logout`,
+            type: "post",
+            headers: {
+                Authorization: `Bearer ${jwtToken}`,
+            },
+            dataType: "json",
+            success: (response) => {
+              localStorage.removeItem('jwtToken');
+                window.location.href = `/`;
+            },
+            error: (xhr) => {
+                // Menampilkan pesan error AJAX
+                let errors;
+                if (xhr.responseJSON.errors) {
+                    errors = this.objectToString(xhr.responseJSON.errors);
+                } else {
+                    errors = this.objectToString(xhr.responseJSON);
+                }
+                this.showErrorMessage(errors).then(() => {
+                    if (xhr.status == 401) {
+                        window.location.href = "/";
+                    }
+                });
+            },
+        });
+    });
+});
+
+  </script>
