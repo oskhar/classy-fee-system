@@ -135,7 +135,7 @@
 						<img src="{{ asset('images/smk3gu0ke.png') }}" alt="AdminLTE Logo" class="img-circle elevation-2" style="opacity: .8">
 					</div>
 					<div class="info">
-						<a href="{{ url('') }}" class="d-block">SMK Triguna Utama Testing</a>
+						<a href="{{ url('') }}" class="d-block">SMK Triguna Utama</a>
 					</div>
 				</div>
 				<!-- sidebar logo -->
@@ -154,16 +154,36 @@
 						</li>
 						<!-- ./li-main-dashboard -->
 
-						<!-- li-menu-data-siswa -->
-						<li class="nav-item">
-							<a href="{{ route('admin.data_siswa') }}" class="nav-link @if(strpos(request()->path(), 'admin/data-siswa') !== false) active @endif">
+						<!-- menu-master-siswa -->
+						<li class="nav-item @if(strpos(request()->path(), 'admin/data-siswa') !== false || strpos(request()->path(), 'admin/data-kelas') !== false) menu-open @endif">
+							<a href="#" class="nav-link @if(strpos(request()->path(), 'admin/data-siswa') !== false || strpos(request()->path(), 'admin/data-kelas') !== false) active @endif">
 								<i class="nav-icon fas fa-user-graduate"></i>
-								<p>
-									Data Siswa
-								</p>
+								<p>Master Data Siswa<i class="fas fa-angle-left right"></i></p>
 							</a>
+							<!-- nav-tree-master-siswa -->
+							<ul class="nav nav-treeview">
+
+								<!-- data siswa -->
+								<li class="nav-item">
+									<a href="{{ route('admin.data_siswa') }}" class="nav-link @if(strpos(request()->path(), 'admin/data-siswa') !== false) active @endif">
+										<i class="fas fa-minus nav-icon"></i>
+										<p>Data Siswa</p>
+									</a>
+								</li>
+								<!-- /.data jurusan -->
+
+								<!-- data kelas -->
+								<li class="nav-item">
+									<a href="{{ route('admin.data_kelas') }}" class="nav-link @if(strpos(request()->path(), 'admin/data-kelas') !== false) active @endif">
+										<i class="fas fa-minus nav-icon"></i>
+										<p>Data kelas</p>
+									</a>
+								</li>
+								<!-- ./data kelas -->
+							</ul>
+							<!-- nav-tree-pengaturan-sistem -->
 						</li>
-						<!-- li-menu-data-siswa -->
+						<!-- ./menu-pengaturan-sistem -->
 
 						<!-- li-menu-data-pembayaran-spp -->
 						<li class="nav-item">
@@ -184,10 +204,10 @@
 						<!-- /. li-menu-cetak-laporan -->
 
 						<!-- menu-pengaturan-sistem -->
-						<li class="nav-item @if(strpos(request()->path(), 'admin/data-jurusan') !== false || strpos(request()->path(), 'admin/data-kelas') !== false || strpos(request()->path(), 'admin/data-tahun-ajar') !== false) menu-open @endif">
+						<li class="nav-item @if(strpos(request()->path(), 'admin/data-tahun-ajar') !== false) menu-open @endif">
 
 							<!-- pengaturan sistem -->
-							<a href="#" class="nav-link @if(strpos(request()->path(), 'admin/data-jurusan') !== false || strpos(request()->path(), 'admin/data-kelas') !== false || strpos(request()->path(), 'admin/data-tahun-ajar') !== false) active @endif">
+							<a href="#" class="nav-link @if(strpos(request()->path(), 'admin/data-tahun-ajar') !== false) active @endif">
 								<i class="nav-icon fas fa-gears"></i>
 								<p>Pengaturan Sistem<i class="fas fa-angle-left right"></i></p>
 							</a>
@@ -195,24 +215,6 @@
 
 							<!-- nav-tree-pengaturan-sistem -->
 							<ul class="nav nav-treeview">
-
-								<!-- data jurusan -->
-								<li class="nav-item">
-									<a href="{{ route('admin.data_jurusan') }}" class="nav-link @if(strpos(request()->path(), 'admin/data-jurusan') !== false) active @endif">
-										<i class="fas fa-minus nav-icon"></i>
-										<p>Data Jurusan</p>
-									</a>
-								</li>
-								<!-- /.data jurusan -->
-
-								<!-- data kelas -->
-								<li class="nav-item">
-									<a href="{{ route('admin.data_kelas') }}" class="nav-link @if(strpos(request()->path(), 'admin/data-kelas') !== false) active @endif">
-										<i class="fas fa-minus nav-icon"></i>
-										<p>Data kelas</p>
-									</a>
-								</li>
-								<!-- ./data kelas -->
 
 								<!-- data tahun ajar -->
 								<li class="nav-item">
@@ -222,15 +224,6 @@
 									</a>
 								</li>
 								<!-- ./data tahun ajar -->
-
-								<!-- data jenis pembayaran -->
-								<li class="nav-item">
-									<a href="#" class="nav-link">
-										<i class="fas fa-minus nav-icon"></i>
-										<p>Data Jenis Pembayaran</p>
-									</a>
-								</li>
-								<!-- ./data jenis pembayaran -->
 
 							</ul>
 							<!-- nav-tree-pengaturan-sistem -->
@@ -245,7 +238,6 @@
 								<p>Keluar</p>
 							</a>
 						</li>
-
 						<!-- /. li-keluar -->
 
 					</ul>
