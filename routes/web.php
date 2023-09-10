@@ -80,6 +80,14 @@ Route::group(['prefix' => 'admin'], function ($router) {
     Route::get('/data-tahun-ajar-update/{id}', function () {
         return view('admin.data_tahun_ajar.update');
     })->name('admin.data_tahun_ajar_update');
+
+    // Router untuk halaman data pembayaran spp
+    Route::get('/data-pembayaran-spp', function () {
+        return view('admin.data_pembayaran_spp.read');
+    })->name('admin.data_pembayaran_spp');
+    Route::get('/data-pembayaran-spp-create', function () {
+        return view('admin.data_pembayaran_spp.create');
+    })->name('admin.data_pembayaran_spp_create');
 });
     // Router untuk export excel
     Route::get('/export/siswa', [ExportController::class, 'exportSiswaExcel'])->name('export.siswa');

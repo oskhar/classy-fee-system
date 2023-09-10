@@ -42,18 +42,18 @@ class Main extends Core {
             };
             if (dataBody.username == "siswa") {
                 window.location.href = `${self.mainURL}/siswa`;
+            } else {
+                // Jalankan api untuk create data saat submit
+                self.doAjax(
+                    url,
+                    function (response) {
+                        localStorage.setItem("jwtToken", response.access_token);
+                        window.location.href = `${self.mainURL}/admin`;
+                    },
+                    dataBody,
+                    method
+                );
             }
-
-            // Jalankan api untuk create data saat submit
-            self.doAjax(
-                url,
-                function (response) {
-                    localStorage.setItem("jwtToken", response.access_token);
-                    window.location.href = `${self.mainURL}/admin`;
-                },
-                dataBody,
-                method
-            );
         });
     }
 }

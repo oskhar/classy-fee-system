@@ -15,7 +15,7 @@ class SiswaImport implements ToModel, WithStartRow
      */
     public function startRow(): int
     {
-        return 2; // Mulai membaca data dari baris kedua (abaikan baris judul)
+        return 5; // Mulai membaca data dari baris kedua (abaikan baris judul)
     }
     public function model(array $row)
     {

@@ -159,7 +159,7 @@
 
           <!-- li-menu-data-pembayaran-spp -->
           <li class="nav-item">
-            <a href="?page=pembayaran-spp" class="nav-link">
+            <a href="{{ route('admin.data_pembayaran_spp') }}" class="nav-link">
               <i class="nav-icon fas fa-money-check-dollar"></i>
               <p>Data Pembayaran SPP</p>
             </a>
