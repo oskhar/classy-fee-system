@@ -135,7 +135,7 @@
 						<img src="{{ asset('images/smk3gu0ke.png') }}" alt="AdminLTE Logo" class="img-circle elevation-2" style="opacity: .8">
 					</div>
 					<div class="info">
-						<a href="{{ url('') }}" class="d-block">SMK Triguna Utama 3gu</a>
+						<a href="{{ url('') }}" class="d-block">SMK Triguna Utama 3gu oskhar</a>
 					</div>
 				</div>
 				<!-- sidebar logo -->
