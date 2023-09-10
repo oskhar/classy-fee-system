@@ -99,3 +99,5 @@ Route::group(['prefix' => 'admin'], function ($router) {
         return view('admin.data_pembayaran_spp.create');
     })->name('admin.data_pembayaran_spp_create');
 });
+
+Route::get('/export/siswa', [ExportController::class, 'exportSiswaExcel'])->name('export.siswa');
