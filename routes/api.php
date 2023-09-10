@@ -63,7 +63,8 @@ Route::group(['middleware' => 'apiauthmid'], function ($router) {
     Route::delete('/tahun-ajar', [TahunAjarController::class, 'delete']);
     // END DATA TAHUN AJAR
 
-    // IMPORT
+    // EXPORT IMPORT DATA SISWA
     Route::post('/import/siswa', [ImportController::class, 'importSiswa'])->name('import.siswa');
+    Route::get('/export/siswa', [ExportController::class, 'exportSiswaExcel'])->name('export.siswa');
 
 });

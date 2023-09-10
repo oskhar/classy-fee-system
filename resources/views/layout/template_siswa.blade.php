@@ -38,10 +38,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <a href="{{ route('siswa.home') }}" class="nav-link">Home</a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">Pembayaran SPP</a>
+              <a href="{{ route('siswa.pembayaran_spp') }}" class="nav-link">Pembayaran SPP</a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">E-Raport</a>
+              <a href="{{ route('siswa.e-raport') }}" class="nav-link">E-Raport</a>
             </li>
           </ul>
         </div>

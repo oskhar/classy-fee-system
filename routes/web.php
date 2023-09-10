@@ -23,6 +23,16 @@ Route::group(['prefix' => 'siswa'], function ($router) {
     Route::get('/', function () {
         return view('siswa.home');
     })->name('siswa.home');
+
+    // Router untuk halaman data siswa
+    Route::get('/pembayaran-spp', function () {
+        return view('siswa.pembayaran_spp.read');
+    })->name('siswa.pembayaran_spp');
+
+    // Router untuk halaman data siswa
+    Route::get('/e-raport', function () {
+        return view('siswa.e-raport.read');
+    })->name('siswa.e-raport');
 });
 
 Route::group(['prefix' => 'admin'], function ($router) {
@@ -89,5 +99,3 @@ Route::group(['prefix' => 'admin'], function ($router) {
         return view('admin.data_pembayaran_spp.create');
     })->name('admin.data_pembayaran_spp_create');
 });
-    // Router untuk export excel
-    Route::get('/export/siswa', [ExportController::class, 'exportSiswaExcel'])->name('export.siswa');
