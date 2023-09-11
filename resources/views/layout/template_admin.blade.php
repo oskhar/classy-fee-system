@@ -6,26 +6,24 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" href="{{ asset('images/smk3gu0ke.png') }}" type="image/x-icon">
 	<title>@yield('title')</title>
-	@include('depedensi.layout.template_admin');
 	<meta name="csrf-token" content="{{ csrf_token() }}">
+	@include('depedensi.layout.template_admin')
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed bg-light">
+<body class="hold-transition sidebar-mini layout-fixed">
 	{{-- @include('components.loading') --}}
-
 	<div class="wrapper">
 		<!-- Navbar -->
-		<nav class="main-header navbar navbar-expand navbar-white navbar-light" id="navbar-costume">
+		<nav class="main-header navbar navbar-expand navbar-white navbar-light">
 			<!-- Left navbar links -->
 			<ul class="navbar-nav">
-				<li class="nav-item">
-					<a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-				</li>
-				<li class="nav-item d-none d-sm-inline-block">
-					<a href="{{ route("dashboard") }}" class="nav-link">Home</a>
-				</li>
+			  <li class="nav-item">	
+				<a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+			  </li>
+			  <li class="nav-item d-none d-sm-inline-block">
+				<a href="{{ route('dashboard') }}" class="nav-link">Home</a>
+			  </li>
 			</ul>
-
 			<!-- Right navbar links -->
 			<ul class="navbar-nav ml-auto">
 
@@ -248,7 +246,7 @@
 		</aside>
 
 		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper mt-5">
+		<div class="content-wrapper">
 			@yield('mainContent')
 		</div>
 		<!-- /.content-wrapper -->

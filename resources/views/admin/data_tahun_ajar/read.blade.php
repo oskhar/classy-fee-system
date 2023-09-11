@@ -20,17 +20,12 @@
       </div>
     </div><!-- /.container-fluid -->
   </section>
-
-<section class="content">
-  <div class="container-fluid">
-    <div class="card card-outline-left">
-      <div class="card-primary p-4">
-        <h3 class="card-title text-muted">Data tahun ajar SMK Triguna Utama</h3>
+  <section class="content">
+    <div class="col-md-12">
+      <div class="callout callout-success">
+          <b>Data tahun ajar SMK Triguna Utama</b>
       </div>
     </div>
-  </div>
-</section>
-  <section class="content">
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">

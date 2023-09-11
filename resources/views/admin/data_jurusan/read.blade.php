@@ -23,12 +23,14 @@
 
 <section class="content">
   <div class="container-fluid">
-    <div class="card card-outline-left">
-      <div class="card-primary p-4">
-        <h3 class="card-title text-muted">Data jurusan SMK Triguna Utama</h3>
+    <div class="col-md-12">
+      <div class="callout callout-success">
+          <b>Data jurusan SMK Triguna Utama</b>
       </div>
     </div>
   </div>
+</section>
+
 </section>
   <section class="content">
     <div class="container-fluid">

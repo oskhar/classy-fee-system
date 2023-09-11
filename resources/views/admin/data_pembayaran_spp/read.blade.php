@@ -23,8 +23,11 @@
 
 <section class="content">
     <div class="container-fluid">
-        
-					<div class='row'><div class='col-md-12'><div class='callout callout-success'><p class='text-secondary'>Data Pembayaran SPP</p></div></div><div class='col-md-12'><div class='card'><div class='card-body'>
+        <div class='row'>
+            <div class='col-md-12'>
+                <div class='callout callout-success'>
+                    <b>Data Pembayaran SPP</b>
+                </div></div><div class='col-md-12'><div class='card'><div class='card-body'>
                         <button type='button' class='btn btn-outline-info btn-md mb-2' onclick=window.location.href="{{ route('admin.data_pembayaran_spp_create') }}">
                             Tambah Data
                         </button>

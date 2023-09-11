@@ -228,7 +228,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                                        <tr>
+                                <tr>
                                     <td>Teknik Komputer Jaringan</td>
                                     <td>X-TKJ-1</td>
                                     <td>40 Siswa</td>
@@ -236,7 +236,7 @@
                                     <td>Rp. 0,-</td>
                                 </tr>
 
-                                                        <tr>
+                                <tr>
                                     <td>Teknik Komputer Jaringan</td>
                                     <td>X-TKJ-1</td>
                                     <td>40 Siswa</td>
@@ -244,7 +244,7 @@
                                     <td>Rp. 0,-</td>
                                 </tr>
 
-                                                        <tr>
+                                <tr>
                                     <td>Teknik Komputer Jaringan</td>
                                     <td>X-TKJ-1</td>
                                     <td>40 Siswa</td>
@@ -252,7 +252,7 @@
                                     <td>Rp. 0,-</td>
                                 </tr>
 
-                                                        <tr>
+                                <tr>
                                     <td>Teknik Komputer Jaringan</td>
                                     <td>X-TKJ-1</td>
                                     <td>40 Siswa</td>
@@ -260,7 +260,7 @@
                                     <td>Rp. 0,-</td>
                                 </tr>
 
-                                                        <tr>
+                                <tr>
                                     <td>Teknik Komputer Jaringan</td>
                                     <td>X-TKJ-1</td>
                                     <td>40 Siswa</td>
@@ -268,7 +268,7 @@
                                     <td>Rp. 0,-</td>
                                 </tr>
 
-                                                        <tr>
+                                <tr>
                                     <td>Teknik Komputer Jaringan</td>
                                     <td>X-TKJ-1</td>
                                     <td>40 Siswa</td>
@@ -276,7 +276,7 @@
                                     <td>Rp. 0,-</td>
                                 </tr>
 
-                                                        <tr>
+                                <tr>
                                     <td>Teknik Komputer Jaringan</td>
                                     <td>X-TKJ-1</td>
                                     <td>40 Siswa</td>
@@ -284,7 +284,7 @@
                                     <td>Rp. 0,-</td>
                                 </tr>
 
-                                                        <tr>
+                                <tr>
                                     <td>Teknik Komputer Jaringan</td>
                                     <td>X-TKJ-1</td>
                                     <td>40 Siswa</td>
@@ -292,7 +292,7 @@
                                     <td>Rp. 0,-</td>
                                 </tr>
 
-                                                        <tr>
+                                <tr>
                                     <td>Teknik Komputer Jaringan</td>
                                     <td>X-TKJ-1</td>
                                     <td>40 Siswa</td>
@@ -300,7 +300,7 @@
                                     <td>Rp. 0,-</td>
                                 </tr>
 
-                                                        <tr>
+                                <tr>
                                     <td>Teknik Komputer Jaringan</td>
                                     <td>X-TKJ-1</td>
                                     <td>40 Siswa</td>
@@ -308,7 +308,7 @@
                                     <td>Rp. 0,-</td>
                                 </tr>
 
-                                                        <tr>
+                                <tr>
                                     <td>Teknik Komputer Jaringan</td>
                                     <td>X-TKJ-1</td>
                                     <td>40 Siswa</td>
