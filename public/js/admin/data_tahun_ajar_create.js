@@ -277,6 +277,7 @@ var Core = /*#__PURE__*/function () {
           }
           _this.showErrorMessage(errors).then(function () {
             if (xhr.status == 401) {
+              localStorage.removeItem("jwtToken");
               window.location.href = "/";
             }
           });
@@ -382,6 +383,7 @@ var Core = /*#__PURE__*/function () {
             }
             self.showErrorMessage(errors).then(function () {
               if (xhr.status == 401) {
+                localStorage.removeItem("jwtToken");
                 window.location.href = "/";
               }
             });

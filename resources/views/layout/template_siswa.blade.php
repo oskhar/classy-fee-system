@@ -20,33 +20,35 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
     <div class="container">
+    <div class="container">
+      <!-- Logo di kiri -->
       <a href="{{ route('siswa.home') }}" class="navbar-brand">
         <img src="{{ asset('images/smk3gu0ke.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">SMK Triguna Utama</span>
       </a>
 
-      <!-- Right navbar links -->
-      <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
-
-        <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+      <!-- Tombol Collapse di kanan dengan ml-auto -->
+      <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
   
-        <div class="collapse navbar-collapse order-3" id="navbarCollapse">
-          <!-- Left navbar links -->
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a href="{{ route('siswa.home') }}" class="nav-link">Home</a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('siswa.pembayaran_spp') }}" class="nav-link">Pembayaran SPP</a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('siswa.e-raport') }}" class="nav-link">E-Raport</a>
-            </li>
-          </ul>
-        </div>
-      </ul>
+    <div class="container">
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a href="{{ route('siswa.home') }}" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('siswa.pembayaran_spp') }}" class="nav-link">Pembayaran SPP</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('siswa.e-raport') }}" class="nav-link">E-Raport</a>
+          </li>
+        </ul>
+      </div>
+    </div>
     </div>
   </nav>
   <!-- /.navbar -->

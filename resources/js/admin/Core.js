@@ -74,6 +74,7 @@ export class Core {
                 }
                 this.showErrorMessage(errors).then(() => {
                     if (xhr.status == 401) {
+                        localStorage.removeItem("jwtToken");
                         window.location.href = "/";
                     }
                 });
@@ -169,6 +170,7 @@ export class Core {
                     }
                     self.showErrorMessage(errors).then(() => {
                         if (xhr.status == 401) {
+                            localStorage.removeItem("jwtToken");
                             window.location.href = "/";
                         }
                     });

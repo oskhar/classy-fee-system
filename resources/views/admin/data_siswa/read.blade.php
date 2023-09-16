@@ -1,5 +1,5 @@
 @extends('layout.template_admin')
-
+  
 @section('title', 'Halaman Dashboard')
 @section('mainContent')
 
@@ -24,7 +24,7 @@
 
     <div class="col-md-12">
       <div class="callout callout-success">
-          <b>Data siswa SMK Triguna Utama</b>
+          <b class="text-muted">Data siswa SMK Triguna Utama</b>
       </div>
     </div>
     <div class="container-fluid">
