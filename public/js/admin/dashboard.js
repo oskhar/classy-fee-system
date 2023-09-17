@@ -35,17 +35,28 @@ $(function () {
       data: [32, 61, 12, 39, 6, 62, 21]
     }]
   };
-  var barChartCanvas = $("#barChart").text("tesdoang");
-  var barChartData = $.extend(true, {}, areaChartData);
-  for (var i = 0; i < areaChartData.datasets.length; i++) {
-    var temp = areaChartData.datasets[i];
-    barChartData.datasets[i] = temp;
-  }
   var barChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
     datasetFill: false
   };
+  var barChartCanvas = $("#barChartGanjil").text("tesdoang");
+  var barChartData = $.extend(true, {}, areaChartData);
+  for (var i = 0; i < areaChartData.datasets.length; i++) {
+    var temp = areaChartData.datasets[i];
+    barChartData.datasets[i] = temp;
+  }
+  new Chart(barChartCanvas, {
+    type: "bar",
+    data: barChartData,
+    options: barChartOptions
+  });
+  var barChartCanvas = $("#barChartGenap").text("tesdoang");
+  var barChartData = $.extend(true, {}, areaChartData);
+  for (var _i = 0; _i < areaChartData.datasets.length; _i++) {
+    var _temp = areaChartData.datasets[_i];
+    barChartData.datasets[_i] = _temp;
+  }
   new Chart(barChartCanvas, {
     type: "bar",
     data: barChartData,

@@ -62,32 +62,46 @@
 <script>
     $(document).ready(function() {
         $("#logout-admin").click(function() {
-            const jwtToken = localStorage.getItem("jwtToken");
-            $.ajax({
-                url: `/api/auth/logout`,
-                type: "post",
-                headers: {
-                    Authorization: `Bearer ${jwtToken}`,
-                },
-                dataType: "json",
-                success: (response) => {
-                    localStorage.removeItem('jwtToken');
-                    window.location.href = `/`;
-                },
-                error: (xhr) => {
-                    // Menampilkan pesan error AJAX
-                    let errors;
-                    if (xhr.responseJSON.errors) {
-                        errors = this.objectToString(xhr.responseJSON.errors);
-                    } else {
-                        errors = this.objectToString(xhr.responseJSON);
-                    }
-                    this.showErrorMessage(errors).then(() => {
-                        if (xhr.status == 401) {
-                            window.location.href = "/";
-                        }
+
+            Swal.fire({
+                title: "Logout dari akun ini?",
+                showConfirmButton: false,
+                showDenyButton: true,
+                showCancelButton: true,
+                denyButtonText: "Logout",
+            }).then((result) => {
+                // Assigmen data yang dibutuhkan untuk mengakses API
+                const jwtToken = localStorage.getItem("jwtToken");
+
+                // Jalankan api untuk delete data jika tombol hapus diclick
+                if (result.isDenied) {
+                    $.ajax({
+                        url: `/api/auth/logout`,
+                        type: "post",
+                        headers: {
+                            Authorization: `Bearer ${jwtToken}`,
+                        },
+                        dataType: "json",
+                        success: (response) => {
+                            localStorage.removeItem('jwtToken');
+                            window.location.href = `/`;
+                        },
+                        error: (xhr) => {
+                            // Menampilkan pesan error AJAX
+                            let errors;
+                            if (xhr.responseJSON.errors) {
+                                errors = this.objectToString(xhr.responseJSON.errors);
+                            } else {
+                                errors = this.objectToString(xhr.responseJSON);
+                            }
+                            this.showErrorMessage(errors).then(() => {
+                                if (xhr.status == 401) {
+                                    window.location.href = "/";
+                                }
+                            });
+                        },
                     });
-                },
+                }
             });
         });
     });

@@ -40,6 +40,9 @@ Route::group(['prefix' => 'admin'], function ($router) {
     Route::get('/', function () {
         return view('admin.dashboard');
     })->name('dashboard');
+    Route::get('/admin.home-keuangan-sekolah', function () {
+        return view('admin.home_keuangan_sekolah');
+    })->name('admin.home_keuangan_sekolah');
 
     // Router untuk halaman data siswa
     Route::get('/data-siswa', function () {

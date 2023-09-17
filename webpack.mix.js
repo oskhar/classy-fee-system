@@ -43,6 +43,9 @@ mix.js("resources/js/admin/data_siswa_detail.js", "public/js/admin");
 mix.js("resources/js/admin/data_siswa_import.js", "public/js/admin");
 // END DATA SISWA
 
+// START DATA SISWA PERKELAS
+mix.js("resources/js/admin/data_siswa_perkelas.js", "public/js/admin");
+
 // START DATA JURUSAN
 mix.js("resources/js/admin/data_jurusan.js", "public/js/admin");
 mix.postCss("resources/css/admin/data_jurusan.css", "public/css/admin");

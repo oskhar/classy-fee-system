@@ -17,103 +17,18 @@
 		<nav class="main-header navbar navbar-expand navbar-white navbar-light">
 			<!-- Left navbar links -->
 			<ul class="navbar-nav">
-			  <li class="nav-item">	
-				<a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-			  </li>
-			  <li class="nav-item d-none d-sm-inline-block">
-				<a href="{{ route('dashboard') }}" class="nav-link">Home</a>
-			  </li>
+				<li class="nav-item">
+					<a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+				</li>
 			</ul>
+
 			<!-- Right navbar links -->
 			<ul class="navbar-nav ml-auto">
-
-				<!-- Messages Dropdown Menu -->
-				<li class="nav-item dropdown">
-					<a class="nav-link" data-toggle="dropdown" href="#">
-						<i class="far fa-comments"></i>
-						<span class="badge badge-danger navbar-badge">3</span>
-					</a>
-					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-						<a href="#" class="dropdown-item">
-							<!-- Message Start -->
-							<div class="media">
-								<img src="" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-								<div class="media-body">
-									<h3 class="dropdown-item-title">
-										Brad Diesel
-										<span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-									</h3>
-									<p class="text-sm">Call me whenever you can...</p>
-									<p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-								</div>
-							</div>
-							<!-- Message End -->
-						</a>
-						<div class="dropdown-divider"></div>
-						<a href="#" class="dropdown-item">
-							<!-- Message Start -->
-							<div class="media">
-								<img src="" alt="User Avatar" class="img-size-50 img-circle mr-3">
-								<div class="media-body">
-									<h3 class="dropdown-item-title">
-										John Pierce
-										<span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-									</h3>
-									<p class="text-sm">I got your message bro</p>
-									<p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-								</div>
-							</div>
-							<!-- Message End -->
-						</a>
-						<div class="dropdown-divider"></div>
-						<a href="#" class="dropdown-item">
-							<!-- Message Start -->
-							<div class="media">
-								<img src="" alt="User Avatar" class="img-size-50 img-circle mr-3">
-								<div class="media-body">
-									<h3 class="dropdown-item-title">
-										Nora Silvester
-										<span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-									</h3>
-									<p class="text-sm">The subject goes here</p>
-									<p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-								</div>
-							</div>
-							<!-- Message End -->
-						</a>
-						<div class="dropdown-divider"></div>
-						<a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-					</div>
-				</li>
-				<!-- Notifications Dropdown Menu -->
-				<li class="nav-item dropdown">
-					<a class="nav-link" data-toggle="dropdown" href="#">
-						<i class="far fa-bell"></i>
-						<span class="badge badge-warning navbar-badge">15</span>
-					</a>
-					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-						<span class="dropdown-item dropdown-header">15 Notifications</span>
-						<div class="dropdown-divider"></div>
-						<a href="#" class="dropdown-item">
-							<i class="fas fa-envelope mr-2"></i> 4 new messages
-							<span class="float-right text-muted text-sm">3 mins</span>
-						</a>
-						<div class="dropdown-divider"></div>
-						<a href="#" class="dropdown-item">
-							<i class="fas fa-users mr-2"></i> 8 friend requests
-							<span class="float-right text-muted text-sm">12 hours</span>
-						</a>
-						<div class="dropdown-divider"></div>
-						<a href="#" class="dropdown-item">
-							<i class="fas fa-file mr-2"></i> 3 new reports
-							<span class="float-right text-muted text-sm">2 days</span>
-						</a>
-						<div class="dropdown-divider"></div>
-						<a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-					</div>
+				<li class="nav-item d-none d-sm-inline-block">
+					<a href="#" class="nav-link">Home / Main Dashboard</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" data-widget="fullscreen" href="#" role="button">
+					<a href="#" class="nav-link" data-widget="fullscreen" role="button">
 						<i class="fas fa-expand-arrows-alt"></i>
 					</a>
 				</li>
@@ -133,7 +48,7 @@
 						<img src="{{ asset('images/smk3gu0ke.png') }}" alt="AdminLTE Logo" class="img-circle elevation-2" style="opacity: .8">
 					</div>
 					<div class="info">
-						<a href="{{ url('') }}" class="d-block">SMK Triguna Utama</a>
+						<a href="{{url('')}}" class="d-block">SMA-SMK Triguna Utama</a>
 					</div>
 				</div>
 				<!-- sidebar logo -->
@@ -141,20 +56,67 @@
 				<!-- Sidebar Menu -->
 				<nav class="mt-2">
 					<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-						<!-- li-main-dashboard -->
-						<li class="nav-item">
-							<a href="{{ route('dashboard') }}" class="nav-link @if(request()->is('admin')) active @endif">
-								<i class="nav-icon fas fa-home"></i>
-								<p>
-									Main Dashboard
-								</p>
+						
+						<!-- menu-Dashboard -->
+						<li class="nav-item @if(strpos(request()->path(), 'admin/home-keuangan-sekolah') !== false)
+							menu-open
+						@endif">
+							<a href="#" class="nav-link">
+								<i class="nav-icon fa-solid fa-home"></i>
+								<p>Main Dashboard<i class="fas fa-angle-left right"></i></p>
 							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a href="#" class="nav-link">
+										<i class="fa-solid fa-minus nav-icon"></i>
+										<p>Dash. Guru & Karyawan</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a href="#" class="nav-link">
+										<i class="fa-solid fa-minus nav-icon"></i>
+										<p>Dash. Siswa & Wali Siswa</p>
+									</a>
+								</li>
+								<!-- li-main-dashboard -->
+								<li class="nav-item">
+									<a href="{{ route('admin.home_keuangan_sekolah') }}" class="nav-link 
+										@if(request()->is('admin/home-keuangan-sekolah'))
+											active
+										@endif">
+										<i class="nav-icon fas fa-minus"></i>
+										<p>
+											Dash. Keuangan Sekolah
+										</p>
+									</a>
+								</li>
+								<!-- ./li-main-dashboard -->
+								<li class="nav-item">
+									<a href="#" class="nav-link">
+										<i class="fa-solid fa-minus nav-icon"></i>
+										<p>Dash. Raport Siswa</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a href="#" class="nav-link">
+										<i class="fa-solid fa-minus nav-icon"></i>
+										<p>Dash. Tabungan Siswa</p>
+									</a>
+								</li>
+							</ul>
+							<!-- /.nav nav-treeview -->
 						</li>
-						<!-- ./li-main-dashboard -->
+						<!-- /. menu-Dashboard -->
 
 						<!-- menu-master-siswa -->
-						<li class="nav-item @if(strpos(request()->path(), 'admin/data-siswa') !== false || strpos(request()->path(), 'admin/data-kelas') !== false) menu-open @endif">
-							<a href="#" class="nav-link @if(strpos(request()->path(), 'admin/data-siswa') !== false || strpos(request()->path(), 'admin/data-kelas') !== false) active @endif">
+						<li class="nav-item 
+							@if(strpos(request()->path(), 'admin/data-siswa') !== false)
+								menu-open
+							@endif">
+							<a href="#" class="nav-link 
+								@if(strpos(request()->path(), 'admin/data-siswa') !== false)
+									active
+								@endif">
 								<i class="nav-icon fas fa-user-graduate"></i>
 								<p>Master Data Siswa<i class="fas fa-angle-left right"></i></p>
 							</a>
@@ -163,49 +125,189 @@
 
 								<!-- data siswa -->
 								<li class="nav-item">
-									<a href="{{ route('admin.data_siswa') }}" class="nav-link @if(strpos(request()->path(), 'admin/data-siswa') !== false) active @endif">
+									<a href="{{ route('admin.data_siswa') }}" class="nav-link 
+										@if(strpos(request()->path(), 'admin/data-siswa') !== false)
+											active
+										@endif">
 										<i class="fas fa-minus nav-icon"></i>
-										<p>Data Siswa</p>
+										<p>Data Siswa & Wali Siswa</p>
 									</a>
 								</li>
 								<!-- /.data jurusan -->
 
 								<!-- data kelas -->
 								<li class="nav-item">
-									<a href="{{ route('admin.data_kelas') }}" class="nav-link @if(strpos(request()->path(), 'admin/data-kelas') !== false) active @endif">
+									<a href="{{ route('admin.data_kelas') }}" class="nav-link @if(strpos(request()->path(), 'admin/data-kelas') !== false)
+											active
+										@endif">
 										<i class="fas fa-minus nav-icon"></i>
-										<p>Data kelas</p>
+										<p>Data Siswa Perkelas</p>
 									</a>
 								</li>
-								<!-- ./data kelas -->
 							</ul>
+							<!-- /.nav nav-treeview -->
+						</li>
 							<!-- nav-tree-pengaturan-sistem -->
 						</li>
 						<!-- ./menu-pengaturan-sistem -->
 
-						<!-- li-menu-data-pembayaran-spp -->
+						<!-- menu guru & karyawan -->
 						<li class="nav-item">
-							<a href="{{ route('admin.data_pembayaran_spp') }}" class="nav-link">
-								<i class="nav-icon fas fa-money-check-dollar"></i>
-								<p>Data Pembayaran SPP</p>
+							<a href="#" class="nav-link">
+								<i class="nav-icon fa-solid fa-user-graduate"></i>
+								<p>Data Guru & Karyawan</p>
 							</a>
 						</li>
-						<!-- li-menu-data-pembayaran-spp -->
+						<!-- /. menu guru & karyawan -->
 
-						<!-- li-menu-cetak-laporan -->
+						<!-- SI. Pembayaran SPP -->
 						<li class="nav-item">
-							<a href="?page=cetak-laporan" class="nav-link">
-								<i class="nav-icon fas fa-print"></i>
-								<p>Cetak Laporan</p>
+							<a href="#" class="nav-link">
+								<i class="nav-icon fa-solid fa-money-check-dollar"></i>
+								<p>Sis. Keuangan Sekolah<i class="fas fa-angle-left right"></i></p>
 							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a href="#" class="nav-link">
+										<i class="fa-solid fa-minus nav-icon"></i>
+										<p>Jenis Pembayaran</p>
+									</a>
+								</li>
+							</ul>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a href="#" class="nav-link">
+										<i class="fa-solid fa-minus nav-icon"></i>
+										<p>Transaksi Pembayaran</p>
+									</a>
+								</li>
+							</ul>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a href="{{ route('admin.data_pembayaran_spp') }}" class="nav-link">
+										<i class="fa-solid fa-minus nav-icon"></i>
+										<p>Data Pembayaran SPP</p>
+									</a>
+								</li>
+							</ul>
+
+							<!-- /.nav nav-treeview -->
 						</li>
-						<!-- /. li-menu-cetak-laporan -->
+						<!-- /. SI. Pembayaran SPP -->
+
+						<!-- SI. Rapot Siswa -->
+						<li class="nav-item">
+							<a href="#" class="nav-link">
+								<i class="nav-icon fa-solid fa-book"></i>
+								<p>Sis. Raport Siswa<i class="fas fa-angle-left right"></i></p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a href="#" class="nav-link">
+										<i class="fa-solid fa-minus nav-icon"></i>
+										<p>Menu ke-1</p>
+									</a>
+								</li>
+							</ul>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a href="#" class="nav-link">
+										<i class="fa-solid fa-minus nav-icon"></i>
+										<p>Menu ke-1</p>
+									</a>
+								</li>
+							</ul>
+							<!-- /.nav nav-treeview -->
+						</li>
+						<!-- /. SI. Rapot Siswa -->
+
+						<!-- SI. Tabungan Siswa -->
+						<li class="nav-item">
+							<a href="#" class="nav-link">
+								<i class="nav-icon fa-solid fa-book"></i>
+								<p>Sis. Tabungan Siswa<i class="fas fa-angle-left right"></i></p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a href="#" class="nav-link">
+										<i class="fa-solid fa-minus nav-icon"></i>
+										<p>Data Rekening Siswa</p>
+									</a>
+								</li>
+							</ul>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a href="#" class="nav-link">
+										<i class="fa-solid fa-minus nav-icon"></i>
+										<p>Buku Tabungan Siswa</p>
+									</a>
+								</li>
+							</ul>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a href="#" class="nav-link">
+										<i class="fa-solid fa-minus nav-icon"></i>
+										<p>Transaksi Tarik Setor</p>
+									</a>
+								</li>
+							</ul>
+							<!-- /.nav nav-treeview -->
+						</li>
+						<!-- /. SI. Tabungan Siswa -->
+
+						<!-- menu-laporan -->
+						<li class="nav-item">
+							<a href="#" class="nav-link">
+								<i class="nav-icon fa-solid fa-print"></i>
+								<p>Cetak Laporan<i class="fas fa-angle-left right"></i></p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a href="#" class="nav-link">
+										<i class="fa-solid fa-minus nav-icon"></i>
+										<p>Lap. Guru & Karyawan</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a href="#" class="nav-link">
+										<i class="fa-solid fa-minus nav-icon"></i>
+										<p>Lap. Siswa & Wali Siswa</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a href="#" class="nav-link">
+										<i class="fa-solid fa-minus nav-icon"></i>
+										<p>Lap. Pembayaran SPP</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a href="#" class="nav-link">
+										<i class="fa-solid fa-minus nav-icon"></i>
+										<p>Lap. Raport Siswa</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a href="#" class="nav-link">
+										<i class="fa-solid fa-minus nav-icon"></i>
+										<p>Lap. Tabungan Siswa</p>
+									</a>
+								</li>
+							</ul>
+							<!-- /.nav nav-treeview -->
+						</li>
+						<!-- /. menu-laporan -->
 
 						<!-- menu-pengaturan-sistem -->
-						<li class="nav-item @if(strpos(request()->path(), 'admin/data-tahun-ajar') !== false) menu-open @endif">
+						<li class="nav-item 
+							@if(strpos(request()->path(), 'admin/data-tahun-ajar') !== false || strpos(request()->path(), 'admin/data-kelas') !== false || strpos(request()->path(), 'admin/data-jurusan') !== false )
+								menu-open
+							@endif">
 
 							<!-- pengaturan sistem -->
-							<a href="#" class="nav-link @if(strpos(request()->path(), 'admin/data-tahun-ajar') !== false) active @endif">
+							<a href="#" class="nav-link 
+								@if(strpos(request()->path(), 'admin/data-tahun-ajar') !== false || strpos(request()->path(), 'admin/data-kelas') !== false || strpos(request()->path(), 'admin/data-jurusan') !== false )
+									active
+								@endif">
 								<i class="nav-icon fas fa-gears"></i>
 								<p>Pengaturan Sistem<i class="fas fa-angle-left right"></i></p>
 							</a>
@@ -214,9 +316,32 @@
 							<!-- nav-tree-pengaturan-sistem -->
 							<ul class="nav nav-treeview">
 
+								<li class="nav-item">
+									<a href="{{ route('admin.data_jurusan') }}" class="nav-link
+										@if(strpos(request()->path(), 'admin/data-jurusan') !== false)
+											active
+										@endif">
+										<i class="fa-solid fa-minus nav-icon"></i>
+										<p>Data Jurusan</p>
+									</a>
+								</li>
+
+								<li class="nav-item">
+									<a href="{{ route('admin.data_kelas') }}" class="nav-link
+										@if(strpos(request()->path(), 'admin/data-kelas') !== false)
+											active
+										@endif">
+										<i class="fa-solid fa-minus nav-icon"></i>
+										<p>Data kelas</p>
+									</a>
+								</li>
+
 								<!-- data tahun ajar -->
 								<li class="nav-item">
-									<a href="{{ route('admin.data_tahun_ajar') }}" class="nav-link @if(strpos(request()->path(), 'admin/data-tahun-ajar') !== false) active @endif">
+									<a href="{{ route('admin.data_tahun_ajar') }}" class="nav-link 
+										@if(strpos(request()->path(), 'admin/data-tahun-ajar') !== false)
+											active
+										@endif">
 										<i class="fas fa-minus nav-icon"></i>
 										<p>Data Tahun Ajar</p>
 									</a>
@@ -246,7 +371,7 @@
 		</aside>
 
 		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper">
+		<div class="content-wrapper pt-4">
 			@yield('mainContent')
 		</div>
 		<!-- /.content-wrapper -->
