@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         // Tabel yang akan dibuat saat migration
         Schema::create('tb_kelas', function (Blueprint $table) {
-            $table->string('id_kelas')->primary();
+            $table->string('id_kelas', 10)->primary();
 
             $table->string('id_jurusan');
             $table->foreign('id_jurusan')->references('id_jurusan')->on('tb_jurusan')->onDelete('cascade');

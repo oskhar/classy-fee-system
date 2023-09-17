@@ -340,7 +340,7 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 /*!***************************************************!*\
-  !*** ./resources/js/admin/data_jurusan_update.js ***!
+  !*** ./resources/js/admin/data_siswa_perkelas.js ***!
   \***************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Core.js */ "./resources/js/admin/Core.js");
@@ -365,61 +365,86 @@ var Main = /*#__PURE__*/function (_Core) {
     var _this;
     _classCallCheck(this, Main);
     _this = _super.call(this);
-    _this.inputNamaJurusan = $("#nama_jurusan");
-    _this.inputSingkatan = $("#singkatan");
-    _this.inputStatusData = $("#status_data");
-    _this.paramIdJurusan = _this.getIdJurusan();
-    _this.setFormData();
+    _this.setDataTableSiswa();
     _this.setListener();
     return _this;
   }
   _createClass(Main, [{
-    key: "setFormData",
-    value: function setFormData() {
-      var self = this; // Simpan referensi this dalam variabel self
-      var url = "".concat(self.mainURL, "/api/jurusan");
-      var dataBody = {
-        id_jurusan: self.paramIdJurusan
-      };
-      this.doAjax(url, function (response) {
-        self.inputNamaJurusan.val(response.data.nama_jurusan);
-        self.inputSingkatan.val(response.data.singkatan);
+    key: "setDataTableSiswa",
+    value: function setDataTableSiswa() {
+      var _this2 = this;
+      // Data yang dibutuhkan tabel
+      this.dataTableElement = $("#example1");
+      var urlAPI = "".concat(this.mainURL, "/api/siswa-perkelas");
+      var dataColumns = [{
+        data: "nis"
+      }, {
+        data: "nisn"
+      }, {
+        data: "nama_siswa"
+      }, {
+        data: "jenis_kelamin"
+      }, {
+        data: "tempat_lahir"
+      }, {
+        data: "tanggal_lahir",
+        render: function render(data) {
+          return _this2.convertTanggal(data);
+        }
+      }, {
+        data: "status_data",
+        render: function render(data) {
+          var className = data === "Aktif" ? "text-success" : "text-danger";
+          return "<strong class='".concat(className, " px-3'>").concat(data, "</strong>");
+        }
+      }, {
+        data: "nis",
+        render: function render(data, type, row) {
+          return "\n                    <a class=\"btn btn-outline-primary btn-sm\" href=\"".concat(_this2.mainURL, "/admin/data-siswa-detail/").concat(btoa(data), "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"lihat detai data\">\n                        <i class=\"fas fa-eye\"></i>\n                    </a>\n                    <a class=\"btn btn-outline-warning btn-sm\" href=\"").concat(_this2.mainURL, "/admin/data-siswa-update/").concat(btoa(data), "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"ubah data\">\n                        <i class=\"fas fa-edit\"></i>\n                    </a>\n                    <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-nis=\"").concat(data, "\" data-nama=\"").concat(row.nama_siswa, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"hapus data\">\n                        <i class=\"fas fa-trash\"></i>\n                    </a>\n                ");
+        }
+      }];
 
-        // Pilih opsi yang memiliki value sesuai dengan status_data
-        self.inputStatusData.find('option[value="' + pilihanStatusData + '"]').prop("selected", true);
-      }, dataBody);
+      // Membuat tabel
+      this.dataTable = this.setDataTable(this.dataTableElement, urlAPI, dataColumns, 40);
     }
   }, {
     key: "setListener",
     value: function setListener() {
       var self = this; // Simpan referensi this dalam variabel self
-      $("#form-tambah-jurusan").submit(function (event) {
-        // Mencegah pengiriman formulir secara default
-        event.preventDefault();
 
-        // Assigmen data yang diperlukan untuk mengakses API
-        var url = "".concat(self.mainURL, "/api/jurusan");
-        var method = "put";
-        var dataBody = {
-          id_jurusan: self.paramIdJurusan,
-          nama_jurusan: self.inputNamaJurusan.val(),
-          singkatan: self.inputSingkatan.val(),
-          status_data: self.inputStatusData.val()
-        };
-
-        // Jalankan api untuk create data saat submit
-        self.doAjax(url, function (response) {
-          self.showSuccessAndRedirect(response.data.success.message, "".concat(self.mainURL, "/admin/data-jurusan"));
-        }, dataBody, method);
+      // Event listener untuk tombol delete
+      this.dataTableElement.on("click", ".btn-action.delete", function (event) {
+        var button = $(this);
+        var nis = button.data("nis");
+        var nama_siswa = button.data("nama");
+        self.performSoftDelete(nis, nama_siswa); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari Siswa Main
       });
     }
   }, {
-    key: "getIdJurusan",
-    value: function getIdJurusan() {
-      // Ambil url keseluruhan
-      var id_jurusan = this.objectURL.href.replace("".concat(this.mainURL, "/admin/data-jurusan-update/"), "");
-      id_jurusan = atob(id_jurusan);
-      return id_jurusan;
+    key: "performSoftDelete",
+    value: function performSoftDelete(nis, nama_siswa) {
+      var _this3 = this;
+      this.showWarningMessage("Hapus Siswa ".concat(nama_siswa, " ?"), "Hapus").then(function (result) {
+        // Assigmen data yang dibutuhkan untuk mengakses API
+        var urlAPI = "".concat(_this3.mainURL, "/api/siswa");
+        var method = "delete";
+        var dataBody = {
+          nis: nis
+        };
+
+        // Jalankan api untuk delete data jika tombol hapus diclick
+        if (result.isDenied) {
+          _this3.doAjax(urlAPI, function (response) {
+            _this3.refreshDataTable();
+            _this3.showSuccessMessage(response.data.success.message);
+          }, dataBody, method);
+        }
+      });
+    }
+  }, {
+    key: "refreshDataTable",
+    value: function refreshDataTable() {
+      this.dataTable.ajax.reload();
     }
   }]);
   return Main;

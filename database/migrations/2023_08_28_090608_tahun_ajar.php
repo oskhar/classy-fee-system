@@ -13,7 +13,7 @@ return new class extends Migration
     {
         // Tabel yang akan dibuat saat migration
         Schema::create('tb_tahun_ajar', function (Blueprint $table) {
-            $table->string('id_tahun_ajar')->primary();
+            $table->string('id_tahun_ajar', 10)->primary();
 
             $table->string('nama_tahun_ajar');
 

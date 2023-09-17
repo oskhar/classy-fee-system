@@ -48,7 +48,7 @@
 						<img src="{{ asset('images/smk3gu0ke.png') }}" alt="AdminLTE Logo" class="img-circle elevation-2" style="opacity: .8">
 					</div>
 					<div class="info">
-						<a href="{{url('')}}" class="d-block">SMA-SMK Triguna Utama</a>
+						<a href="{{url('admin')}}" class="d-block">SMA-SMK Triguna Utama</a>
 					</div>
 				</div>
 				<!-- sidebar logo -->

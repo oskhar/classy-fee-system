@@ -19,6 +19,28 @@ export class Core {
             11: "November",
             12: "Desember",
         };
+
+        /**
+         * Chekc ontentikasi user yang mengakses halama admin
+         * apakah user sudah login dengan sesuai
+         */
+        this.checkAuthentication();
+    }
+
+    async checkAuthentication() {
+        try {
+            await this.doAjax(
+                `${this.mainURL}/api/auth/me`,
+                () => {},
+                {},
+                "post"
+            );
+        } catch (error) {
+            // Handle error jika otentikasi gagal
+            this.showErrorMessage(
+                "Kamu belum login! harap login terlebih dahulu"
+            );
+        }
     }
 
     setAjaxHeader() {

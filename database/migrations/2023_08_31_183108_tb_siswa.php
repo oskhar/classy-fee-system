@@ -13,8 +13,8 @@ return new class extends Migration
     {
         // Tabel yang akan dibuat saat migration
         Schema::create('tb_siswa', function (Blueprint $table) {
-            $table->string('nis')->primary();
-            $table->string('nisn')->unique();
+            $table->string('nis', 30)->primary();
+            $table->string('nisn', 30)->unique();
 
             $table->string('id_wali_siswa');
             $table->foreign('id_wali_siswa')->references('id_wali_siswa')->on('tb_wali_siswa')->onDelete('cascade');
