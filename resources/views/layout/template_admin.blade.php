@@ -269,7 +269,7 @@
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href="#" class="nav-link">
+									<a href="{{route('admin.cetak.laporan_siswa')}}" class="nav-link">
 										<i class="fa-solid fa-minus nav-icon"></i>
 										<p>Lap. Siswa & Wali Siswa</p>
 									</a>

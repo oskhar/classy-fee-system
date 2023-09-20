@@ -19,6 +19,7 @@
     "/js/admin/data_tahun_ajar.js": "/js/admin/data_tahun_ajar.js",
     "/js/admin/data_tahun_ajar_create.js": "/js/admin/data_tahun_ajar_create.js",
     "/js/admin/data_tahun_ajar_update.js": "/js/admin/data_tahun_ajar_update.js",
+    "/js/admin/cetak/laporan_siswa.js": "/js/admin/cetak/laporan_siswa.js",
     "/css/admin/data_jurusan_update.css": "/css/admin/data_jurusan_update.css",
     "/css/admin/data_jurusan_create.css": "/css/admin/data_jurusan_create.css",
     "/css/admin/data_jurusan.css": "/css/admin/data_jurusan.css",

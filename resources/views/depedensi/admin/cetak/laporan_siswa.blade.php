@@ -1,0 +1,1 @@
+<script src="{{ asset('js/admin/cetak/laporan_siswa.js') }}"></script>
