@@ -21,7 +21,8 @@ class Main extends Core {
 
         self.idTahunAjar.on("change", function () {
             this.tahunAjarSelected = $(this).val();
-            self.idTahunAjar.prop("disabled", false);
+            $(this).prop("disabled", false);
+            $(this).removeAttr("disabled");
 
             if (this.tahunAjarSelected) {
                 self.fetchNamaSiswa();

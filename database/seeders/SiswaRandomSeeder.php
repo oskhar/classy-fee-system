@@ -14,20 +14,39 @@ class SiswaRandomSeeder extends Seeder
      */
     public function run(): void
     {
-        // Jumlah data yang ingin Anda buat
+        /**
+         * Menentukan jumlah data yang diinginkan
+         * untuk melakukan penambahan data
+         * sebanyak jumlah data yang sesuai
+         */
         $jumlahData = 2160; // Ganti dengan jumlah yang diinginkan
 
+        /**
+         * Melakukan perulangan sebanyak number jumlahData
+         * yang ditentukan untuk melakukan penambahan
+         * data yang relevan dengan ketentuan
+         */
         for ($i = 0; $i < $jumlahData; $i++) {
 
+            /**
+             * Membuat id walisiswa berdasarkan banyaknya
+             * jumlah data (count) pada tabel walisiswa
+             */
             $banyakData = WaliSiswaModel::withTrashed()->count();
             $idWaliSiswa = "WS-" . str_pad(($banyakData + 1), 8, '0', STR_PAD_LEFT);
 
-            // Membuat data wali siswa
+            /**
+             * Membuat data wali siswa berdasarkan
+             * idWaliSiswa yang sudah ditentukan
+             */
             WaliSiswaModel::factory()->create([
                 'id_wali_siswa' => $idWaliSiswa,
             ]);
 
-            // Menggunakan ID wali siswa yang baru saja dibuat untuk membuat data siswa
+            /**
+             * Menggunakan idWali siswa untuk membuat data
+             * siswa yang terhubung dengan wali siswa
+             */
             SiswaModel::factory()->create([
                 'id_wali_siswa' => $idWaliSiswa,
             ]);

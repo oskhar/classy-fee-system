@@ -24,8 +24,9 @@ class MasterDataSiswaModel extends Model
      * @var boolean
      */
     public $timestamps = true;
-    protected $primaryKey = ['nis', 'nis', 'id_kelas', 'id_tahun_ajar'];
+    protected $primaryKey = ['nis', 'nisn', 'id_kelas', 'id_tahun_ajar'];
     protected $keyType = "string";
+    public $incrementing = false;
 
     /**
      * Atribut atau kolom yang boleh diubah.
@@ -34,7 +35,7 @@ class MasterDataSiswaModel extends Model
      */
     protected $fillable = [
         'nis',
-        'nis',
+        'nisn',
         'id_kelas',
         'id_tahun_ajar',
         'status_data',

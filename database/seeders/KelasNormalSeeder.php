@@ -14,7 +14,10 @@ class KelasNormalSeeder extends Seeder
      */
     public function run(): void
     {
-
+        /**
+         * Menulis satu persatu data tabel kelas
+         * secara manual (tanpa perulangan)
+         */
         KelasModel::create([
             'id_kelas' => 'K-001',
             'id_jurusan' => 'J-001',

@@ -13,7 +13,10 @@ class JurusanNormalSeeder extends Seeder
      */
     public function run(): void
     {
-
+        /**
+         * Menulis satu persatu data tabel jurusan
+         * secara manual (tanpa perulangan)
+         */
         JurusanModel::create([
             'id_jurusan' => 'J-001',
             'nama_jurusan' => 'Ilmu Pengetahuan Alam',

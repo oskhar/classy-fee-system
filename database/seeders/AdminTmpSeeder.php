@@ -14,6 +14,11 @@ class AdminTmpSeeder extends Seeder
      */
     public function run(): void
     {
+        /**
+         * Mengisi data pada tabel admin
+         * dengan data default untuk
+         * sistem auth semetara
+         */
         AdminModel::create([
             'id_admin' => 'J-001',
             'username' => 'admin',

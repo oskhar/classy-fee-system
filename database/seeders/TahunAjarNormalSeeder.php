@@ -13,7 +13,10 @@ class TahunAjarNormalSeeder extends Seeder
      */
     public function run(): void
     {
-
+        /**
+         * Melakukan penambahan data secara manual
+         * untuk mengisi data tabel tahun ajar
+         */
         TahunAjarModel::create([
             'id_tahun_ajar' => 'TA-001',
             'nama_tahun_ajar' => '2021/2022',
