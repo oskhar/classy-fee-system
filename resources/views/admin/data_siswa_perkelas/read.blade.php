@@ -18,9 +18,7 @@
           <!-- /.card-header -->
           <div class="card">
             <div class="card-body">
-                  <a href="{{ route('admin.data_siswa_create') }}" class="btn btn-outline-primary p-2 ml-2" >Tambah Data</a>
                   <a href="{{ route('export.siswa') }}" class="btn btn-outline-primary p-2 ml-2" >Export Data</a>
-                  <a href="{{ route('admin.data_siswa_import') }}" class="btn btn-outline-primary p-2 ml-2" >Import Data</a>
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>

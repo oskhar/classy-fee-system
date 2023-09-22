@@ -1,4 +1,8 @@
-// Kelas utama untuk semua
+/**
+ * Core sebagai class utama yang
+ * akan dijadikan parent untuk
+ * setiap halaman javascript
+ */
 export class Core {
     constructor() {
         this.setAjaxHeader();
@@ -36,7 +40,10 @@ export class Core {
                 "post"
             );
         } catch (error) {
-            // Handle error jika otentikasi gagal
+            /**
+             * Tampilkan error ketika ada kesalahan
+             * pada percobaan autentikasi jwttoken
+             */
             this.showErrorMessage(
                 "Kamu belum login! harap login terlebih dahulu"
             );
