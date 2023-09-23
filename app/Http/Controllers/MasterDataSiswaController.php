@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\MasterDataSiswa\Requests\KelasDariTahunAjarRequest;
 use App\Http\Resources\MasterDataSiswaResource;
 use App\Models\MasterDataSiswaModel;
 use App\Models\SiswaModel;
@@ -19,21 +20,95 @@ class MasterDataSiswaController extends Controller
          */
         $query = MasterDataSiswaModel::select(
             'master_data_siswa.nis',
+            'master_data_siswa.nisn',
             'master_data_siswa.id_kelas',
-            'master_data_siswa.id_tahun_ajar'
+            'master_data_siswa.id_tahun_ajar',
+            'tb_siswa.nama_siswa',
+            'tb_siswa.status_data',
+            'tb_kelas.nama_kelas',
+            'tb_tahun_ajar.nama_tahun_ajar',
+            'tb_tahun_ajar.semester'
         )->join('tb_siswa', 'master_data_siswa.nis', '=', 'tb_siswa.nis')
-        ->join('tb_kelas', 'master_data_siswa.id_kelas', '=', 'tb_siswa.id_kelas')
-        ->join('tb_tahun_ajar', 'master_data_siswa.id_tahun_ajar', '=', 'tb_siswa.id_tahun_ajar');
+        ->join('tb_kelas', 'master_data_siswa.id_kelas', '=', 'tb_kelas.id_kelas')
+        ->join('tb_tahun_ajar', 'master_data_siswa.id_tahun_ajar', '=', 'tb_tahun_ajar.id_tahun_ajar');
+
+        if ($request->has('nama_tahun_ajar') && $request->has('semester')) {
+            $query = $query->where('tb_tahun_ajar.nama_tahun_ajar', $request->nama_tahun_ajar)
+                        ->where('tb_tahun_ajar.semester', $request->semester);
+        }
+
+        $totalRecords = MasterDataSiswaModel::count();
+
+        if ($request->has('start') && $request->has('length')) {
+            $query = $query->offset($request->start)
+                ->limit($request->length);
+        }
+
+        // Penyortiran (Ordering) berdasarkan kolom yang dipilih
+        if ($request->has('order') && count($request->order) > 0) {
+            $orderByColumn = $request->order[0]['column'];
+            $orderByDir = $request->order[0]['dir'];
+
+            $columns = [
+                'id_kelas',
+                'nama_kelas',
+                'nama_jurusan'
+            ];
+
+            if (isset($columns[$orderByColumn])) {
+                $orderBy = $columns[$orderByColumn];
+                $query = $query->orderBy($orderBy, $orderByDir);
+            }
+        }
+
+        // Pencarian berdasarkan nama_kelas
+        if ($request->has('search') && !empty($request->search['value'])) {
+            $searchValue = $request->search['value'];
+            $query = $query->where('tb_kelas.nama_kelas', 'LIKE', '%' . $searchValue . '%');
+            $filteredRecords = $query->count();
+        } else {
+            $filteredRecords = $totalRecords; // Jumlah total keseluruhan data
+        }
 
         $data = $query->get();
         
         $response = [
-            // 'draw' => intval($request->input('draw')),
-            // 'recordsTotal' => $totalRecords,
-            // 'recordsFiltered' => $filteredRecords,
+            'draw' => intval($request->input('draw')), // Pastikan draw disertakan
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $filteredRecords,
             'data' => MasterDataSiswaResource::collection($data),
         ];
-        
+
+        /**
+         * Mengembalikan data berdasarkan
+         * resource yang sudah diatur
+         */
         return response()->json($response)->setStatusCode(200);
+    }
+
+    public function getKelasDariTahunAjar (KelasDariTahunAjarRequest $request): JsonResponse
+    {
+        /**
+         * Query utama yang ditetapkan untuk melakukan
+         * pengambilan data sesuai parameter tujuan
+         */
+        $query = MasterDataSiswaModel::select(
+            'tb_kelas.nama_kelas',
+        )->join('tb_siswa', 'master_data_siswa.nis', '=', 'tb_siswa.nis')
+        ->join('tb_kelas', 'master_data_siswa.id_kelas', '=', 'tb_kelas.id_kelas')
+        ->join('tb_tahun_ajar', 'master_data_siswa.id_tahun_ajar', '=', 'tb_tahun_ajar.id_tahun_ajar');
+
+        /**
+         * Mengedit query sesuai kebutuhan
+         */
+        $query = $query->where('tb_tahun_ajar.nama_tahun_ajar', $request['nama_tahun_ajar'])
+                    ->where('tb_tahun_ajar.semester', $request['semester']);
+        $data = $query->get;
+
+        /**
+         * Mengembalikan data berdasarkan
+         * resource yang sudah diatur
+         */
+        return (new MasterDataSiswaResource($data))->response()->setStatusCode(200);
     }
 }

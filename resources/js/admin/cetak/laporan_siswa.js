@@ -7,9 +7,12 @@ class Main extends Core {
 
         this.idTahunAjar = $("#idTahunAjar");
         this.idSiswa = $("#idSiswa");
-        this.doAjax(`${this.mainURL}/api/siswa`, function (response) {
-            console.log(response);
-        });
+        this.doAjax(
+            `${this.mainURL}/api/kelas/dari-tahun-ajar`,
+            function (response) {
+                console.log(response);
+            }
+        );
         this.fetchTahunAjar();
         this.tahunAjarSelected = false;
 

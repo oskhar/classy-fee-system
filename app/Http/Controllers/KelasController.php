@@ -23,7 +23,7 @@ class KelasController extends Controller
             'tb_jurusan.id_jurusan',
             'tb_jurusan.nama_jurusan'
             )->join('tb_jurusan', 'tb_kelas.id_jurusan', '=', 'tb_jurusan.id_jurusan');
-    
+
         if ($request->has('id_kelas')) {
             $kelas = $query->find($request->id_kelas);
             return (new KelasResource($kelas))->response()->setStatusCode(200);

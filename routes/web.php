@@ -76,6 +76,10 @@ Route::group(['prefix' => 'admin'], function ($router) {
         return view('admin.data_siswa.detail');
     })->name('admin.data_siswa_detail');
 
+    Route::get('/data-siswa-perkelas', function () {
+        return view('admin.data_siswa_perkelas.read');
+    })->name('admin.data_siswa_perkelas');
+
     /**
      * Router untuk halaman data jurusan
      * 

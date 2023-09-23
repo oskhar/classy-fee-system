@@ -28,7 +28,7 @@
 
                             <div class='form-group'>
                                 <label for='idSiswa'>Nama Siswa</label>
-                                <select required disabled class="form-control" name="idSiswa" id="idSiswa">
+                                <select required class="form-control" name="idSiswa" id="idSiswa">
                                     <option value="" disabled>Pilih siswa</option>
                                 </select>
                             </div>

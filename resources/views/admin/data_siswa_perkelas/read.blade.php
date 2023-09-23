@@ -25,9 +25,9 @@
                         <th>NIS</th>
                         <th>NISN</th>
                         <th>Nama Lengkap</th>
-                        <th>Jenis Kelamin</th>
-                        <th>Tempat Lahir</th>
-                        <th>Tanggal Lahir</th>
+                        <th>Kelas</th>
+                        <th>Tahun Ajar</th>
+                        <th>Semester</th>
                         <th>Status Data</th>
                         <th>Aksi</th>
                       </tr>

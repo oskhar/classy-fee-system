@@ -375,7 +375,7 @@ var Main = /*#__PURE__*/function (_Core) {
     _this = _super.call(this);
     _this.idTahunAjar = $("#idTahunAjar");
     _this.idSiswa = $("#idSiswa");
-    _this.doAjax("".concat(_this.mainURL, "/api/siswa"), function (response) {
+    _this.doAjax("".concat(_this.mainURL, "/api/kelas/dari-tahun-ajar"), function (response) {
       console.log(response);
     });
     _this.fetchTahunAjar();

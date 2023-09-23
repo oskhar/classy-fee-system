@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MasterDataSiswaController;
 use App\Http\Controllers\SiswaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,8 @@ Route::group(['middleware' => 'apiauthmid'], function ($router) {
     Route::put('/siswa', [SiswaController::class, 'update']);
     Route::put('/siswa/pulihkan', [SiswaController::class, 'restore']);
     Route::delete('/siswa', [SiswaController::class, 'delete']);
+
+    Route::get('/siswa/perkelas', [MasterDataSiswaController::class, 'getDataSiswaPerkelas']);
     // END DATA SISWA
 
     // START DATA KELAS
@@ -44,6 +47,8 @@ Route::group(['middleware' => 'apiauthmid'], function ($router) {
     Route::put('/kelas', [KelasController::class, 'update']);
     Route::put('/kelas/pulihkan', [KelasController::class, 'restore']);
     Route::delete('/kelas', [KelasController::class, 'delete']);
+
+    Route::get('/kelas/dari-tahun-ajar', [MasterDataSiswaController::class, 'getKelasDariTahunAjar']);
     // END DATA KELAS
 
     // START DATA JURUSAN

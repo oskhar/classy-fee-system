@@ -10,19 +10,14 @@ class Main extends Core {
     setDataTableSiswa() {
         // Data yang dibutuhkan tabel
         this.dataTableElement = $("#example1");
-        const urlAPI = `${this.mainURL}/api/siswa-perkelas`;
+        const urlAPI = `${this.mainURL}/api/siswa/perkelas`;
         const dataColumns = [
             { data: "nis" },
             { data: "nisn" },
             { data: "nama_siswa" },
-            { data: "jenis_kelamin" },
-            { data: "tempat_lahir" },
-            {
-                data: "tanggal_lahir",
-                render: (data) => {
-                    return this.convertTanggal(data);
-                },
-            },
+            { data: "nama_kelas" },
+            { data: "nama_tahun_ajar" },
+            { data: "semester" },
             {
                 data: "status_data",
                 render: (data) => {
@@ -62,7 +57,7 @@ class Main extends Core {
             this.dataTableElement,
             urlAPI,
             dataColumns,
-            40
+            20
         );
     }
 

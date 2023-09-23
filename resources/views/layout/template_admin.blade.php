@@ -137,7 +137,7 @@
 
 								<!-- data kelas -->
 								<li class="nav-item">
-									<a href="{{ route('admin.data_kelas') }}" class="nav-link @if(strpos(request()->path(), 'admin/data-kelas') !== false)
+									<a href="{{ route('admin.data_siswa_perkelas') }}" class="nav-link @if(strpos(request()->path(), 'admin/data-kelas') !== false)
 											active
 										@endif">
 										<i class="fas fa-minus nav-icon"></i>

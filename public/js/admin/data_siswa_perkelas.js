@@ -382,7 +382,7 @@ var Main = /*#__PURE__*/function (_Core) {
       var _this2 = this;
       // Data yang dibutuhkan tabel
       this.dataTableElement = $("#example1");
-      var urlAPI = "".concat(this.mainURL, "/api/siswa-perkelas");
+      var urlAPI = "".concat(this.mainURL, "/api/siswa/perkelas");
       var dataColumns = [{
         data: "nis"
       }, {
@@ -390,14 +390,11 @@ var Main = /*#__PURE__*/function (_Core) {
       }, {
         data: "nama_siswa"
       }, {
-        data: "jenis_kelamin"
+        data: "nama_kelas"
       }, {
-        data: "tempat_lahir"
+        data: "nama_tahun_ajar"
       }, {
-        data: "tanggal_lahir",
-        render: function render(data) {
-          return _this2.convertTanggal(data);
-        }
+        data: "semester"
       }, {
         data: "status_data",
         render: function render(data) {
@@ -412,7 +409,7 @@ var Main = /*#__PURE__*/function (_Core) {
       }];
 
       // Membuat tabel
-      this.dataTable = this.setDataTable(this.dataTableElement, urlAPI, dataColumns, 40);
+      this.dataTable = this.setDataTable(this.dataTableElement, urlAPI, dataColumns, 20);
     }
   }, {
     key: "setListener",
