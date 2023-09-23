@@ -230,21 +230,28 @@ var Core = /*#__PURE__*/function () {
     key: "setDataTable",
     value: function setDataTable(tableElement, urlAPI, dataColumns) {
       var limit = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 5;
+      var ordering = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
       var self = this;
       return tableElement.DataTable({
         ajax: {
           url: urlAPI,
           type: "GET",
           data: function data(_data) {
-            // Tambahkan parameter pengurutan
+            /**
+             * Menambahkan parameter yang dibutuhkan
+             */
+            _data.jenis_login = "admin";
             if (_data.order.length > 0) {
               _data.orderColumn = _data.order[0].column; // Indeks kolom yang ingin diurutkan
               _data.orderDir = _data.order[0].dir; // Arah pengurutan (asc atau desc)
-              _data.jenis_login = "admin";
             }
           },
+
           error: function error(xhr) {
-            // Handle kesalahan yang terjadi saat pengambilan data
+            /**
+             * Handle kesalahan yang terjadi selama
+             * proses pengambilan data berlangusng
+             */
             var errors;
             if (xhr.responseJSON.errors) {
               errors = self.objectToString(xhr.responseJSON.errors);
@@ -276,6 +283,7 @@ var Core = /*#__PURE__*/function () {
         // Mengaktifkan paginasi
         pageLength: limit,
         // Menentukan jumlah data per halaman
+        ordering: ordering,
         drawCallback: function drawCallback() {
           $('[data-toggle="tooltip"]').tooltip();
         }

@@ -17,7 +17,22 @@
         <div class="col-12">
           <!-- /.card-header -->
           <div class="card">
-            <div class="card-body">
+            <div class="card-body row">
+
+              <div class='form-group col-sm-6'>
+                  <label for='idTahunAjar'>Tahun ajar</label>
+                  <select required class="form-control" name="idTahunAjar" id="idTahunAjar">
+                      <option value="" disabled>Pilih tahun ajar</option>
+                  </select>
+              </div>
+
+              <div class='form-group col-sm-6'>
+                  <label for='idKelas'>Nama Kelas</label>
+                  <select required class="form-control" name="idKelas" id="idKelas">
+                      <option value="" disabled>Pilih kelas</option>
+                  </select>
+              </div>
+              <div class="col-lg-12">
                   <a href="{{ route('export.siswa') }}" class="btn btn-outline-primary p-2 ml-2" >Export Data</a>
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
@@ -38,6 +53,7 @@
                 </div>
                 <!-- /.card-body -->
               </div>
+            </div>
           </div>
         </div>
       </div>

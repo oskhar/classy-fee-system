@@ -230,21 +230,28 @@ var Core = /*#__PURE__*/function () {
     key: "setDataTable",
     value: function setDataTable(tableElement, urlAPI, dataColumns) {
       var limit = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 5;
+      var ordering = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
       var self = this;
       return tableElement.DataTable({
         ajax: {
           url: urlAPI,
           type: "GET",
           data: function data(_data) {
-            // Tambahkan parameter pengurutan
+            /**
+             * Menambahkan parameter yang dibutuhkan
+             */
+            _data.jenis_login = "admin";
             if (_data.order.length > 0) {
               _data.orderColumn = _data.order[0].column; // Indeks kolom yang ingin diurutkan
               _data.orderDir = _data.order[0].dir; // Arah pengurutan (asc atau desc)
-              _data.jenis_login = "admin";
             }
           },
+
           error: function error(xhr) {
-            // Handle kesalahan yang terjadi saat pengambilan data
+            /**
+             * Handle kesalahan yang terjadi selama
+             * proses pengambilan data berlangusng
+             */
             var errors;
             if (xhr.responseJSON.errors) {
               errors = self.objectToString(xhr.responseJSON.errors);
@@ -276,6 +283,7 @@ var Core = /*#__PURE__*/function () {
         // Mengaktifkan paginasi
         pageLength: limit,
         // Menentukan jumlah data per halaman
+        ordering: ordering,
         drawCallback: function drawCallback() {
           $('[data-toggle="tooltip"]').tooltip();
         }
@@ -374,12 +382,16 @@ var Main = /*#__PURE__*/function (_Core) {
     _classCallCheck(this, Main);
     _this = _super.call(this);
     _this.idTahunAjar = $("#idTahunAjar");
+    _this.idKelas = $("#idKelas");
     _this.idSiswa = $("#idSiswa");
     _this.doAjax("".concat(_this.mainURL, "/api/kelas/dari-tahun-ajar"), function (response) {
       console.log(response);
+    }, {
+      id_tahun_ajar: "TA-001"
     });
     _this.fetchTahunAjar();
     _this.tahunAjarSelected = false;
+    _this.idKelasSelected = false;
     _this.setListeners();
     return _this;
   }
@@ -388,32 +400,17 @@ var Main = /*#__PURE__*/function (_Core) {
     value: function setListeners() {
       var self = this;
       self.idTahunAjar.on("change", function () {
-        this.tahunAjarSelected = $(this).val();
-        $(this).prop("disabled", false);
-        $(this).removeAttr("disabled");
-        if (this.tahunAjarSelected) {
-          self.fetchNamaSiswa();
+        self.tahunAjarSelected = $(this).val();
+        if (self.tahunAjarSelected) {
+          self.fetchNamaKelas(self.tahunAjarSelected);
         }
       });
-
-      // self.regencySelect.on("change", function () {
-      //     const selectedRegencyId = $(this).val();
-      //     self.districtFormGroup.hide();
-      //     self.villageFormGroup.hide();
-
-      //     if (selectedRegencyId) {
-      //         self.fetchDistricts(selectedRegencyId);
-      //     }
-      // });
-
-      // self.districtSelect.on("change", function () {
-      //     const selectedDistrictId = $(this).val();
-      //     self.villageFormGroup.hide();
-
-      //     if (selectedDistrictId) {
-      //         self.fetchVillages(selectedDistrictId);
-      //     }
-      // });
+      self.idKelas.on("change", function () {
+        self.idKelasSelected = $(this).val();
+        if (self.tahunAjarSelected && self.idKelasSelected) {
+          self.fetchNamaSiswa(self.tahunAjarSelected, self.idKelasSelected);
+        }
+      });
     }
   }, {
     key: "fetchTahunAjar",
@@ -421,27 +418,53 @@ var Main = /*#__PURE__*/function (_Core) {
       var self = this;
       var url = "".concat(self.mainURL, "/api/tahun-ajar");
       self.doAjax(url, function (response) {
-        self.populateSelect(self.idTahunAjar, response.data);
+        self.optionsList("tahun ajar", self.idTahunAjar, response.data);
+      });
+    }
+  }, {
+    key: "fetchNamaKelas",
+    value: function fetchNamaKelas(requestIdTahunAjar) {
+      var self = this;
+      var url = "".concat(self.mainURL, "/api/kelas/dari-tahun-ajar");
+      self.doAjax(url, function (response) {
+        self.optionsList("nama kelas", self.idKelas, response.data);
+      }, {
+        id_tahun_ajar: requestIdTahunAjar
       });
     }
   }, {
     key: "fetchNamaSiswa",
-    value: function fetchNamaSiswa() {
+    value: function fetchNamaSiswa(requestIdTahunAjar, requestIdKelas) {
       var self = this;
-      var url = "".concat(self.mainURL, "/api/siswa");
+      var url = "".concat(self.mainURL, "/api/siswa/perkelas");
       self.doAjax(url, function (response) {
-        self.populateSelect(self.idSiswa, response.data);
+        self.optionsList("nama kelas", self.idSiswa, response.data);
+      }, {
+        id_tahun_ajar: requestIdTahunAjar,
+        id_kelas: requestIdKelas
       });
     }
   }, {
-    key: "populateSelect",
-    value: function populateSelect(selectElement, data) {
-      selectElement.html('<option value="" selected disabled>Pilih</option>');
+    key: "optionsList",
+    value: function optionsList(namaData, selectElement, data) {
+      selectElement.html("<option value=\"\" selected disabled>Pilih ".concat(namaData, "</option>"));
       $.each(data, function (index, item) {
-        selectElement.append($("<option>", {
-          value: item.id_tahun_ajar,
-          text: item.nama_tahun_ajar + " " + item.semester
-        }));
+        if (item.nis) {
+          selectElement.append($("<option>", {
+            value: item.nis,
+            text: "".concat(item.nama_kelas, " (").concat(item.nis, ") ").concat(item.nama_siswa)
+          }));
+        } else if (item.id_kelas) {
+          selectElement.append($("<option>", {
+            value: item.id_kelas,
+            text: "(".concat(item.nama_tahun_ajar, ") ").concat(item.nama_kelas)
+          }));
+        } else if (item.id_tahun_ajar) {
+          selectElement.append($("<option>", {
+            value: item.id_tahun_ajar,
+            text: item.nama_tahun_ajar + " " + item.semester
+          }));
+        }
       });
     }
   }]);

@@ -38,7 +38,7 @@ Route::group(['middleware' => 'apiauthmid'], function ($router) {
     Route::put('/siswa/pulihkan', [SiswaController::class, 'restore']);
     Route::delete('/siswa', [SiswaController::class, 'delete']);
 
-    Route::get('/siswa/perkelas', [MasterDataSiswaController::class, 'getDataSiswaPerkelas']);
+    Route::get('/siswa/perkelas', [MasterDataSiswaController::class, 'getSiswaPerkelas']);
     // END DATA SISWA
 
     // START DATA KELAS

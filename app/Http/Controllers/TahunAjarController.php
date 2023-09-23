@@ -18,7 +18,7 @@ class TahunAjarController extends Controller
             'id_tahun_ajar',
             'nama_tahun_ajar',
             'semester',
-            'status_data');
+            'status_data')->orderBy('nama_tahun_ajar', 'DESC');
 
         $totalRecords = TahunAjarModel::count();
     
@@ -31,25 +31,11 @@ class TahunAjarController extends Controller
             $query = $query->offset($request->start)
                 ->limit($request->length);
         }
-
-        // Penyortiran (Ordering) berdasarkan kolom yang dipilih
-        if ($request->has('order') && count($request->order) > 0) {
-            $orderByColumn = $request->order[0]['column'];
-            $orderByDir = $request->order[0]['dir'];
-
-            $columns = [
-                'id_tahun_ajar',
-                'nama_tahun_ajar',
-                'semester'
-            ];
-
-            if (isset($columns[$orderByColumn])) {
-                $orderBy = $columns[$orderByColumn];
-                $query = $query->orderBy($orderBy, $orderByDir);
-            }
-        }
-
-        // Pencarian berdasarkan nama_tahun_ajar
+        
+        /**
+         * Melakukan pencarian data pada datatable
+         * jquery berdasarkan nama_tahun_ajar
+         */
         if ($request->has('search') && !empty($request->search['value'])) {
             $searchValue = $request->search['value'];
             $query = $query->where('nama_tahun_ajar', 'LIKE', '%' . $searchValue . '%');

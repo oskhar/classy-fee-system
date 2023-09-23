@@ -3,78 +3,94 @@ import { Core } from "./Core.js";
 class Main extends Core {
     constructor() {
         super();
-        this.setDataTableSiswa();
+        this.idTahunAjar = $("#idTahunAjar");
+        this.idKelas = $("#idKelas");
+        this.dataTableElement = $("#example1");
         this.setListener();
+        this.fetchTahunAjar();
     }
 
-    setDataTableSiswa() {
-        // Data yang dibutuhkan tabel
-        this.dataTableElement = $("#example1");
-        const urlAPI = `${this.mainURL}/api/siswa/perkelas`;
-        const dataColumns = [
-            { data: "nis" },
-            { data: "nisn" },
-            { data: "nama_siswa" },
-            { data: "nama_kelas" },
-            { data: "nama_tahun_ajar" },
-            { data: "semester" },
-            {
-                data: "status_data",
-                render: (data) => {
-                    const className =
-                        data === "Aktif" ? "text-success" : "text-danger";
-                    return `<strong class='${className} px-3'>${data}</strong>`;
+    setDataTableSiswa(requestIdTahunAjar, requestIdKelas) {
+        /**
+         * Merefresh data pada datatable
+         * jika data table sudah terisi
+         */
+        const urlAPI = `${this.mainURL}/api/siswa/perkelas?id_tahun_ajar=${requestIdTahunAjar}&id_kelas=${requestIdKelas}`;
+        if (this.dataTable) {
+            this.dataTable.ajax.url(urlAPI).load();
+        } else {
+            const dataColumns = [
+                { data: "nis" },
+                { data: "nisn" },
+                { data: "nama_siswa" },
+                { data: "nama_kelas" },
+                { data: "nama_tahun_ajar" },
+                { data: "semester" },
+                {
+                    data: "status_data",
+                    render: (data) => {
+                        const className =
+                            data === "Aktif" ? "text-success" : "text-danger";
+                        return `<strong class='${className} px-3'>${data}</strong>`;
+                    },
                 },
-            },
-            {
-                data: "nis",
-                render: (data, type, row) => `
-                    <a class="btn btn-outline-primary btn-sm" href="${
-                        this.mainURL
-                    }/admin/data-siswa-detail/${btoa(
-                    data
-                )}" data-toggle="tooltip" data-bs-placement="top" title="lihat detai data">
-                        <i class="fas fa-eye"></i>
-                    </a>
-                    <a class="btn btn-outline-warning btn-sm" href="${
-                        this.mainURL
-                    }/admin/data-siswa-update/${btoa(
-                    data
-                )}" data-toggle="tooltip" data-bs-placement="top" title="ubah data">
-                        <i class="fas fa-edit"></i>
-                    </a>
-                    <a class="btn btn-outline-danger btn-action btn-sm delete" data-nis="${data}" data-nama="${
-                    row.nama_siswa
-                }" data-toggle="tooltip" data-bs-placement="top" title="hapus data">
-                        <i class="fas fa-trash"></i>
-                    </a>
-                `,
-            },
-        ];
+                {
+                    data: "nis",
+                    render: (data, type, row) => `
+                        <a class="btn btn-outline-primary btn-sm" href="${
+                            this.mainURL
+                        }/admin/data-siswa-detail/${btoa(
+                        data
+                    )}" data-toggle="tooltip" data-bs-placement="top" title="lihat detai data">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        <a class="btn btn-outline-warning btn-sm" href="${
+                            this.mainURL
+                        }/admin/data-siswa-update/${btoa(
+                        data
+                    )}" data-toggle="tooltip" data-bs-placement="top" title="ubah data">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a class="btn btn-outline-danger btn-action btn-sm delete" data-nis="${data}" data-nama="${
+                        row.nama_siswa
+                    }" data-toggle="tooltip" data-bs-placement="top" title="hapus data">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    `,
+                },
+            ];
 
-        // Membuat tabel
-        this.dataTable = this.setDataTable(
-            this.dataTableElement,
-            urlAPI,
-            dataColumns,
-            20
-        );
+            // Membuat tabel
+            this.dataTable = this.setDataTable(
+                this.dataTableElement,
+                urlAPI,
+                dataColumns,
+                20
+            );
+        }
     }
 
     setListener() {
         const self = this; // Simpan referensi this dalam variabel self
 
-        // Event listener untuk tombol delete
-        this.dataTableElement.on(
-            "click",
-            ".btn-action.delete",
-            function (event) {
-                const button = $(this);
-                const nis = button.data("nis");
-                const nama_siswa = button.data("nama");
-                self.performSoftDelete(nis, nama_siswa); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari Siswa Main
+        self.idTahunAjar.on("change", function () {
+            self.tahunAjarSelected = $(this).val();
+
+            if (self.tahunAjarSelected) {
+                self.fetchNamaKelas(self.tahunAjarSelected);
             }
-        );
+        });
+
+        self.idKelas.on("change", function () {
+            self.idKelasSelected = $(this).val();
+
+            if (self.tahunAjarSelected && self.idKelasSelected) {
+                self.setDataTableSiswa(
+                    self.tahunAjarSelected,
+                    self.idKelasSelected
+                );
+            }
+        });
     }
 
     performSoftDelete(nis, nama_siswa) {
@@ -101,6 +117,53 @@ class Main extends Core {
                 }
             }
         );
+    }
+
+    fetchTahunAjar() {
+        const self = this;
+        const url = `${self.mainURL}/api/tahun-ajar`;
+
+        self.doAjax(url, function (response) {
+            self.optionsList("tahun ajar", self.idTahunAjar, response.data);
+        });
+    }
+
+    fetchNamaKelas(requestIdTahunAjar) {
+        const self = this;
+        const url = `${self.mainURL}/api/kelas/dari-tahun-ajar`;
+
+        self.doAjax(
+            url,
+            function (response) {
+                self.optionsList("nama kelas", self.idKelas, response.data);
+            },
+            {
+                id_tahun_ajar: requestIdTahunAjar,
+            }
+        );
+    }
+
+    optionsList(namaData, selectElement, data) {
+        selectElement.html(
+            `<option value="" selected disabled>Pilih ${namaData}</option>`
+        );
+        $.each(data, function (index, item) {
+            if (item.id_kelas) {
+                selectElement.append(
+                    $("<option>", {
+                        value: item.id_kelas,
+                        text: `(${item.nama_tahun_ajar}) ${item.nama_kelas}`,
+                    })
+                );
+            } else if (item.id_tahun_ajar) {
+                selectElement.append(
+                    $("<option>", {
+                        value: item.id_tahun_ajar,
+                        text: item.nama_tahun_ajar + " " + item.semester,
+                    })
+                );
+            }
+        });
     }
 
     refreshDataTable() {

@@ -230,21 +230,28 @@ var Core = /*#__PURE__*/function () {
     key: "setDataTable",
     value: function setDataTable(tableElement, urlAPI, dataColumns) {
       var limit = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 5;
+      var ordering = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
       var self = this;
       return tableElement.DataTable({
         ajax: {
           url: urlAPI,
           type: "GET",
           data: function data(_data) {
-            // Tambahkan parameter pengurutan
+            /**
+             * Menambahkan parameter yang dibutuhkan
+             */
+            _data.jenis_login = "admin";
             if (_data.order.length > 0) {
               _data.orderColumn = _data.order[0].column; // Indeks kolom yang ingin diurutkan
               _data.orderDir = _data.order[0].dir; // Arah pengurutan (asc atau desc)
-              _data.jenis_login = "admin";
             }
           },
+
           error: function error(xhr) {
-            // Handle kesalahan yang terjadi saat pengambilan data
+            /**
+             * Handle kesalahan yang terjadi selama
+             * proses pengambilan data berlangusng
+             */
             var errors;
             if (xhr.responseJSON.errors) {
               errors = self.objectToString(xhr.responseJSON.errors);
@@ -276,6 +283,7 @@ var Core = /*#__PURE__*/function () {
         // Mengaktifkan paginasi
         pageLength: limit,
         // Menentukan jumlah data per halaman
+        ordering: ordering,
         drawCallback: function drawCallback() {
           $('[data-toggle="tooltip"]').tooltip();
         }
@@ -372,56 +380,70 @@ var Main = /*#__PURE__*/function (_Core) {
     var _this;
     _classCallCheck(this, Main);
     _this = _super.call(this);
-    _this.setDataTableSiswa();
+    _this.idTahunAjar = $("#idTahunAjar");
+    _this.idKelas = $("#idKelas");
+    _this.dataTableElement = $("#example1");
     _this.setListener();
+    _this.fetchTahunAjar();
     return _this;
   }
   _createClass(Main, [{
     key: "setDataTableSiswa",
-    value: function setDataTableSiswa() {
+    value: function setDataTableSiswa(requestIdTahunAjar, requestIdKelas) {
       var _this2 = this;
-      // Data yang dibutuhkan tabel
-      this.dataTableElement = $("#example1");
-      var urlAPI = "".concat(this.mainURL, "/api/siswa/perkelas");
-      var dataColumns = [{
-        data: "nis"
-      }, {
-        data: "nisn"
-      }, {
-        data: "nama_siswa"
-      }, {
-        data: "nama_kelas"
-      }, {
-        data: "nama_tahun_ajar"
-      }, {
-        data: "semester"
-      }, {
-        data: "status_data",
-        render: function render(data) {
-          var className = data === "Aktif" ? "text-success" : "text-danger";
-          return "<strong class='".concat(className, " px-3'>").concat(data, "</strong>");
-        }
-      }, {
-        data: "nis",
-        render: function render(data, type, row) {
-          return "\n                    <a class=\"btn btn-outline-primary btn-sm\" href=\"".concat(_this2.mainURL, "/admin/data-siswa-detail/").concat(btoa(data), "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"lihat detai data\">\n                        <i class=\"fas fa-eye\"></i>\n                    </a>\n                    <a class=\"btn btn-outline-warning btn-sm\" href=\"").concat(_this2.mainURL, "/admin/data-siswa-update/").concat(btoa(data), "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"ubah data\">\n                        <i class=\"fas fa-edit\"></i>\n                    </a>\n                    <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-nis=\"").concat(data, "\" data-nama=\"").concat(row.nama_siswa, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"hapus data\">\n                        <i class=\"fas fa-trash\"></i>\n                    </a>\n                ");
-        }
-      }];
+      /**
+       * Merefresh data pada datatable
+       * jika data table sudah terisi
+       */
+      var urlAPI = "".concat(this.mainURL, "/api/siswa/perkelas?id_tahun_ajar=").concat(requestIdTahunAjar, "&id_kelas=").concat(requestIdKelas);
+      if (this.dataTable) {
+        this.dataTable.ajax.url(urlAPI).load();
+      } else {
+        var dataColumns = [{
+          data: "nis"
+        }, {
+          data: "nisn"
+        }, {
+          data: "nama_siswa"
+        }, {
+          data: "nama_kelas"
+        }, {
+          data: "nama_tahun_ajar"
+        }, {
+          data: "semester"
+        }, {
+          data: "status_data",
+          render: function render(data) {
+            var className = data === "Aktif" ? "text-success" : "text-danger";
+            return "<strong class='".concat(className, " px-3'>").concat(data, "</strong>");
+          }
+        }, {
+          data: "nis",
+          render: function render(data, type, row) {
+            return "\n                        <a class=\"btn btn-outline-primary btn-sm\" href=\"".concat(_this2.mainURL, "/admin/data-siswa-detail/").concat(btoa(data), "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"lihat detai data\">\n                            <i class=\"fas fa-eye\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-warning btn-sm\" href=\"").concat(_this2.mainURL, "/admin/data-siswa-update/").concat(btoa(data), "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"ubah data\">\n                            <i class=\"fas fa-edit\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-nis=\"").concat(data, "\" data-nama=\"").concat(row.nama_siswa, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"hapus data\">\n                            <i class=\"fas fa-trash\"></i>\n                        </a>\n                    ");
+          }
+        }];
 
-      // Membuat tabel
-      this.dataTable = this.setDataTable(this.dataTableElement, urlAPI, dataColumns, 20);
+        // Membuat tabel
+        this.dataTable = this.setDataTable(this.dataTableElement, urlAPI, dataColumns, 20);
+      }
     }
   }, {
     key: "setListener",
     value: function setListener() {
       var self = this; // Simpan referensi this dalam variabel self
 
-      // Event listener untuk tombol delete
-      this.dataTableElement.on("click", ".btn-action.delete", function (event) {
-        var button = $(this);
-        var nis = button.data("nis");
-        var nama_siswa = button.data("nama");
-        self.performSoftDelete(nis, nama_siswa); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari Siswa Main
+      self.idTahunAjar.on("change", function () {
+        self.tahunAjarSelected = $(this).val();
+        if (self.tahunAjarSelected) {
+          self.fetchNamaKelas(self.tahunAjarSelected);
+        }
+      });
+      self.idKelas.on("change", function () {
+        self.idKelasSelected = $(this).val();
+        if (self.tahunAjarSelected && self.idKelasSelected) {
+          self.setDataTableSiswa(self.tahunAjarSelected, self.idKelasSelected);
+        }
       });
     }
   }, {
@@ -442,6 +464,44 @@ var Main = /*#__PURE__*/function (_Core) {
             _this3.refreshDataTable();
             _this3.showSuccessMessage(response.data.success.message);
           }, dataBody, method);
+        }
+      });
+    }
+  }, {
+    key: "fetchTahunAjar",
+    value: function fetchTahunAjar() {
+      var self = this;
+      var url = "".concat(self.mainURL, "/api/tahun-ajar");
+      self.doAjax(url, function (response) {
+        self.optionsList("tahun ajar", self.idTahunAjar, response.data);
+      });
+    }
+  }, {
+    key: "fetchNamaKelas",
+    value: function fetchNamaKelas(requestIdTahunAjar) {
+      var self = this;
+      var url = "".concat(self.mainURL, "/api/kelas/dari-tahun-ajar");
+      self.doAjax(url, function (response) {
+        self.optionsList("nama kelas", self.idKelas, response.data);
+      }, {
+        id_tahun_ajar: requestIdTahunAjar
+      });
+    }
+  }, {
+    key: "optionsList",
+    value: function optionsList(namaData, selectElement, data) {
+      selectElement.html("<option value=\"\" selected disabled>Pilih ".concat(namaData, "</option>"));
+      $.each(data, function (index, item) {
+        if (item.id_kelas) {
+          selectElement.append($("<option>", {
+            value: item.id_kelas,
+            text: "(".concat(item.nama_tahun_ajar, ") ").concat(item.nama_kelas)
+          }));
+        } else if (item.id_tahun_ajar) {
+          selectElement.append($("<option>", {
+            value: item.id_tahun_ajar,
+            text: item.nama_tahun_ajar + " " + item.semester
+          }));
         }
       });
     }

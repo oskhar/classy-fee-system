@@ -5,7 +5,7 @@ namespace App\Http\Requests\MasterDataSiswa;
 use App\Http\Requests\CoreRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
-class KelasDariTahunAjarRequest extends CoreRequest
+class SiswaPekelasRequest extends CoreRequest
 {
 
     /**
@@ -16,7 +16,13 @@ class KelasDariTahunAjarRequest extends CoreRequest
     public function rules(): array
     {
         return [
+            'start' => 'nullable|integer',
+            'length' => 'nullable|integer',
+            'search' => 'nullable',
+            'orderColumn' => 'nullable',
+            'orderDir' => 'nullable',
             'id_tahun_ajar' => 'required',
+            'id_kelas' => 'required',
         ];
     }
 
@@ -29,6 +35,7 @@ class KelasDariTahunAjarRequest extends CoreRequest
     {
         return [
             'id_tahun_ajar.required' => "Id tahun ajar wajib diisi !!",
+            'id_kelas.required' => "Id kelas wajib diisi !!",
         ];
     }
 }

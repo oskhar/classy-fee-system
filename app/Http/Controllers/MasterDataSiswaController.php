@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\MasterDataSiswa\Requests\KelasDariTahunAjarRequest;
+use App\Http\Requests\MasterDataSiswa\KelasDariTahunAjarRequest;
+use App\Http\Requests\MasterDataSiswa\SiswaPekelasRequest;
 use App\Http\Resources\MasterDataSiswaResource;
 use App\Models\MasterDataSiswaModel;
 use App\Models\SiswaModel;
@@ -12,7 +13,7 @@ use Illuminate\Http\Request;
 class MasterDataSiswaController extends Controller
 {
     //
-    public function getDataSiswaPerkelas(Request $request): JsonResponse
+    public function getSiswaPerkelas(SiswaPekelasRequest $request): JsonResponse
     {
         /**
          * Query utama yang ditetapkan untuk melakukan
@@ -32,9 +33,10 @@ class MasterDataSiswaController extends Controller
         ->join('tb_kelas', 'master_data_siswa.id_kelas', '=', 'tb_kelas.id_kelas')
         ->join('tb_tahun_ajar', 'master_data_siswa.id_tahun_ajar', '=', 'tb_tahun_ajar.id_tahun_ajar');
 
-        if ($request->has('nama_tahun_ajar') && $request->has('semester')) {
-            $query = $query->where('tb_tahun_ajar.nama_tahun_ajar', $request->nama_tahun_ajar)
-                        ->where('tb_tahun_ajar.semester', $request->semester);
+        if ($request->has('id_kelas') && $request->has('id_tahun_ajar')) {
+            $query = $query->where('master_data_siswa.id_kelas', $request->id_kelas)
+                        ->where('master_data_siswa.id_tahun_ajar', $request->id_tahun_ajar)
+                        ->distinct();
         }
 
         $totalRecords = MasterDataSiswaModel::count();
@@ -50,9 +52,12 @@ class MasterDataSiswaController extends Controller
             $orderByDir = $request->order[0]['dir'];
 
             $columns = [
-                'id_kelas',
+                'nis',
+                'nisn',
+                'nama_siswa',
                 'nama_kelas',
-                'nama_jurusan'
+                'nama_tahun_ajar',
+                'semester'
             ];
 
             if (isset($columns[$orderByColumn])) {
@@ -93,17 +98,24 @@ class MasterDataSiswaController extends Controller
          * pengambilan data sesuai parameter tujuan
          */
         $query = MasterDataSiswaModel::select(
+            'tb_kelas.id_kelas',
             'tb_kelas.nama_kelas',
-        )->join('tb_siswa', 'master_data_siswa.nis', '=', 'tb_siswa.nis')
-        ->join('tb_kelas', 'master_data_siswa.id_kelas', '=', 'tb_kelas.id_kelas')
+            'tb_tahun_ajar.nama_tahun_ajar'
+        )->join('tb_kelas', 'master_data_siswa.id_kelas', '=', 'tb_kelas.id_kelas')
         ->join('tb_tahun_ajar', 'master_data_siswa.id_tahun_ajar', '=', 'tb_tahun_ajar.id_tahun_ajar');
 
         /**
          * Mengedit query sesuai kebutuhan
          */
-        $query = $query->where('tb_tahun_ajar.nama_tahun_ajar', $request['nama_tahun_ajar'])
-                    ->where('tb_tahun_ajar.semester', $request['semester']);
-        $data = $query->get;
+        $query = $query
+                    ->where('master_data_siswa.id_tahun_ajar', $request['id_tahun_ajar'])
+                    ->distinct();
+
+        /**
+         * Mendapatkan data yang sudah difilter
+         * dengan beberapa query laravel
+         */
+        $data = $query->get();
 
         /**
          * Mengembalikan data berdasarkan

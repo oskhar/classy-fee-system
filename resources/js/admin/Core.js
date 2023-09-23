@@ -175,22 +175,33 @@ export class Core {
         return Object.values(object).join("<br>");
     }
 
-    setDataTable(tableElement, urlAPI, dataColumns, limit = 5) {
+    setDataTable(
+        tableElement,
+        urlAPI,
+        dataColumns,
+        limit = 5,
+        ordering = true
+    ) {
         const self = this;
         return tableElement.DataTable({
             ajax: {
                 url: urlAPI,
                 type: "GET",
                 data: function (data) {
-                    // Tambahkan parameter pengurutan
+                    /**
+                     * Menambahkan parameter yang dibutuhkan
+                     */
+                    data.jenis_login = "admin";
                     if (data.order.length > 0) {
                         data.orderColumn = data.order[0].column; // Indeks kolom yang ingin diurutkan
                         data.orderDir = data.order[0].dir; // Arah pengurutan (asc atau desc)
-                        data.jenis_login = "admin";
                     }
                 },
                 error: function (xhr) {
-                    // Handle kesalahan yang terjadi saat pengambilan data
+                    /**
+                     * Handle kesalahan yang terjadi selama
+                     * proses pengambilan data berlangusng
+                     */
                     let errors;
                     if (xhr.responseJSON.errors) {
                         errors = self.objectToString(xhr.responseJSON.errors);
@@ -217,6 +228,7 @@ export class Core {
             serverSide: true, // Aktifkan server-side processing
             paging: true, // Mengaktifkan paginasi
             pageLength: limit, // Menentukan jumlah data per halaman
+            ordering: ordering,
             drawCallback: function () {
                 $('[data-toggle="tooltip"]').tooltip();
             },
