@@ -6,6 +6,8 @@ class Main extends Core {
         this.idTahunAjar = $("#idTahunAjar");
         this.idKelas = $("#idKelas");
         this.dataTableElement = $("#example1");
+        this.tombolExport = $("#exportSiswaPerkelas");
+        this.kelasDipilih = "";
         this.setListener();
         this.fetchTahunAjar();
     }
@@ -78,11 +80,15 @@ class Main extends Core {
 
             if (self.tahunAjarSelected) {
                 self.fetchNamaKelas(self.tahunAjarSelected);
+                if (self.dataTable) {
+                    $("#example1 tbody").html("");
+                }
             }
         });
 
         self.idKelas.on("change", function () {
             self.idKelasSelected = $(this).val();
+            self.kelasDipilih = $(this).find(":selected").text().split(" ")[1];
 
             if (self.tahunAjarSelected && self.idKelasSelected) {
                 self.setDataTableSiswa(
@@ -90,6 +96,10 @@ class Main extends Core {
                     self.idKelasSelected
                 );
             }
+        });
+
+        self.tombolExport.on("click", function () {
+            self.exportSiswaPerkelasExcel();
         });
     }
 
@@ -131,11 +141,13 @@ class Main extends Core {
     fetchNamaKelas(requestIdTahunAjar) {
         const self = this;
         const url = `${self.mainURL}/api/kelas/dari-tahun-ajar`;
+        self.tombolExport.show();
 
         self.doAjax(
             url,
             function (response) {
-                self.optionsList("nama kelas", self.idKelas, response.data);
+                let data = response.data;
+                self.optionsList("nama kelas", self.idKelas, data);
             },
             {
                 id_tahun_ajar: requestIdTahunAjar,
@@ -168,6 +180,10 @@ class Main extends Core {
 
     refreshDataTable() {
         this.dataTable.ajax.reload();
+    }
+
+    exportSiswaPerkelasExcel() {
+        window.location.href = `${this.mainURL}/export/siswa-perkelas?nama_kelas=${this.kelasDipilih}&id_kelas=${this.idKelasSelected}&id_tahun_ajar=${this.tahunAjarSelected}`;
     }
 }
 

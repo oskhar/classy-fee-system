@@ -384,14 +384,9 @@ var Main = /*#__PURE__*/function (_Core) {
     _this.idTahunAjar = $("#idTahunAjar");
     _this.idKelas = $("#idKelas");
     _this.idSiswa = $("#idSiswa");
-    _this.doAjax("".concat(_this.mainURL, "/api/kelas/dari-tahun-ajar"), function (response) {
-      console.log(response);
-    }, {
-      id_tahun_ajar: "TA-001"
-    });
-    _this.fetchTahunAjar();
     _this.tahunAjarSelected = false;
     _this.idKelasSelected = false;
+    _this.fetchTahunAjar();
     _this.setListeners();
     return _this;
   }

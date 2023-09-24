@@ -8,19 +8,10 @@ class Main extends Core {
         this.idTahunAjar = $("#idTahunAjar");
         this.idKelas = $("#idKelas");
         this.idSiswa = $("#idSiswa");
-        this.doAjax(
-            `${this.mainURL}/api/kelas/dari-tahun-ajar`,
-            function (response) {
-                console.log(response);
-            },
-            {
-                id_tahun_ajar: "TA-001",
-            }
-        );
-        this.fetchTahunAjar();
         this.tahunAjarSelected = false;
         this.idKelasSelected = false;
 
+        this.fetchTahunAjar();
         this.setListeners();
     }
 

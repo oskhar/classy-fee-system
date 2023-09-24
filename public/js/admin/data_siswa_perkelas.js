@@ -383,6 +383,8 @@ var Main = /*#__PURE__*/function (_Core) {
     _this.idTahunAjar = $("#idTahunAjar");
     _this.idKelas = $("#idKelas");
     _this.dataTableElement = $("#example1");
+    _this.tombolExport = $("#exportSiswaPerkelas");
+    _this.kelasDipilih = "";
     _this.setListener();
     _this.fetchTahunAjar();
     return _this;
@@ -437,13 +439,20 @@ var Main = /*#__PURE__*/function (_Core) {
         self.tahunAjarSelected = $(this).val();
         if (self.tahunAjarSelected) {
           self.fetchNamaKelas(self.tahunAjarSelected);
+          if (self.dataTable) {
+            $("#example1 tbody").html("");
+          }
         }
       });
       self.idKelas.on("change", function () {
         self.idKelasSelected = $(this).val();
+        self.kelasDipilih = $(this).find(":selected").text().split(" ")[1];
         if (self.tahunAjarSelected && self.idKelasSelected) {
           self.setDataTableSiswa(self.tahunAjarSelected, self.idKelasSelected);
         }
+      });
+      self.tombolExport.on("click", function () {
+        self.exportSiswaPerkelasExcel();
       });
     }
   }, {
@@ -481,8 +490,10 @@ var Main = /*#__PURE__*/function (_Core) {
     value: function fetchNamaKelas(requestIdTahunAjar) {
       var self = this;
       var url = "".concat(self.mainURL, "/api/kelas/dari-tahun-ajar");
+      self.tombolExport.show();
       self.doAjax(url, function (response) {
-        self.optionsList("nama kelas", self.idKelas, response.data);
+        var data = response.data;
+        self.optionsList("nama kelas", self.idKelas, data);
       }, {
         id_tahun_ajar: requestIdTahunAjar
       });
@@ -509,6 +520,11 @@ var Main = /*#__PURE__*/function (_Core) {
     key: "refreshDataTable",
     value: function refreshDataTable() {
       this.dataTable.ajax.reload();
+    }
+  }, {
+    key: "exportSiswaPerkelasExcel",
+    value: function exportSiswaPerkelasExcel() {
+      window.location.href = "".concat(this.mainURL, "/export/siswa-perkelas?nama_kelas=").concat(this.kelasDipilih, "&id_kelas=").concat(this.idKelasSelected, "&id_tahun_ajar=").concat(this.tahunAjarSelected);
     }
   }]);
   return Main;

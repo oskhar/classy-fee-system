@@ -110,11 +110,11 @@
 
 						<!-- menu-master-siswa -->
 						<li class="nav-item 
-							@if(strpos(request()->path(), 'admin/data-siswa') !== false)
+							@if(strpos(request()->path(), 'admin/data-siswa') !== false || strpos(request()->path(), 'admin/siswa-perkelas') !== false)
 								menu-open
 							@endif">
 							<a href="#" class="nav-link 
-								@if(strpos(request()->path(), 'admin/data-siswa') !== false)
+								@if(strpos(request()->path(), 'admin/data-siswa') !== false || strpos(request()->path(), 'admin/siswa-perkelas') !== false)
 									active
 								@endif">
 								<i class="nav-icon fas fa-user-graduate"></i>
@@ -137,7 +137,7 @@
 
 								<!-- data kelas -->
 								<li class="nav-item">
-									<a href="{{ route('admin.data_siswa_perkelas') }}" class="nav-link @if(strpos(request()->path(), 'admin/data-kelas') !== false)
+									<a href="{{ route('admin.data_siswa_perkelas') }}" class="nav-link @if(strpos(request()->path(), 'admin/siswa-perkelas') !== false)
 											active
 										@endif">
 										<i class="fas fa-minus nav-icon"></i>

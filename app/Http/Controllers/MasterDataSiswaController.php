@@ -39,7 +39,7 @@ class MasterDataSiswaController extends Controller
                         ->distinct();
         }
 
-        $totalRecords = MasterDataSiswaModel::count();
+        $totalRecords = $query->count();
 
         if ($request->has('start') && $request->has('length')) {
             $query = $query->offset($request->start)
@@ -102,7 +102,8 @@ class MasterDataSiswaController extends Controller
             'tb_kelas.nama_kelas',
             'tb_tahun_ajar.nama_tahun_ajar'
         )->join('tb_kelas', 'master_data_siswa.id_kelas', '=', 'tb_kelas.id_kelas')
-        ->join('tb_tahun_ajar', 'master_data_siswa.id_tahun_ajar', '=', 'tb_tahun_ajar.id_tahun_ajar');
+        ->join('tb_tahun_ajar', 'master_data_siswa.id_tahun_ajar', '=', 'tb_tahun_ajar.id_tahun_ajar')
+        ->orderBy('tb_kelas.nama_kelas', 'ASC');
 
         /**
          * Mengedit query sesuai kebutuhan

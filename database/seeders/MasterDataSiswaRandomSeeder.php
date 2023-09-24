@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\TahunAjarModel;
 use Illuminate\Database\Seeder;
 use App\Models\KelasModel;
 use App\Models\SiswaModel;
@@ -19,42 +20,98 @@ class MasterDataSiswaRandomSeeder extends Seeder
          * dibutuhkan untuk melakukan mengisi
          * data dari tabel master_data_siswa
          */
-        $banyakKelas = KelasModel::count();
-        $banyakSiswa = SiswaModel::count();
-        $pembagianKelasSiswa = ceil($banyakSiswa / $banyakKelas);
-        $dataKelas = KelasModel::all();
+        $siswa = SiswaModel::all();
+        $kelas = KelasModel::all();
+        $tahunAjar = TahunAjarModel::where('semester', 'Ganjil')->get();
+
+        /**
+         * Menghitung banyak data dari
+         * masing masing tabel
+         */
+        $totalSiswa = count($siswa);
+        $totalKelas = count($kelas);
+        $totalTahunAjar = count($tahunAjar);
+
+        $siswaPerKelasPerTahun = ceil($totalSiswa / ($totalKelas * $totalTahunAjar));
+
 
         /**
          * Inisialisasi variabel jumlah siswa
          * yang telah ditempatkan
          */
-        $siswaDitempatkan = 0;
+        $siswaIndex = 0;
 
         /**
          * Melakukan perulangan untuk membuat
          * data sebanyak jumlah data siswa
          */
-        foreach ($dataKelas as $kelas) {
-            /**
-             * Mengambil siswa sesuai jumlah yang
-             * akan ditempatkan dalam kelas ini
-             */
-            $siswa = SiswaModel::skip($siswaDitempatkan)->take($pembagianKelasSiswa)->get();
+        foreach ($tahunAjar as $tahun) {
+            foreach ($kelas as $dataKelas) {
+                /**
+                 * Mengambil siswa sesuai jumlah yang
+                 * akan ditempatkan dalam dataKelas ini
+                 */
+                if (is_object($dataKelas)) {
+                    $siswaTerpilih = $siswa->slice($siswaIndex, $siswaPerKelasPerTahun);
 
-            foreach ($siswa as $data) {
-                MasterDataSiswaModel::create([
-                    'nis' => $data->nis,
-                    'nisn' => $data->nisn,
-                    'id_kelas' => $kelas->id_kelas, // Menggunakan ID kelas saat ini
-                    'id_tahun_ajar' => 'TA-001', // Sesuaikan dengan tahun ajar siswa
-                ]);
+                    foreach ($siswaTerpilih as $data) {
+                        MasterDataSiswaModel::create([
+                            'nis' => $data->nis,
+                            'nisn' => $data->nisn,
+                            'id_kelas' => $dataKelas->id_kelas,
+                            'id_tahun_ajar' => $tahun->id_tahun_ajar,
+                        ]);
+                    }
+                }
+
+                /**
+                 * Mengupdate variabel jumlah siswa
+                 * yang telah ditempatkan
+                 */
+                $siswaIndex += $siswaPerKelasPerTahun;
             }
+        }
+        
+        /**
+         * Ulangi lagi pada tahun ajar genap
+         */
+        $tahunAjar = TahunAjarModel::where('semester', 'Genap')->get();
 
-            /**
-             * Mengupdate variabel jumlah siswa
-             * yang telah ditempatkan
-             */
-            $siswaDitempatkan += $pembagianKelasSiswa;
+        /**
+         * Inisialisasi variabel jumlah siswa
+         * yang telah ditempatkan
+         */
+        $siswaIndex = 0;
+
+        /**
+         * Melakukan perulangan untuk membuat
+         * data sebanyak jumlah data siswa
+         */
+        foreach ($tahunAjar as $tahun) {
+            foreach ($kelas as $dataKelas) {
+                /**
+                 * Mengambil siswa sesuai jumlah yang
+                 * akan ditempatkan dalam dataKelas ini
+                 */
+                if (is_object($dataKelas)) {
+                    $siswaTerpilih = $siswa->slice($siswaIndex, $siswaPerKelasPerTahun);
+
+                    foreach ($siswaTerpilih as $data) {
+                        MasterDataSiswaModel::create([
+                            'nis' => $data->nis,
+                            'nisn' => $data->nisn,
+                            'id_kelas' => $dataKelas->id_kelas,
+                            'id_tahun_ajar' => $tahun->id_tahun_ajar,
+                        ]);
+                    }
+                }
+
+                /**
+                 * Mengupdate variabel jumlah siswa
+                 * yang telah ditempatkan
+                 */
+                $siswaIndex += $siswaPerKelasPerTahun;
+            }
         }
     }
 }
