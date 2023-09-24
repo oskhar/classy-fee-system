@@ -88,7 +88,7 @@ class Main extends Core {
 
         self.idKelas.on("change", function () {
             self.idKelasSelected = $(this).val();
-            self.kelasDipilih = $(this).find(":selected").text().split(" ")[1];
+            self.kelasDipilih = $(this).find(":selected").text();
 
             if (self.tahunAjarSelected && self.idKelasSelected) {
                 self.setDataTableSiswa(
@@ -164,7 +164,7 @@ class Main extends Core {
                 selectElement.append(
                     $("<option>", {
                         value: item.id_kelas,
-                        text: `(${item.nama_tahun_ajar}) ${item.nama_kelas}`,
+                        text: item.nama_kelas,
                     })
                 );
             } else if (item.id_tahun_ajar) {

@@ -123,6 +123,14 @@ Route::group(['prefix' => 'admin'], function ($router) {
     })->name('admin.data_tahun_ajar_update');
 
     /**
+     * Router untuk halaman data rekenging
+     * 
+     */
+    Route::get('/data-rekening', function () {
+        return view('admin.data_rekening.read');
+    })->name('admin.data_rekening');
+
+    /**
      * Router untuk halaman data pembayaran spp
      * 
      */

@@ -97,7 +97,7 @@ class SiswaPerkelasExport implements FromCollection, WithHeadings, WithEvents, W
         $sheet->getColumnDimension('E')->setWidth(14);
         $sheet->getColumnDimension('F')->setWidth(14);
         $sheet->getColumnDimension('G')->setWidth(14);
-        $sheet->getColumnDimension('H')->setWidth(14);
+        $sheet->getColumnDimension('H')->setWidth(20);
         $sheet->getColumnDimension('I')->setWidth(14);
         $sheet->getColumnDimension('J')->setWidth(14);
         $sheet->getColumnDimension('K')->setWidth(20);

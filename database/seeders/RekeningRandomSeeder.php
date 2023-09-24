@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\RekeningModel;
+use App\Models\SiswaModel;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +14,20 @@ class RekeningRandomSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        /**
+         * Menentukan banyak data yang ditambahkan
+         * ke dalam tabel reking tabungan
+         */
+        $dataSiswa = SiswaModel::all();
+
+        /**
+         * Melakukan penambahan data reking
+         * menggunakan costum factory
+         */
+        foreach ($dataSiswa as $data) {
+            RekeningModel::factory()->create([
+                'nis' => $data->nis,
+            ]);
+        }
     }
 }

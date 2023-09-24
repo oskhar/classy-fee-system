@@ -229,9 +229,9 @@
 							</a>
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
-									<a href="#" class="nav-link">
+									<a href="{{route('admin.data_rekening')}}" class="nav-link">
 										<i class="fa-solid fa-minus nav-icon"></i>
-										<p>Data Rekening Siswa</p>
+										<p>Pembukaan Rekening Siswa</p>
 									</a>
 								</li>
 							</ul>
