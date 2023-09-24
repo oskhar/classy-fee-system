@@ -380,52 +380,79 @@ var Main = /*#__PURE__*/function (_Core) {
     var _this;
     _classCallCheck(this, Main);
     _this = _super.call(this);
-    _this.setDataTableSiswa();
+    _this.idTahunAjar = $("#idTahunAjar");
+    _this.idKelas = $("#idKelas");
+    _this.dataTableElement = $("#example1");
+    _this.tombolExport = $("#exportSiswaPerkelas");
+    _this.kelasDipilih = "";
     _this.setListener();
+    _this.fetchTahunAjar();
     return _this;
   }
   _createClass(Main, [{
-    key: "setDataTableSiswa",
-    value: function setDataTableSiswa() {
+    key: "setDataTableRekening",
+    value: function setDataTableRekening(requestIdTahunAjar, requestIdKelas) {
       var _this2 = this;
-      // Data yang dibutuhkan tabel
-      this.dataTableElement = $("#example1");
-      var urlAPI = "".concat(this.mainURL, "/api/siswa");
-      var dataColumns = [{
-        data: "nomor_rekening"
-      }, {
-        data: "nis"
-      }, {
-        data: "tanggal_buka"
-      }, {
-        data: "tanggal_tutup"
-      }, {
-        data: "setoran_awal"
-      }, {
-        data: "saldo"
-      }, {
-        data: "status_data"
-      }, {
-        data: "nis",
-        render: function render(data, type, row) {
-          return "\n                    <a class=\"btn btn-outline-primary btn-sm\" href=\"".concat(_this2.mainURL, "/admin/data-siswa-detail/").concat(btoa(data), "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"lihat detai data\">\n                        <i class=\"fas fa-eye\"></i>\n                    </a>\n                    <a class=\"btn btn-outline-warning btn-sm\" href=\"").concat(_this2.mainURL, "/admin/data-siswa-update/").concat(btoa(data), "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"ubah data\">\n                        <i class=\"fas fa-edit\"></i>\n                    </a>\n                    <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-nis=\"").concat(data, "\" data-nama=\"").concat(row.nama_siswa, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"hapus data\">\n                        <i class=\"fas fa-trash\"></i>\n                    </a>\n                ");
-        }
-      }];
+      /**
+       * Merefresh data pada datatable
+       * jika data table sudah terisi
+       */
+      var urlAPI = "".concat(this.mainURL, "/api/siswa/perkelas?id_tahun_ajar=").concat(requestIdTahunAjar, "&id_kelas=").concat(requestIdKelas);
+      if (this.dataTable) {
+        this.dataTable.ajax.url(urlAPI).load();
+      } else {
+        var dataColumns = [{
+          data: "nis"
+        }, {
+          data: "nisn"
+        }, {
+          data: "nama_siswa"
+        }, {
+          data: "nama_kelas"
+        }, {
+          data: "nama_tahun_ajar"
+        }, {
+          data: "semester"
+        }, {
+          data: "status_data",
+          render: function render(data) {
+            var className = data === "Aktif" ? "text-success" : "text-danger";
+            return "<strong class='".concat(className, " px-3'>").concat(data, "</strong>");
+          }
+        }, {
+          data: "nis",
+          render: function render(data, type, row) {
+            return "\n                        <a class=\"btn btn-outline-primary btn-sm\" href=\"".concat(_this2.mainURL, "/admin/data-siswa-detail/").concat(btoa(data), "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"lihat detai data\">\n                            <i class=\"fas fa-eye\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-warning btn-sm\" href=\"").concat(_this2.mainURL, "/admin/data-siswa-update/").concat(btoa(data), "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"ubah data\">\n                            <i class=\"fas fa-edit\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-nis=\"").concat(data, "\" data-nama=\"").concat(row.nama_siswa, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"hapus data\">\n                            <i class=\"fas fa-trash\"></i>\n                        </a>\n                    ");
+          }
+        }];
 
-      // Membuat tabel
-      this.dataTable = this.setDataTable(this.dataTableElement, urlAPI, dataColumns, 40);
+        // Membuat tabel
+        this.dataTable = this.setDataTable(this.dataTableElement, urlAPI, dataColumns, 20);
+      }
     }
   }, {
     key: "setListener",
     value: function setListener() {
       var self = this; // Simpan referensi this dalam variabel self
 
-      // Event listener untuk tombol delete
-      this.dataTableElement.on("click", ".btn-action.delete", function (event) {
-        var button = $(this);
-        var nis = button.data("nis");
-        var nama_siswa = button.data("nama");
-        self.performSoftDelete(nis, nama_siswa); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari Siswa Main
+      self.idTahunAjar.on("change", function () {
+        self.tahunAjarSelected = $(this).val();
+        if (self.tahunAjarSelected) {
+          self.fetchNamaKelas(self.tahunAjarSelected);
+          if (self.dataTable) {
+            $("#example1 tbody").html("");
+          }
+        }
+      });
+      self.idKelas.on("change", function () {
+        self.idKelasSelected = $(this).val();
+        self.kelasDipilih = $(this).find(":selected").text();
+        if (self.tahunAjarSelected && self.idKelasSelected) {
+          self.setDataTableRekening(self.tahunAjarSelected, self.idKelasSelected);
+        }
+      });
+      self.tombolExport.on("click", function () {
+        self.exportSiswaPerkelasExcel();
       });
     }
   }, {
@@ -450,9 +477,54 @@ var Main = /*#__PURE__*/function (_Core) {
       });
     }
   }, {
+    key: "fetchTahunAjar",
+    value: function fetchTahunAjar() {
+      var self = this;
+      var url = "".concat(self.mainURL, "/api/tahun-ajar");
+      self.doAjax(url, function (response) {
+        self.optionsList("tahun ajar", self.idTahunAjar, response.data);
+      });
+    }
+  }, {
+    key: "fetchNamaKelas",
+    value: function fetchNamaKelas(requestIdTahunAjar) {
+      var self = this;
+      var url = "".concat(self.mainURL, "/api/kelas/dari-tahun-ajar");
+      self.tombolExport.show();
+      self.doAjax(url, function (response) {
+        var data = response.data;
+        self.optionsList("nama kelas", self.idKelas, data);
+      }, {
+        id_tahun_ajar: requestIdTahunAjar
+      });
+    }
+  }, {
+    key: "optionsList",
+    value: function optionsList(namaData, selectElement, data) {
+      selectElement.html("<option value=\"\" selected disabled>Pilih ".concat(namaData, "</option>"));
+      $.each(data, function (index, item) {
+        if (item.id_kelas) {
+          selectElement.append($("<option>", {
+            value: item.id_kelas,
+            text: item.nama_kelas
+          }));
+        } else if (item.id_tahun_ajar) {
+          selectElement.append($("<option>", {
+            value: item.id_tahun_ajar,
+            text: item.nama_tahun_ajar + " " + item.semester
+          }));
+        }
+      });
+    }
+  }, {
     key: "refreshDataTable",
     value: function refreshDataTable() {
       this.dataTable.ajax.reload();
+    }
+  }, {
+    key: "exportSiswaPerkelasExcel",
+    value: function exportSiswaPerkelasExcel() {
+      window.location.href = "".concat(this.mainURL, "/export/siswa-perkelas?nama_kelas=").concat(this.kelasDipilih, "&id_kelas=").concat(this.idKelasSelected, "&id_tahun_ajar=").concat(this.tahunAjarSelected);
     }
   }]);
   return Main;

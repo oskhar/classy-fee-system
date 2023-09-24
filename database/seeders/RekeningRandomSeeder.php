@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\RekeningModel;
+use App\Models\Tabungan\RekeningModel;
 use App\Models\SiswaModel;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
