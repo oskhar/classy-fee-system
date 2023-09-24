@@ -39,9 +39,7 @@
                       <tr>
                         <th>nomor_rekening</th>
                         <th>nis</th>
-                        <th>tanggal_buka</th>
-                        <th>tanggal_tutup</th>
-                        <th>setoran_awal</th>
+                        <th>nama siswa</th>
                         <th>saldo</th>
                         <th>status_data</th>
                         <th>Aksi</th>

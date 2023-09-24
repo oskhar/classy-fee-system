@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Tabungan;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,8 +18,8 @@ class RekeningModelFactory extends Factory
             'nis' => $this->faker->unique()->numerify('########'),
             'tanggal_buka' => $this->faker->date,
             'tanggal_tutup' => $this->faker->date,
-            'setoran_awal' => $this->faker->numberBetween(10000, 1000000000000),
-            'saldo' => $this->faker->numberBetween(10000, 1000000000000),
+            'setoran_awal' => $this->faker->numberBetween(1, 10000) * 1000,
+            'saldo' => $this->faker->numberBetween(1, 10000) * 1000,
         ];
     }
 }

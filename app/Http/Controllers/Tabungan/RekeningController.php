@@ -17,7 +17,8 @@ class RekeningController extends Controller
             'tb_rekening.nomor_rekening',
             'tb_siswa.nis',
             'tb_siswa.nama_siswa',
-            'tb_rekening.saldo'
+            'tb_rekening.saldo',
+            'master_data_siswa.status_data'
             )->join('master_data_siswa', 'tb_rekening.nis', '=', 'master_data_siswa.nis')
             ->join('tb_siswa', 'tb_rekening.nis', '=', 'tb_siswa.nis');
 
@@ -40,9 +41,10 @@ class RekeningController extends Controller
             $orderByDir = $request->order[0]['dir'];
 
             $columns = [
-                'id_kelas',
-                'nama_kelas',
-                'nama_jurusan'
+                'nomor_rekening',
+                'nis',
+                'nama_siswa',
+                'saldo'
             ];
 
             if (isset($columns[$orderByColumn])) {

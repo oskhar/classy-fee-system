@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MasterDataSiswaController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\Tabungan\RekeningController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JurusanController;
@@ -69,7 +70,7 @@ Route::group(['middleware' => 'apiauthmid'], function ($router) {
     // END DATA TAHUN AJAR
 
     // START DATA REKENING
-    Route::get('/tahun-ajar', [TahunAjarController::class, 'get']);
+    Route::get('/rekening', [RekeningController::class, 'get']);
     // START DATA REKENING
 
     // EXPORT IMPORT DATA SISWA

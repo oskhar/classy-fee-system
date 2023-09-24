@@ -17,17 +17,23 @@ class Main extends Core {
          * Merefresh data pada datatable
          * jika data table sudah terisi
          */
-        const urlAPI = `${this.mainURL}/api/siswa/perkelas?id_tahun_ajar=${requestIdTahunAjar}&id_kelas=${requestIdKelas}`;
+        const urlAPI = `${this.mainURL}/api/rekening?id_tahun_ajar=${requestIdTahunAjar}&id_kelas=${requestIdKelas}`;
         if (this.dataTable) {
             this.dataTable.ajax.url(urlAPI).load();
         } else {
             const dataColumns = [
+                { data: "nomor_rekening" },
                 { data: "nis" },
-                { data: "nisn" },
                 { data: "nama_siswa" },
-                { data: "nama_kelas" },
-                { data: "nama_tahun_ajar" },
-                { data: "semester" },
+                {
+                    data: "saldo",
+                    render: (data) => {
+                        const uang = data
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                        return `Rp ${uang}.-`;
+                    },
+                },
                 {
                     data: "status_data",
                     render: (data) => {
@@ -43,20 +49,8 @@ class Main extends Core {
                             this.mainURL
                         }/admin/data-siswa-detail/${btoa(
                         data
-                    )}" data-toggle="tooltip" data-bs-placement="top" title="lihat detai data">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a class="btn btn-outline-warning btn-sm" href="${
-                            this.mainURL
-                        }/admin/data-siswa-update/${btoa(
-                        data
-                    )}" data-toggle="tooltip" data-bs-placement="top" title="ubah data">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a class="btn btn-outline-danger btn-action btn-sm delete" data-nis="${data}" data-nama="${
-                        row.nama_siswa
-                    }" data-toggle="tooltip" data-bs-placement="top" title="hapus data">
-                            <i class="fas fa-trash"></i>
+                    )}" data-toggle="tooltip" data-bs-placement="top" title="Cetak buku tabungan">
+                            <i class="fas fa-print"></i>
                         </a>
                     `,
                 },
@@ -101,13 +95,29 @@ class Main extends Core {
         self.tombolExport.on("click", function () {
             self.exportSiswaPerkelasExcel();
         });
+
+        // Event listener untuk tombol delete
+        self.dataTableElement.on(
+            "click",
+            ".btn-action.print",
+            function (event) {
+                const button = $(this);
+                const nomor_rekening = button.data("nomor_rekening");
+                self.previewBukuRekening(nomor_rekening); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari Siswa Main
+            }
+        );
+    }
+
+    previewBukuRekening(nomor_rekening) {
+        const urlAPI = `${this.mainURL}`;
+        this.doAjax();
     }
 
     performSoftDelete(nis, nama_siswa) {
         this.showWarningMessage(`Hapus Siswa ${nama_siswa} ?`, "Hapus").then(
             (result) => {
                 // Assigmen data yang dibutuhkan untuk mengakses API
-                let urlAPI = `${this.mainURL}/api/siswa`;
+                let urlAPI = `${this.mainURL}/api/rekening`;
                 let method = "delete";
                 let dataBody = { nis: nis };
 

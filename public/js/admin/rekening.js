@@ -397,22 +397,22 @@ var Main = /*#__PURE__*/function (_Core) {
        * Merefresh data pada datatable
        * jika data table sudah terisi
        */
-      var urlAPI = "".concat(this.mainURL, "/api/siswa/perkelas?id_tahun_ajar=").concat(requestIdTahunAjar, "&id_kelas=").concat(requestIdKelas);
+      var urlAPI = "".concat(this.mainURL, "/api/rekening?id_tahun_ajar=").concat(requestIdTahunAjar, "&id_kelas=").concat(requestIdKelas);
       if (this.dataTable) {
         this.dataTable.ajax.url(urlAPI).load();
       } else {
         var dataColumns = [{
-          data: "nis"
+          data: "nomor_rekening"
         }, {
-          data: "nisn"
+          data: "nis"
         }, {
           data: "nama_siswa"
         }, {
-          data: "nama_kelas"
-        }, {
-          data: "nama_tahun_ajar"
-        }, {
-          data: "semester"
+          data: "saldo",
+          render: function render(data) {
+            var uang = data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            return "Rp ".concat(uang, ".-");
+          }
         }, {
           data: "status_data",
           render: function render(data) {
@@ -422,7 +422,7 @@ var Main = /*#__PURE__*/function (_Core) {
         }, {
           data: "nis",
           render: function render(data, type, row) {
-            return "\n                        <a class=\"btn btn-outline-primary btn-sm\" href=\"".concat(_this2.mainURL, "/admin/data-siswa-detail/").concat(btoa(data), "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"lihat detai data\">\n                            <i class=\"fas fa-eye\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-warning btn-sm\" href=\"").concat(_this2.mainURL, "/admin/data-siswa-update/").concat(btoa(data), "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"ubah data\">\n                            <i class=\"fas fa-edit\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-nis=\"").concat(data, "\" data-nama=\"").concat(row.nama_siswa, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"hapus data\">\n                            <i class=\"fas fa-trash\"></i>\n                        </a>\n                    ");
+            return "\n                        <a class=\"btn btn-outline-primary btn-sm\" href=\"".concat(_this2.mainURL, "/admin/data-siswa-detail/").concat(btoa(data), "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"Cetak buku tabungan\">\n                            <i class=\"fas fa-print\"></i>\n                        </a>\n                    ");
           }
         }];
 
@@ -454,6 +454,19 @@ var Main = /*#__PURE__*/function (_Core) {
       self.tombolExport.on("click", function () {
         self.exportSiswaPerkelasExcel();
       });
+
+      // Event listener untuk tombol delete
+      self.dataTableElement.on("click", ".btn-action.print", function (event) {
+        var button = $(this);
+        var nomor_rekening = button.data("nomor_rekening");
+        self.previewBukuRekening(nomor_rekening); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari Siswa Main
+      });
+    }
+  }, {
+    key: "previewBukuRekening",
+    value: function previewBukuRekening(nomor_rekening) {
+      var urlAPI = "".concat(this.mainURL);
+      this.doAjax();
     }
   }, {
     key: "performSoftDelete",
@@ -461,7 +474,7 @@ var Main = /*#__PURE__*/function (_Core) {
       var _this3 = this;
       this.showWarningMessage("Hapus Siswa ".concat(nama_siswa, " ?"), "Hapus").then(function (result) {
         // Assigmen data yang dibutuhkan untuk mengakses API
-        var urlAPI = "".concat(_this3.mainURL, "/api/siswa");
+        var urlAPI = "".concat(_this3.mainURL, "/api/rekening");
         var method = "delete";
         var dataBody = {
           nis: nis
