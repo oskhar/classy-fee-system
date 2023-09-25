@@ -214,11 +214,23 @@ var Core = /*#__PURE__*/function () {
   }, {
     key: "showInfoMessage",
     value: function showInfoMessage(message, buttonText) {
+      var lebarAlert = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "32em";
+      var elementHTML = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
+      var cancelButtonColor = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : "#aaa";
+      var cancelButtonText = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "";
       return Swal.fire({
         title: message,
+        html: elementHTML,
         showConfirmButton: true,
+        confirmButtonText: buttonText,
         showCancelButton: true,
-        confirmButtonText: buttonText
+        cancelButtonText: cancelButtonText,
+        cancelButtonColor: cancelButtonColor,
+        width: lebarAlert,
+        backdrop: true,
+        customClass: {
+          backdrop: "backdrop-costume" // Menambahkan kelas CSS khusus
+        }
       });
     }
   }, {
@@ -288,6 +300,12 @@ var Core = /*#__PURE__*/function () {
           $('[data-toggle="tooltip"]').tooltip();
         }
       });
+    }
+  }, {
+    key: "numberToMoney",
+    value: function numberToMoney(data) {
+      var uang = data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      return "Rp ".concat(uang, ".-");
     }
   }]);
   return Core;
@@ -437,6 +455,18 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************************************!*\
   !*** ./resources/css/admin/data_tahun_ajar_create.css ***!
   \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/css/admin/rekening.css":
+/*!******************************************!*\
+  !*** ./resources/css/admin/rekening.css ***!
+  \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -609,6 +639,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 			"css/admin/data_jurusan": 0,
 /******/ 			"css/admin/data_siswa": 0,
 /******/ 			"css/template_admin": 0,
+/******/ 			"css/admin/rekening": 0,
 /******/ 			"css/admin/data_tahun_ajar_create": 0,
 /******/ 			"css/admin/data_tahun_ajar": 0,
 /******/ 			"css/admin/data_kelas_update": 0,
@@ -663,17 +694,18 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/js/admin/dashboard.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/template_admin.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_siswa.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_jurusan.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_jurusan_create.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_jurusan_update.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_kelas.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_kelas_create.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_kelas_update.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_tahun_ajar.css")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_tahun_ajar_create.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/js/admin/dashboard.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/template_admin.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_siswa.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_jurusan.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_jurusan_create.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_jurusan_update.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_kelas.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_kelas_create.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_kelas_update.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_tahun_ajar.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_tahun_ajar_create.css")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/rekening.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

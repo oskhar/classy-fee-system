@@ -214,11 +214,23 @@ var Core = /*#__PURE__*/function () {
   }, {
     key: "showInfoMessage",
     value: function showInfoMessage(message, buttonText) {
+      var lebarAlert = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "32em";
+      var elementHTML = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
+      var cancelButtonColor = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : "#aaa";
+      var cancelButtonText = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "";
       return Swal.fire({
         title: message,
+        html: elementHTML,
         showConfirmButton: true,
+        confirmButtonText: buttonText,
         showCancelButton: true,
-        confirmButtonText: buttonText
+        cancelButtonText: cancelButtonText,
+        cancelButtonColor: cancelButtonColor,
+        width: lebarAlert,
+        backdrop: true,
+        customClass: {
+          backdrop: "backdrop-costume" // Menambahkan kelas CSS khusus
+        }
       });
     }
   }, {
@@ -288,6 +300,12 @@ var Core = /*#__PURE__*/function () {
           $('[data-toggle="tooltip"]').tooltip();
         }
       });
+    }
+  }, {
+    key: "numberToMoney",
+    value: function numberToMoney(data) {
+      var uang = data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      return "Rp ".concat(uang, ".-");
     }
   }]);
   return Core;

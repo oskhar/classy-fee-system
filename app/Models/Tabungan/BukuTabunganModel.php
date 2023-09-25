@@ -38,6 +38,7 @@ class BukuTabunganModel extends Model
         'kredit',
         'saldo',
         'tanggal',
+        'status_data',
     ];
 
     /**

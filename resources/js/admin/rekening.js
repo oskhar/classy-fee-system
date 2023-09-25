@@ -28,10 +28,8 @@ class Main extends Core {
                 {
                     data: "saldo",
                     render: (data) => {
-                        const uang = data
-                            .toString()
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                        return `Rp ${uang}.-`;
+                        const uang = this.numberToMoney(data);
+                        return uang;
                     },
                 },
                 {
@@ -43,14 +41,13 @@ class Main extends Core {
                     },
                 },
                 {
-                    data: "nis",
+                    data: "nomor_rekening",
                     render: (data, type, row) => `
-                        <a class="btn btn-outline-primary btn-sm" href="${
-                            this.mainURL
-                        }/admin/data-siswa-detail/${btoa(
-                        data
-                    )}" data-toggle="tooltip" data-bs-placement="top" title="Cetak buku tabungan">
+                        <a class="btn btn-outline-primary btn-action btn-sm print" data-nomor-rekening="${data}" data-toggle="tooltip" data-bs-placement="top" title="Cetak buku tabungan">
                             <i class="fas fa-print"></i>
+                        </a>
+                        <a class="btn btn-outline-danger btn-action btn-sm delete" data-nis="${data}" data-nama="${row.nama_siswa}" data-toggle="tooltip" data-bs-placement="top" title="hapus data">
+                            <i class="fas fa-trash"></i>
                         </a>
                     `,
                 },
@@ -102,15 +99,101 @@ class Main extends Core {
             ".btn-action.print",
             function (event) {
                 const button = $(this);
-                const nomor_rekening = button.data("nomor_rekening");
+                const nomor_rekening = button.data("nomor-rekening");
                 self.previewBukuRekening(nomor_rekening); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari Siswa Main
             }
         );
     }
 
-    previewBukuRekening(nomor_rekening) {
-        const urlAPI = `${this.mainURL}`;
-        this.doAjax();
+    async previewBukuRekening(nomor_rekening) {
+        /**
+         * Menginisialisasi this milik main class
+         * ke dalam bentuk lain agar tidak
+         * bentrok dengan class tambahan
+         */
+        const self = this;
+
+        /**
+         * Melakukan assigment pada variable
+         * urlAPI untuk melakukan request
+         */
+        const urlAPI = `${self.mainURL}/api/buku-tabungan?nomor_rekening=${nomor_rekening}`;
+
+        /**
+         * Melakukan request menggunakan jquery
+         * ajax dengan gateway yang ditentukan
+         */
+        await self.doAjax(urlAPI, function (response) {
+            /**
+             * Menampilkan pop up data table
+             */
+            self.showInfoMessage(
+                "",
+                "<i class='fas fa-print'></i> Cetak data",
+                "90%",
+                `<div class="card card-success mt-4">
+                <div class="card-header">
+                    <h3 class="card-title">Preview data rekening</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table id="example2" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>nomor rekening</th>
+                                <th>debit</th>
+                                <th>kredit</th>
+                                <th>saldo</th>
+                                <th>tanggal</th>
+                                <th>status_data</th>
+                            </tr>
+                        </thead>
+                        <tbody>${self.arrayBukuRekeningToTable(
+                            response.data
+                        )}</tbody>
+                    </table>
+                </div>
+                </div>`,
+                "var(--danger)",
+                "<i class='fas fa-times'></i> Cancel"
+            ).then((result) => {
+                /**
+                 * Mencetak data buku tabungan
+                 * siswa sesuai permintaan
+                 */
+                if (result.isConfirmed) {
+                }
+            });
+        });
+        // Data yang dibutuhkan tabel
+        const dataTablePreview = $("#example2");
+        const dataColumnsPreview = [
+            { data: "nomor_rekening" },
+            { data: "debit" },
+            { data: "kredit" },
+            { data: "saldo" },
+            {
+                data: "tanggal",
+                render: (data) => {
+                    return self.convertTanggal(data);
+                },
+            },
+            {
+                data: "status_data",
+                render: (data) => {
+                    const className =
+                        data === "Aktif" ? "text-success" : "text-danger";
+                    return `<strong class='${className} px-3'>${data}</strong>`;
+                },
+            },
+        ];
+
+        // Membuat tabel
+        self.setDataTable(dataTablePreview, urlAPI, dataColumnsPreview, 10);
     }
 
     performSoftDelete(nis, nama_siswa) {
@@ -194,6 +277,22 @@ class Main extends Core {
 
     exportSiswaPerkelasExcel() {
         window.location.href = `${this.mainURL}/export/siswa-perkelas?nama_kelas=${this.kelasDipilih}&id_kelas=${this.idKelasSelected}&id_tahun_ajar=${this.tahunAjarSelected}`;
+    }
+
+    arrayBukuRekeningToTable(arrayBukuRekening) {
+        let hasil = "";
+        for (let i = 0; i < arrayBukuRekening.length; i++) {
+            hasil += `
+            <tr>
+                <td>${arrayBukuRekening[i].nomor_rekening}</td>
+                <td>${this.numberToMoney(arrayBukuRekening[i].debit)}</td>
+                <td>${this.numberToMoney(arrayBukuRekening[i].kredit)}</td>
+                <td>${this.numberToMoney(arrayBukuRekening[i].saldo)}</td>
+                <td>${arrayBukuRekening[i].tanggal}</td>
+                <td>${arrayBukuRekening[i].status_data}</td>
+            </tr>`;
+        }
+        return hasil;
     }
 }
 

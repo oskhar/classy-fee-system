@@ -89,6 +89,7 @@ mix.js("resources/js/admin/data_tahun_ajar_update.js", "public/js/admin");
  * START DATA REKENING
  */
 mix.js("resources/js/admin/rekening.js", "public/js/admin");
+mix.postCss("resources/css/admin/rekening.css", "public/css/admin");
 
 /**
  * START CETAK DATA LAPORAN KESELURURHAN

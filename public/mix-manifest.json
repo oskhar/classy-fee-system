@@ -26,6 +26,7 @@
     "/css/admin/data_jurusan.css": "/css/admin/data_jurusan.css",
     "/css/admin/data_siswa.css": "/css/admin/data_siswa.css",
     "/css/template_admin.css": "/css/template_admin.css",
+    "/css/admin/rekening.css": "/css/admin/rekening.css",
     "/css/admin/data_tahun_ajar_create.css": "/css/admin/data_tahun_ajar_create.css",
     "/css/admin/data_tahun_ajar.css": "/css/admin/data_tahun_ajar.css",
     "/css/admin/data_kelas_update.css": "/css/admin/data_kelas_update.css",

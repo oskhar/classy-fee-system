@@ -18,12 +18,12 @@ class SiswaPerkelasExport implements FromCollection, WithHeadings, WithEvents, W
     protected $idTahunAjar;
     protected $namaKelas;
 
-    public function __construct ($idKelas, $idTahunAjar, $namaKelas)
+    public function __construct ($objectParam)
     {
     
-        $this->idKelas = $idKelas;
-        $this->idTahunAjar = $idTahunAjar;
-        $this->namaKelas = $namaKelas;
+        $this->idKelas = $objectParam['idKelas'];
+        $this->idTahunAjar = $objectParam['idTahunAjar'];
+        $this->namaKelas = $objectParam['namaKelas'];
     
     }
 
@@ -51,8 +51,14 @@ class SiswaPerkelasExport implements FromCollection, WithHeadings, WithEvents, W
     */
     public function collection()
     {
-        //
-        return MasterDataSiswaModel::select(
+        /**
+         * Membuat query dasar untuk mendapatkan
+         * data yang dibutuhkan ke dalam excel
+         * 
+         * @var \App\Models\MasterDataSiswaModel
+         * 
+         */
+        $query = MasterDataSiswaModel::select(
             'tb_siswa.nis',
             'tb_siswa.nisn',
             'tb_siswa.nama_siswa',
@@ -67,9 +73,37 @@ class SiswaPerkelasExport implements FromCollection, WithHeadings, WithEvents, W
             'tb_tahun_ajar.semester'
         )->join('tb_siswa', 'master_data_siswa.nis', '=', 'tb_siswa.nis')
         ->join('tb_kelas', 'master_data_siswa.id_kelas', '=', 'tb_kelas.id_kelas')
-        ->join('tb_tahun_ajar', 'master_data_siswa.id_tahun_ajar', '=', 'tb_tahun_ajar.id_tahun_ajar')->where('master_data_siswa.id_kelas', $this->idKelas)
-        ->where('master_data_siswa.id_tahun_ajar', $this->idTahunAjar)
-        ->get();
+        ->join('tb_tahun_ajar', 'master_data_siswa.id_tahun_ajar', '=', 'tb_tahun_ajar.id_tahun_ajar');
+
+        /**
+         * Memeriksa apakah id_tahun_ajar kosong jika ada,
+         * ambil data berdasarkan id_tahun_ajar dipilih
+         */
+        if (!empty($this->idTahunAjar)) {
+            $query = $query
+                ->where('master_data_siswa.id_tahun_ajar', $this->idTahunAjar);
+        }
+
+        /**
+         * Memeriksa apakah id_kelas kosong jika ada,
+         * ambil data berdasarkan id_kelas dipilih
+         */
+        if (!empty($this->idKelas)) {
+            $query = $query
+                ->where('master_data_siswa.id_kelas', $this->idKelas);
+        }
+        
+        /**
+         * Mengambil data berdasarkan
+         * berbagai query diatas
+         */
+        $data = $query->get();
+
+        /**
+         * Mengembalikan data dari method
+         * ini berupa data object
+         */
+        return $data;
     }
     
     public function registerEvents(): array

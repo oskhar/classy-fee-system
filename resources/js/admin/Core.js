@@ -162,12 +162,27 @@ export class Core {
         });
     }
 
-    showInfoMessage(message, buttonText) {
+    showInfoMessage(
+        message,
+        buttonText,
+        lebarAlert = "32em",
+        elementHTML = "",
+        cancelButtonColor = "#aaa",
+        cancelButtonText = ""
+    ) {
         return Swal.fire({
             title: message,
+            html: elementHTML,
             showConfirmButton: true,
-            showCancelButton: true,
             confirmButtonText: buttonText,
+            showCancelButton: true,
+            cancelButtonText: cancelButtonText,
+            cancelButtonColor: cancelButtonColor,
+            width: lebarAlert,
+            backdrop: true,
+            customClass: {
+                backdrop: "backdrop-costume", // Menambahkan kelas CSS khusus
+            },
         });
     }
 
@@ -233,5 +248,10 @@ export class Core {
                 $('[data-toggle="tooltip"]').tooltip();
             },
         });
+    }
+
+    numberToMoney(data) {
+        const uang = data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        return `Rp ${uang}.-`;
     }
 }

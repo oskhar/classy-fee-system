@@ -33,7 +33,7 @@
                   </select>
               </div>
               <div class="col-lg-12">
-                  <button class="btn btn-outline-primary p-2 ml-2" id="exportSiswaPerkelas" style="display: none">Export Data</button>
+                  <button class="btn btn-outline-primary p-2 my-2" id="exportSiswaPerkelas">Export Data</button>
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>

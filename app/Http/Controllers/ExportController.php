@@ -4,17 +4,59 @@ namespace App\Http\Controllers;
 
 use App\Exports\SiswaPerkelasExport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\SiswaExport;
 
 class ExportController extends Controller
 {
+    protected $currentTime;
+
+    public function __construct ()
+    {
+        /**
+         * Mendapatkan tanggal sekarang dengan
+         * waktu dan zona waktu yang aktif
+         */
+        $now = Carbon::now();
+
+        /**
+         * Mendapatkan tanggal sekarang dalam format
+         * tertentu (contoh: Y-m-d H-i-s)
+         */
+        $this->currentTime = $now->format('Y-m-d_H-i-s');
+    }
     public function exportSiswaExcel()
     {
-        return Excel::download(new SiswaExport, 'data_siswa.xlsx');
+        /**
+         * Mengatur nama file excel
+         * yang akan diexport
+         */
+        $namaFileExcel = 'data_siswa'. $this->currentTime .'.xlsx';
+        return Excel::download(new SiswaExport, $namaFileExcel);
     }
     public function exportSiswaPerkelasExcel(Request $request)
     {
-        return Excel::download(new SiswaPerkelasExport($request->id_kelas, $request->id_tahun_ajar, $request->nama_kelas), 'data_siswa_'.$request->nama_kelas.'.xlsx');
+        /**
+         * Mengatur nama file excel
+         * yang akan diexport
+         */
+        $namaFileExcel = 'data_siswa_'.$request->nama_kelas .'_'. $this->currentTime .'.xlsx';
+
+        /**
+         * Mengatur data request yang dibutuhkan dalam
+         * mengatur data yang akan di-Export ke excel
+         */
+        $requestDataExcel = [
+            "idKelas" => $request->id_kelas,
+            "idTahunAjar" => $request->id_tahun_ajar,
+            "namaKelas" => $request->nama_kelas
+        ];
+
+        /**
+         * Mengembalikan data response
+         * berupa file exccel
+         */
+        return Excel::download(new SiswaPerkelasExport($requestDataExcel), $namaFileExcel);
     }
 }

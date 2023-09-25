@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\MasterDataSiswaController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\Tabungan\BukuTabunganController;
 use App\Http\Controllers\Tabungan\RekeningController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -71,9 +73,15 @@ Route::group(['middleware' => 'apiauthmid'], function ($router) {
 
     // START DATA REKENING
     Route::get('/rekening', [RekeningController::class, 'get']);
-    // START DATA REKENING
+    // END DATA REKENING
+
+    // START BUKU TABUNGAN
+    Route::get('/buku-tabungan', [BukuTabunganController::class, 'get']);
+    // END BUKU TABUNGAN
 
     // EXPORT IMPORT DATA SISWA
     Route::post('/import/siswa', [ImportController::class, 'importSiswa'])->name('import.siswa');
+
+    Route::get('/export/siswa-perkelas', [ExportController::class, 'exportSiswaPerkelasExcel']);
 
 });

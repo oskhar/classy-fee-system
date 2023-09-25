@@ -183,7 +183,10 @@ class Main extends Core {
     }
 
     exportSiswaPerkelasExcel() {
-        window.location.href = `${this.mainURL}/export/siswa-perkelas?nama_kelas=${this.kelasDipilih}&id_kelas=${this.idKelasSelected}&id_tahun_ajar=${this.tahunAjarSelected}`;
+        const urlAPI = `${this.mainURL}/api/export/siswa-perkelas?nama_kelas=${this.kelasDipilih}&id_kelas=${this.idKelasSelected}&id_tahun_ajar=${this.tahunAjarSelected}`;
+        this.doAjax(urlAPI, function (response) {
+            console.log(response);
+        });
     }
 }
 
