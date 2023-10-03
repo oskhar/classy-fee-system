@@ -183,10 +183,34 @@ class Main extends Core {
     }
 
     exportSiswaPerkelasExcel() {
-        const urlAPI = `${this.mainURL}/api/export/siswa-perkelas?nama_kelas=${this.kelasDipilih}&id_kelas=${this.idKelasSelected}&id_tahun_ajar=${this.tahunAjarSelected}`;
-        this.doAjax(urlAPI, function (response) {
-            console.log(response);
+        /**
+         * Menyediakan tempat utama untuk
+         * mengumpulkan parameter yang
+         * dibutuhkan untuk export
+         */
+        let paramStack = "";
+        let jumlahParam = 0;
+        const objectParam = {
+            nama_kelas: this.kelasDipilih,
+            id_kelas: this.idKelasSelected,
+            id_tahun_ajar: this.tahunAjarSelected,
+        };
+
+        Object.keys(objectParam).forEach((key) => {
+            paramStack +=
+                (jumlahParam == 0 ? "?" : "&") + `${key}=${objectParam[key]}`;
+            jumlahParam++;
         });
+
+        console.log(paramStack);
+
+        /**
+         * Menambahkan parameter jika
+         * ditemukan value dari key-nya
+         */
+
+        window.location.href =
+            `${this.mainURL}/export/siswa-perkelas` + paramStack;
     }
 }
 

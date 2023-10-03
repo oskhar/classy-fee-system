@@ -82,6 +82,4 @@ Route::group(['middleware' => 'apiauthmid'], function ($router) {
     // EXPORT IMPORT DATA SISWA
     Route::post('/import/siswa', [ImportController::class, 'importSiswa'])->name('import.siswa');
 
-    Route::get('/export/siswa-perkelas', [ExportController::class, 'exportSiswaPerkelasExcel']);
-
 });

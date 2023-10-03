@@ -48,9 +48,9 @@ class ExportController extends Controller
          * mengatur data yang akan di-Export ke excel
          */
         $requestDataExcel = [
-            "idKelas" => $request->id_kelas,
-            "idTahunAjar" => $request->id_tahun_ajar,
-            "namaKelas" => $request->nama_kelas
+            "idKelas" => $request->id_kelas == 'undefined' ? null : $request->id_kelas,
+            "idTahunAjar" => $request->id_tahun_ajar == 'undefined' ? null : $request->id_tahun_ajar,
+            "namaKelas" => $request->nama_kelas == 'undefined' ? null : $request->nama_kela
         ];
 
         /**

@@ -15,9 +15,10 @@ return new class extends Migration
             $table->string('id_transaksi_tabungan')->primary();
 
             $table->string('id_administrator');
-            $table->foreign('id_administrator')->references('id_administrator')->on('tb_administrator')->onDelete('cascade');
+            $table->foreign('id_administrator')->references('id_administrator')->on('tb_administrator')->onDelete('cascade')->onUpdate('cascade');
+            
             $table->string('nomor_rekening');
-            $table->foreign('nomor_rekening')->references('nomor_rekening')->on('tb_rekening')->onDelete('cascade');
+            $table->foreign('nomor_rekening')->references('nomor_rekening')->on('tb_rekening')->onDelete('cascade')->onUpdate('cascade');
 
             $table->string('jenis_transaksi');
             $table->date('tanggal_transaksi');

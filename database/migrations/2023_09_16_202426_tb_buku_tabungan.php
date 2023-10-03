@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tb_buku_tabungan', function (Blueprint $table) {
             $table->id('id_buku_tabungan');
             $table->string('nomor_rekening');
-            $table->foreign('nomor_rekening')->references('nomor_rekening')->on('tb_rekening')->onDelete('cascade');
+            $table->foreign('nomor_rekening')->references('nomor_rekening')->on('tb_rekening')->onDelete('cascade')->onUpdate('cascade');
 
             $table->string('debit');
             $table->string('kredit');

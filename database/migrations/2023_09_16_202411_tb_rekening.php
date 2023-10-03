@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('nomor_rekening')->primary();
 
             $table->string('nis');
-            $table->foreign('nis')->references('nis')->on('master_data_siswa')->onDelete('cascade');
+            $table->foreign('nis')->references('nis')->on('master_data_siswa')->onDelete('cascade')->onUpdate('cascade');
             $table->date('tanggal_buka');
             $table->date('tanggal_tutup')->nullable();
             $table->bigInteger('setoran_awal');

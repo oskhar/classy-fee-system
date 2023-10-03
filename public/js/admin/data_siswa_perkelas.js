@@ -542,10 +542,30 @@ var Main = /*#__PURE__*/function (_Core) {
   }, {
     key: "exportSiswaPerkelasExcel",
     value: function exportSiswaPerkelasExcel() {
-      var urlAPI = "".concat(this.mainURL, "/api/export/siswa-perkelas?nama_kelas=").concat(this.kelasDipilih, "&id_kelas=").concat(this.idKelasSelected, "&id_tahun_ajar=").concat(this.tahunAjarSelected);
-      this.doAjax(urlAPI, function (response) {
-        console.log(response);
+      /**
+       * Menyediakan tempat utama untuk
+       * mengumpulkan parameter yang
+       * dibutuhkan untuk export
+       */
+      var paramStack = "";
+      var jumlahParam = 0;
+      var objectParam = {
+        nama_kelas: this.kelasDipilih,
+        id_kelas: this.idKelasSelected,
+        id_tahun_ajar: this.tahunAjarSelected
+      };
+      Object.keys(objectParam).forEach(function (key) {
+        paramStack += (jumlahParam == 0 ? "?" : "&") + "".concat(key, "=").concat(objectParam[key]);
+        jumlahParam++;
       });
+      console.log(paramStack);
+
+      /**
+       * Menambahkan parameter jika
+       * ditemukan value dari key-nya
+       */
+
+      window.location.href = "".concat(this.mainURL, "/export/siswa-perkelas") + paramStack;
     }
   }]);
   return Main;

@@ -81,7 +81,7 @@ class SiswaPerkelasExport implements FromCollection, WithHeadings, WithEvents, W
          */
         if (!empty($this->idTahunAjar)) {
             $query = $query
-                ->where('master_data_siswa.id_tahun_ajar', $this->idTahunAjar);
+                ->where('master_data_siswa.id_tahun_ajar', 'LIKE', $this->idTahunAjar);
         }
 
         /**
@@ -90,7 +90,7 @@ class SiswaPerkelasExport implements FromCollection, WithHeadings, WithEvents, W
          */
         if (!empty($this->idKelas)) {
             $query = $query
-                ->where('master_data_siswa.id_kelas', $this->idKelas);
+                ->where('master_data_siswa.id_kelas', 'LIKE', $this->idKelas);
         }
         
         /**

@@ -151,3 +151,5 @@ Route::group(['prefix' => 'admin'], function ($router) {
 });
 
 Route::get('/export/siswa', [ExportController::class, 'exportSiswaExcel'])->name('export.siswa');
+
+Route::get('/export/siswa-perkelas', [ExportController::class, 'exportSiswaPerkelasExcel']);

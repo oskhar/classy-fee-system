@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('id_kelas', 10)->primary();
 
             $table->string('id_jurusan');
-            $table->foreign('id_jurusan')->references('id_jurusan')->on('tb_jurusan')->onDelete('cascade');
+            $table->foreign('id_jurusan')->references('id_jurusan')->on('tb_jurusan')->onDelete('cascade')->onUpdate('cascade');
 
             $table->string('nama_kelas')->unique();
 
