@@ -129,6 +129,9 @@ Route::group(['prefix' => 'admin'], function ($router) {
     Route::get('/data-rekening', function () {
         return view('admin.data_rekening.read');
     })->name('admin.data_rekening');
+    Route::get('/data-rekening-create', function () {
+        return view('admin.data_rekening.create');
+    })->name('admin.data_rekening_create');
 
     /**
      * Router untuk halaman data pembayaran spp

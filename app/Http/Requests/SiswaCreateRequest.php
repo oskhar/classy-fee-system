@@ -28,6 +28,8 @@ class SiswaCreateRequest extends CoreRequest
             'pekerjaan_ibu' => ['nullable'],
             'penghasilan_ibu' => ['nullable'],
             'telp_rumah' => ['required'],
+            'id_kelas' => ['required'],
+            'id_tahun_ajar' => ['required'],
             'status_data' => ['nullable', 'in:Aktif,Tidak Aktif'],
         ];
     }

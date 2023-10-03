@@ -17,17 +17,27 @@
                     <div class='card-body'>
                         <form method='POST' enctype='multipart/form-data' class="row" id="form-tambah-jurusan">
                             @csrf
+
                             <div class='form-group col-sm-12'>
-                                <label for='nama_jurusan'>Nama jurusan</label>
-                                <input type='text' class='form-control' id='nama_jurusan' name='nama_jurusan' placeholder='Nama Jurusan'>
+                                <label for='nis'>Pilih Siswa</label>
+                                <select class='form-control' id='nis' name='nis'>
+                                    <option value='' selected disabled>Tidak Ada Siswa</option>
+                                </select>
                             </div>
 
-                            <div class='form-group col-sm-4'>
-                                <label for='singkatan'>Singkatan nama jurusan</label>
-                                <input type='text' class='form-control' id='singkatan' name='singkatan' placeholder='Singkatan Nama Jurusan'>
+                            <div class='form-group col-sm-6'>
+                                <label for='saldo_awal'>Saldo Awal</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            Rp
+                                        </div>
+                                    </div>
+                                    <input type='number' class='form-control' id='saldo_awal' name='saldo_awal' placeholder='000.-'>
+                                </div>
                             </div>
 
-                            <div class='form-group col-sm-4'>
+                            <div class='form-group col-sm-6'>
                                 <label for='status_data'>Status Data</label>
                                 <select class='form-control' id='status_data' name='status_data'>
                                     <option value='Aktif'>Aktif</option>

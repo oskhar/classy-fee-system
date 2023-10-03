@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tabungan;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Tabungan\RekeningCreateRequest;
 use App\Http\Requests\Tabungan\RekeningReadRequest;
 use App\Http\Resources\Tabungan\RekeningResource;
 use App\Models\Tabungan\RekeningModel;
@@ -13,6 +14,10 @@ class RekeningController extends Controller
 {
     public function get(RekeningReadRequest $request): JsonResponse
     {
+        /**
+         * Membuat query awal yang dijadikan pedoman dalam
+         * menumpuk query tambahan untuk mengambil data
+         */
         $query = RekeningModel::select(
             'tb_rekening.nomor_rekening',
             'tb_siswa.nis',
@@ -72,5 +77,83 @@ class RekeningController extends Controller
         ];
         
         return response()->json($response)->setStatusCode(200);
+    }
+
+    public function getSiswaBelumDaftar (): JsonResponse
+    {
+        /**
+         * Membuat query dasar sebagai acuan utama
+         * dalam mengambil data tabungan siswa
+         */
+        $query = RekeningModel::select(
+            'tb_siswa.nis',
+            'tb_siswa.nama_siswa'
+        )->join('tb_siswa', 'tb_siswa.nis', 'NOT LIKE', 'tb_rekening.nis');
+
+        /**
+         * Mengambil seluruh data berdasarkan
+         * query yang sudah diseleksi
+         */
+        $data = $query->get();
+
+        /**
+         * Mengembalikan response data berupa
+         * data berbentuk json
+         */
+        return (new RekeningResource([
+            'data' => $data
+        ]))->response()->setStatusCode(200);
+    }
+
+    public function create(RekeningCreateRequest $request): JsonResponse
+    {
+        // Validasi data
+        $data = $request->validated();
+
+        // Check apakah data jurusan sudah digunakan
+        $existingSiswa = RekeningModel::where('nis', $data['nis'])->first();
+        if ($existingSiswa) {
+            return response()->json([
+                'errors' => [
+                    'message' => [
+                        'Siswa ini sudah pernah mendaftar sebelumnya! tolong pilih siswa yang lain'
+                    ]
+                ]
+            ], 400);
+        }
+
+        // Check apakah data Jurusan sudah ada di sampah
+        $deletedJurusan = RekeningModel::onlyTrashed()->where('nama_jurusan', $data['nama_jurusan'])->first();
+        if ($deletedJurusan) {
+            return (new RekeningResource([
+                'errors' => [
+                    'message' => [
+                        'Data dengan nama jurusan serupa sudah ada di tempat sampah! Pulihkan?'
+                    ]
+                ],
+                'id_jurusan' => $deletedJurusan->id_jurusan,
+            ]))->response()->setStatusCode(200);
+        }
+
+        // Membuat id secara otomatis
+        $banyakData = RekeningModel::withTrashed()->count();
+        $data['id_jurusan'] = "J-" . str_pad(($banyakData + 1), 3, '0', STR_PAD_LEFT);
+
+        // Insert data ke tabel
+        $jurusan = new RekeningModel($data);
+        $jurusan->save();
+
+        // Jika status data tidak aktif, set deleted_at agar tidak null (soft delete)
+        if ($jurusan->status_data == "Tidak Aktif") {
+            (RekeningModel::find($data['id_jurusan']))
+                ->delete();
+        }
+
+        // Kembalikan dengan respon
+        return (new RekeningResource([
+            'success' => [
+                'message' => "Jurusan $jurusan->nama_jurusan berhasil ditambahkan"
+            ]
+        ]))->response()->setStatusCode(201);
     }
 }
