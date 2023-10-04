@@ -237,7 +237,7 @@
 							</ul>
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
-									<a href="#" class="nav-link">
+									<a href="{{route('admin.data_buku_tabungan')}}" class="nav-link">
 										<i class="fa-solid fa-minus nav-icon"></i>
 										<p>Buku Tabungan Siswa</p>
 									</a>

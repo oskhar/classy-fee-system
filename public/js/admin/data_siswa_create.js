@@ -398,6 +398,8 @@ var Main = /*#__PURE__*/function (_Core) {
     var _this;
     _classCallCheck(this, Main);
     _this = _super.call(this);
+    _this.idTahunAjar = $("#idTahunAjar");
+    _this.idKelas = $("#idKelas");
     _this.provinceSelect = $("#provinceSelect");
     _this.regencySelect = $("#regencySelect");
     _this.districtSelect = $("#districtSelect");
@@ -411,6 +413,8 @@ var Main = /*#__PURE__*/function (_Core) {
     _this.printButton = $("#printAlamat");
     _this.setListeners();
     _this.fetchProvinces();
+    _this.fetchTahunAjar();
+    _this.fetchNamaKelas();
     return _this;
   }
   _createClass(Main, [{
@@ -444,16 +448,6 @@ var Main = /*#__PURE__*/function (_Core) {
       self.villageSelect.on("change", function () {
         self.detailFormGroup.show();
       });
-    }
-  }, {
-    key: "fetchProvinces",
-    value: function fetchProvinces() {
-      var self = this;
-      var url = "".concat(self.mainURL, "/api-wilayah-indonesia/provinces.json");
-      self.doAjax(url, function (data) {
-        self.populateSelect(self.provinceSelect, data);
-        self.provinceFormGroup.show();
-      });
       $("#form-tambah-siswa").submit(function (event) {
         // Mencegah pengiriman formulir secara default
         event.preventDefault();
@@ -480,6 +474,8 @@ var Main = /*#__PURE__*/function (_Core) {
           penghasilan_ibu: $("#penghasilan_ibu").val(),
           telp_rumah: $("#telp_rumah").val(),
           // Ubah sesuai dengan ID input yang sesuai
+          id_tahun_ajar: $("#idTahunAjar").val(),
+          id_kelas: $("#idKelas").val(),
           status_data: $("#status_data").val()
         };
 
@@ -502,6 +498,16 @@ var Main = /*#__PURE__*/function (_Core) {
             self.showSuccessMessage(response.data.success.message);
           }
         }, dataBody, method);
+      });
+    }
+  }, {
+    key: "fetchProvinces",
+    value: function fetchProvinces() {
+      var self = this;
+      var url = "".concat(self.mainURL, "/api-wilayah-indonesia/provinces.json");
+      self.doAjax(url, function (data) {
+        self.populateSelect(self.provinceSelect, data);
+        self.provinceFormGroup.show();
       });
     }
   }, {
@@ -532,6 +538,42 @@ var Main = /*#__PURE__*/function (_Core) {
       self.doAjax(url, function (data) {
         self.populateSelect(self.villageSelect, data);
         self.villageFormGroup.show();
+      });
+    }
+  }, {
+    key: "fetchTahunAjar",
+    value: function fetchTahunAjar() {
+      var self = this;
+      var url = "".concat(self.mainURL, "/api/tahun-ajar");
+      self.doAjax(url, function (response) {
+        self.optionsList("tahun ajar", self.idTahunAjar, response.data);
+      });
+    }
+  }, {
+    key: "fetchNamaKelas",
+    value: function fetchNamaKelas() {
+      var self = this;
+      var url = "".concat(self.mainURL, "/api/kelas");
+      self.doAjax(url, function (response) {
+        self.optionsList("nama kelas", self.idKelas, response.data);
+      });
+    }
+  }, {
+    key: "optionsList",
+    value: function optionsList(namaData, selectElement, data) {
+      selectElement.html("<option value=\"\" selected disabled>Pilih ".concat(namaData, "</option>"));
+      $.each(data, function (index, item) {
+        if (item.id_kelas) {
+          selectElement.append($("<option>", {
+            value: item.id_kelas,
+            text: item.nama_kelas
+          }));
+        } else if (item.id_tahun_ajar) {
+          selectElement.append($("<option>", {
+            value: item.id_tahun_ajar,
+            text: item.nama_tahun_ajar + " " + item.semester
+          }));
+        }
       });
     }
   }, {

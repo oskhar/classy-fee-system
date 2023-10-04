@@ -20,7 +20,7 @@
     "/js/admin/data_tahun_ajar_create.js": "/js/admin/data_tahun_ajar_create.js",
     "/js/admin/data_tahun_ajar_update.js": "/js/admin/data_tahun_ajar_update.js",
     "/js/admin/rekening.js": "/js/admin/rekening.js",
-    "/js/admin/rekening_create.js": "/js/admin/rekening_create.js",
+    "/js/admin/buku_tabungan.js": "/js/admin/buku_tabungan.js",
     "/js/admin/cetak/laporan_siswa.js": "/js/admin/cetak/laporan_siswa.js",
     "/css/admin/data_jurusan_update.css": "/css/admin/data_jurusan_update.css",
     "/css/admin/data_jurusan_create.css": "/css/admin/data_jurusan_create.css",

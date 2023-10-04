@@ -6,6 +6,7 @@ use App\Http\Requests\SiswaCreateRequest;
 use App\Http\Requests\SiswaReadRequest;
 use App\Http\Requests\SiswaUpdateRequest;
 use App\Http\Resources\SiswaResource;
+use App\Models\MasterDataSiswaModel;
 use App\Models\SiswaModel;
 use App\Models\WaliSiswaModel;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -162,16 +163,25 @@ class SiswaController extends Controller
             'penghasilan_ibu' => $data['penghasilan_ibu'],
             'telp_rumah' => $data['telp_rumah'],
         ]);
+        $masterDataSiswa = new MasterDataSiswaModel([
+            'nis' => $data['nis'],
+            'nisn' => $data['nisn'],
+            'id_tahun_ajar' => $data['id_tahun_ajar'],
+            'id_kelas' => $data['id_kelas'],
+        ]);
 
         // Wali siswa terlebih dahulu karena ketergantungan referensi foreign key
         $waliSiswa->save();
         $siswa->save();
+        $masterDataSiswa->save();
 
         // Jika status data tidak aktif, set deleted_at agar tidak null (soft delete)
         if ($siswa->status_data == "Tidak Aktif") {
             (SiswaModel::find($data['id_wali_siswa']))
                 ->delete();
             (WaliSiswaModel::find($data['id_wali_siswa']))
+                ->delete();
+            (MasterDataSiswaModel::find($data['nis']))
                 ->delete();
         }
 

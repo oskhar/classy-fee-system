@@ -134,6 +134,14 @@ Route::group(['prefix' => 'admin'], function ($router) {
     })->name('admin.data_rekening_create');
 
     /**
+     * Router untuk halaman data buku tabungan
+     * 
+     */
+    Route::get('/data-buku-tabungan', function () {
+        return view('admin.data_buku_tabungan.read');
+    })->name('admin.data_buku_tabungan');
+
+    /**
      * Router untuk halaman data pembayaran spp
      * 
      */

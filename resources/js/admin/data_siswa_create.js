@@ -3,6 +3,8 @@ import { Core } from "./Core.js";
 class Main extends Core {
     constructor() {
         super();
+        this.idTahunAjar = $("#idTahunAjar");
+        this.idKelas = $("#idKelas");
         this.provinceSelect = $("#provinceSelect");
         this.regencySelect = $("#regencySelect");
         this.districtSelect = $("#districtSelect");
@@ -17,6 +19,8 @@ class Main extends Core {
 
         this.setListeners();
         this.fetchProvinces();
+        this.fetchTahunAjar();
+        this.fetchNamaKelas();
     }
 
     setListeners() {
@@ -55,16 +59,7 @@ class Main extends Core {
         self.villageSelect.on("change", function () {
             self.detailFormGroup.show();
         });
-    }
 
-    fetchProvinces() {
-        const self = this;
-        const url = `${self.mainURL}/api-wilayah-indonesia/provinces.json`;
-
-        self.doAjax(url, function (data) {
-            self.populateSelect(self.provinceSelect, data);
-            self.provinceFormGroup.show();
-        });
         $("#form-tambah-siswa").submit(function (event) {
             // Mencegah pengiriman formulir secara default
             event.preventDefault();
@@ -88,6 +83,8 @@ class Main extends Core {
                 pekerjaan_ibu: $("#pekerjaan_ibu").val(),
                 penghasilan_ibu: $("#penghasilan_ibu").val(),
                 telp_rumah: $("#telp_rumah").val(), // Ubah sesuai dengan ID input yang sesuai
+                id_tahun_ajar: $("#idTahunAjar").val(),
+                id_kelas: $("#idKelas").val(),
                 status_data: $("#status_data").val(),
             };
 
@@ -129,6 +126,16 @@ class Main extends Core {
         });
     }
 
+    fetchProvinces() {
+        const self = this;
+        const url = `${self.mainURL}/api-wilayah-indonesia/provinces.json`;
+
+        self.doAjax(url, function (data) {
+            self.populateSelect(self.provinceSelect, data);
+            self.provinceFormGroup.show();
+        });
+    }
+
     fetchRegencies(provinceId) {
         const self = this;
         const url = `${self.mainURL}/api-wilayah-indonesia/regencies/${provinceId}.json`;
@@ -156,6 +163,47 @@ class Main extends Core {
         self.doAjax(url, function (data) {
             self.populateSelect(self.villageSelect, data);
             self.villageFormGroup.show();
+        });
+    }
+
+    fetchTahunAjar() {
+        const self = this;
+        const url = `${self.mainURL}/api/tahun-ajar`;
+
+        self.doAjax(url, function (response) {
+            self.optionsList("tahun ajar", self.idTahunAjar, response.data);
+        });
+    }
+
+    fetchNamaKelas() {
+        const self = this;
+        const url = `${self.mainURL}/api/kelas`;
+
+        self.doAjax(url, function (response) {
+            self.optionsList("nama kelas", self.idKelas, response.data);
+        });
+    }
+
+    optionsList(namaData, selectElement, data) {
+        selectElement.html(
+            `<option value="" selected disabled>Pilih ${namaData}</option>`
+        );
+        $.each(data, function (index, item) {
+            if (item.id_kelas) {
+                selectElement.append(
+                    $("<option>", {
+                        value: item.id_kelas,
+                        text: item.nama_kelas,
+                    })
+                );
+            } else if (item.id_tahun_ajar) {
+                selectElement.append(
+                    $("<option>", {
+                        value: item.id_tahun_ajar,
+                        text: item.nama_tahun_ajar + " " + item.semester,
+                    })
+                );
+            }
         });
     }
 

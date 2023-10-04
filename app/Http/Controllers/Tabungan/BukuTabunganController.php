@@ -3,14 +3,23 @@
 namespace App\Http\Controllers\Tabungan;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Tabungan\BukuTabunganCreateRequest;
 use App\Http\Requests\Tabungan\BukuTabunganReadRequest;
 use App\Http\Resources\Tabungan\RekeningResource;
 use App\Models\Tabungan\BukuTabunganModel;
+use App\Models\Tabungan\RekeningModel;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class BukuTabunganController extends Controller
 {
+    protected $currentDate;
+
+    public function __construct()
+    {
+        $this->currentDate = Carbon::now();
+    }
     public function get(BukuTabunganReadRequest $request): JsonResponse
     {
         /**
@@ -93,5 +102,43 @@ class BukuTabunganController extends Controller
         ];
         
         return response()->json($response)->setStatusCode(200);
+    }
+
+    public function create(BukuTabunganCreateRequest $request)
+    {
+        // Validasi data
+        $data = $request->validated();
+
+        /**
+         * Membuat data saldo sebelumnya
+         */
+        $rekening = RekeningModel::where('nomor_rekening', $data['nomor_rekening'])->first();
+        $saldoSebelumnya = $rekening->saldo;
+        $saldoHasil = $saldoSebelumnya + ($data['debit']-$data['kredit']);
+        $rekening->update(['saldo' => $saldoHasil]);
+
+
+        /**
+         * Membuat object data untuk mengisi buku tabungan
+         * sebagai tanda setoran awal
+         */
+        $dataBukuTabungan = [
+            "nomor_rekening" => $data['nomor_rekening'],
+            "debit" => $data['debit'],
+            "kredit" => $data['kredit'],
+            "saldo" => $saldoHasil,
+            "tanggal" => $this->currentDate->format('Y-m-d'),
+        ];
+
+        // Insert data ke tabel
+        $bukuTabungan = new BukuTabunganModel($dataBukuTabungan);
+        $bukuTabungan->save();
+
+        // Kembalikan dengan respon
+        return (new RekeningResource([
+            'success' => [
+                'message' => "Data tabungan dengan nomor $rekening->nomor_rekening berhasil ditambahkan"
+            ]
+        ]))->response()->setStatusCode(201);
     }
 }

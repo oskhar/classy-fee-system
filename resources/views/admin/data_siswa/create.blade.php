@@ -34,6 +34,20 @@
                             </div>
 
                             <div class='form-group col-sm-6'>
+                                <label for='idTahunAjar'>Tahun ajar</label>
+                                <select required class="form-control" name="idTahunAjar" id="idTahunAjar">
+                                    <option value="" selected disabled>Data Tahun ajar Kosong</option>
+                                </select>
+                            </div>
+              
+                            <div class='form-group col-sm-6'>
+                                <label for='idKelas'>Nama Kelas</label>
+                                <select required class="form-control" name="idKelas" id="idKelas">
+                                    <option value="" selected disabled>Data kelas kosong</option>
+                                </select>
+                            </div>
+
+                            <div class='form-group col-sm-6'>
                                 <label for='agama'>Agama</label>
                                 <select id="agama" class="form-control">
                                     <option value="" selected disabled>Pilih Agama</option>

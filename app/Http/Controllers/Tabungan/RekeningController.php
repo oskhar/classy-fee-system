@@ -6,12 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Tabungan\RekeningCreateRequest;
 use App\Http\Requests\Tabungan\RekeningReadRequest;
 use App\Http\Resources\Tabungan\RekeningResource;
+use App\Models\MasterDataSiswaModel;
+use App\Models\Tabungan\BukuTabunganModel;
 use App\Models\Tabungan\RekeningModel;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class RekeningController extends Controller
 {
+    protected $currentDate;
+
+    public function __construct()
+    {
+        $this->currentDate = Carbon::now();
+    }
+
     public function get(RekeningReadRequest $request): JsonResponse
     {
         /**
@@ -79,16 +89,18 @@ class RekeningController extends Controller
         return response()->json($response)->setStatusCode(200);
     }
 
-    public function getSiswaBelumDaftar (): JsonResponse
+    public function getSiswaBelumTerdaftar (): JsonResponse
     {
         /**
          * Membuat query dasar sebagai acuan utama
          * dalam mengambil data tabungan siswa
          */
-        $query = RekeningModel::select(
+        $query = MasterDataSiswaModel::select(
             'tb_siswa.nis',
             'tb_siswa.nama_siswa'
-        )->join('tb_siswa', 'tb_siswa.nis', 'NOT LIKE', 'tb_rekening.nis');
+        )->join('tb_siswa', 'tb_siswa.nis', '=', 'master_data_siswa.nis')
+        ->leftJoin('tb_rekening', 'tb_siswa.nis', '=', 'tb_rekening.nis')
+        ->whereNull('tb_rekening.nis');
 
         /**
          * Mengambil seluruh data berdasarkan
@@ -123,7 +135,7 @@ class RekeningController extends Controller
         }
 
         // Check apakah data Jurusan sudah ada di sampah
-        $deletedJurusan = RekeningModel::onlyTrashed()->where('nama_jurusan', $data['nama_jurusan'])->first();
+        $deletedJurusan = RekeningModel::onlyTrashed()->where('nis', $data['nis'])->first();
         if ($deletedJurusan) {
             return (new RekeningResource([
                 'errors' => [
@@ -131,16 +143,35 @@ class RekeningController extends Controller
                         'Data dengan nama jurusan serupa sudah ada di tempat sampah! Pulihkan?'
                     ]
                 ],
-                'id_jurusan' => $deletedJurusan->id_jurusan,
+                'nis' => $deletedJurusan->nis,
             ]))->response()->setStatusCode(200);
         }
 
         // Membuat id secara otomatis
         $banyakData = RekeningModel::withTrashed()->count();
-        $data['id_jurusan'] = "J-" . str_pad(($banyakData + 1), 3, '0', STR_PAD_LEFT);
+        $data['nomor_rekening'] = "NR-" . str_pad(($banyakData + 1), 9, '0', STR_PAD_LEFT);
+        $data['tanggal_buka'] = $this->currentDate->format('Y-m-d');
+        $data['saldo'] = $data['setoran_awal'];
 
         // Insert data ke tabel
         $jurusan = new RekeningModel($data);
+        $jurusan->save();
+
+        /**
+         * Membuat object data untuk mengisi buku tabungan
+         * sebagai tanda setoran awal
+         */
+        $dataBukuTabungan = [
+            "id_buku_tabungan",
+            "nomor_rekening" => $data['nomor_rekening'],
+            "debit" => $data['setoran_awal'],
+            "kredit" => 0,
+            "saldo" => $data['setoran_awal'],
+            "tanggal" => $this->currentDate->format('Y-m-d'),
+        ];
+
+        // Insert data ke tabel
+        $jurusan = new BukuTabunganModel($dataBukuTabungan);
         $jurusan->save();
 
         // Jika status data tidak aktif, set deleted_at agar tidak null (soft delete)

@@ -73,7 +73,8 @@ Route::group(['middleware' => 'apiauthmid'], function ($router) {
 
     // START DATA REKENING
     Route::get('/rekening', [RekeningController::class, 'get']);
-    Route::get('/rekening/siswa-belum-terdaftar', [RekeningController::class, 'getSiswaBelumDaftar']);
+    Route::get('/rekening/siswa-belum-terdaftar', [RekeningController::class, 'getSiswaBelumTerdaftar']);
+    Route::post('/rekening', [RekeningController::class, 'create']);
     // END DATA REKENING
 
     // START BUKU TABUNGAN

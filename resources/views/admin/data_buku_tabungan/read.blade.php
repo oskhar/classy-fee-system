@@ -3,13 +3,13 @@
 @section('title', 'Halaman Dashboard')
 @section('mainContent')
 
-  @include('depedensi.admin.data_rekening.read')
+  @include('depedensi.admin.data_buku_tabungan.read')
 
   <section class="content">
 
     <div class="col-md-12">
       <div class="callout callout-success">
-          <b class="text-muted">Data siswa SMK Triguna Utama</b>
+          <b class="text-muted">Data buku tabungan SMK Triguna Utama</b>
       </div>
     </div>
     <div class="container-fluid">
@@ -38,17 +38,17 @@
           <div class="card">
             <div class="card-body row">
               <div class="col-lg-12">
-                <a href="{{route('admin.data_rekening_create')}}" class="btn btn-outline-primary p-2 my-2 ml-2">Tambah Data</a>
+                  <a href="{{}}" class="btn btn-outline-primary p-2 my-2 ml-2">Tambah Data</a>
                   <button class="btn btn-outline-primary p-2 my-2" id="exportSiswaPerkelas">Export Data</button>
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>
-                        <th>nomor_rekening</th>
-                        <th>nis</th>
-                        <th>nama siswa</th>
+                        <th>nomor rekening</th>
+                        <th>debit</th>
+                        <th>kredit</th>
                         <th>saldo</th>
+                        <th>tanggal</th>
                         <th>status_data</th>
-                        <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>

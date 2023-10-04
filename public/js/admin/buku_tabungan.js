@@ -372,9 +372,9 @@ var Core = /*#__PURE__*/function () {
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!***********************************************!*\
-  !*** ./resources/js/admin/rekening_create.js ***!
-  \***********************************************/
+/*!*********************************************!*\
+  !*** ./resources/js/admin/buku_tabungan.js ***!
+  \*********************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Core.js */ "./resources/js/admin/Core.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -398,64 +398,51 @@ var Main = /*#__PURE__*/function (_Core) {
     var _this;
     _classCallCheck(this, Main);
     _this = _super.call(this);
-    _this.pilihanSiswa = $("#nis");
-    _this.setInputSiswa();
-    _this.setListener();
+    _this.setDataTableBukuTabungan();
     return _this;
   }
   _createClass(Main, [{
-    key: "setListener",
-    value: function setListener() {
-      var self = this;
-      $("#form-tambah-rekening").submit(function (event) {
-        // Mencegah pengiriman formulir secara default
-        event.preventDefault();
-
-        // Assigmen data yang diperlukan untuk mengakses API
-        var url = "".concat(self.mainURL, "/api/rekening");
-        var method = "post";
-        var dataBody = {
-          nis: $("#nis").val(),
-          setoran_awal: $("#setoran_awal").val(),
-          status_data: $("#status_data").val()
-        };
-
-        // Jalankan api untuk create data saat submit
-        self.doAjax(url, function (response) {
-          if (response.data.errors) {
-            self.showInfoMessage(self.objectToString(response.data.errors), "pulihkan").then(function (result) {
-              if (result.isConfirmed) {
-                var _url = "".concat(self.mainURL, "/api/rekening/pulihkan");
-                var _method = "put";
-                var _dataBody = {
-                  nomor_rekening: response.data.nomor_rekening
-                };
-                self.doAjax(_url, function (response) {
-                  self.showSuccessAndRedirect(response.data.success.message, "".concat(self.mainURL, "/admin/data-rekening"));
-                }, _dataBody, _method);
-              }
-            });
-          } else {
-            self.showSuccessMessage(response.data.success.message);
-          }
-        }, dataBody, method);
-      });
-    }
-  }, {
-    key: "setInputSiswa",
-    value: function setInputSiswa() {
-      var self = this; // Simpan referensi this dalam variabel self
-
-      // Assigmen data yang diperlukan untuk mengakses API
-      var url = "".concat(self.mainURL, "/api/rekening/siswa-belum-terdaftar");
-      self.pilihanSiswa.html("");
-      this.doAjax(url, function (response) {
-        var data;
-        for (var i = 0; i < response.data.length; i++) {
-          data = response.data[i];
-          self.pilihanSiswa.append(new Option("(".concat(data.nis, ") ").concat(data.nama_siswa), data.nis));
+    key: "setDataTableBukuTabungan",
+    value: function setDataTableBukuTabungan() {
+      var _this2 = this;
+      // Data yang dibutuhkan tabel
+      this.dataTableElement = $("#example1");
+      var urlAPI = "".concat(this.mainURL, "/api/buku-tabungan");
+      var dataColumns = [{
+        data: "nomor_rekening"
+      }, {
+        data: "debit",
+        render: function render(data) {
+          var uang = _this2.numberToMoney(data);
+          return uang;
         }
-      });
+      }, {
+        data: "kredit",
+        render: function render(data) {
+          var uang = _this2.numberToMoney(data);
+          return uang;
+        }
+      }, {
+        data: "saldo",
+        render: function render(data) {
+          var uang = _this2.numberToMoney(data);
+          return uang;
+        }
+      }, {
+        data: "tanggal",
+        render: function render(data) {
+          return _this2.convertTanggal(data);
+        }
+      }, {
+        data: "status_data",
+        render: function render(data) {
+          var className = data === "Aktif" ? "text-success" : "text-danger";
+          return "<strong class='".concat(className, " px-3'>").concat(data, "</strong>");
+        }
+      }];
+
+      // Membuat tabel
+      this.dataTable = this.setDataTable(this.dataTableElement, urlAPI, dataColumns, 40);
     }
   }]);
   return Main;

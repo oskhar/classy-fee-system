@@ -9,13 +9,13 @@
         <div class='row'>
             <div class='col-md-12'>
                 <div class='callout callout-success'>
-                    <p class='text-secondary'>Data jurusan SMK Triguna Utama</p>
+                    <p class='text-secondary'>Data rekening SMK Triguna Utama</p>
                 </div>
             </div>
             <div class='col-md-12'>
                 <div class='card'>
                     <div class='card-body'>
-                        <form method='POST' enctype='multipart/form-data' class="row" id="form-tambah-jurusan">
+                        <form method='POST' enctype='multipart/form-data' class="row" id="form-tambah-rekening">
                             @csrf
 
                             <div class='form-group col-sm-12'>
@@ -26,14 +26,14 @@
                             </div>
 
                             <div class='form-group col-sm-6'>
-                                <label for='saldo_awal'>Saldo Awal</label>
+                                <label for='setoran_awal'>Saldo Awal</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                             Rp
                                         </div>
                                     </div>
-                                    <input type='number' class='form-control' id='saldo_awal' name='saldo_awal' placeholder='000.-'>
+                                    <input type='number' class='form-control' id='setoran_awal' name='setoran_awal' placeholder='000.-'>
                                 </div>
                             </div>
 
