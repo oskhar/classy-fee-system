@@ -12,15 +12,18 @@ class ImportController extends Controller
     public function importSiswa(Request $request): JsonResponse
     {
         $file = $request->file('excel_file');
+        $id_kelas = $request->id_kelas;
+        $id_tahun_ajar = $request->id_tahun_ajar;
 
-        if (!$file) {
+        if (!$file || !$id_kelas || !$id_tahun_ajar) {
             return response()->json([
-                'error' => 'File tidak ditemukan.'
+                'error' => 'Data tidak lengkap.'
             ])->setStatusCode(400);
         }
 
         try {
-            Excel::import(new SiswaImport, $file);
+            $siswaImport = new SiswaImport($id_kelas, $id_tahun_ajar);
+            Excel::import($siswaImport, $file);
             
             return response()->json([
                 'success' => [

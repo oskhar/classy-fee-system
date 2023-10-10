@@ -92,6 +92,7 @@ mix.js("resources/js/admin/rekening.js", "public/js/admin");
 mix.postCss("resources/css/admin/rekening.css", "public/css/admin");
 
 mix.js("resources/js/admin/buku_tabungan.js", "public/js/admin");
+mix.js("resources/js/admin/buku_tabungan_create.js", "public/js/admin");
 
 /**
  * START CETAK DATA LAPORAN KESELURURHAN

@@ -79,6 +79,7 @@ Route::group(['middleware' => 'apiauthmid'], function ($router) {
 
     // START BUKU TABUNGAN
     Route::get('/buku-tabungan', [BukuTabunganController::class, 'get']);
+    Route::post('/buku-tabungan', [BukuTabunganController::class, 'create']);
     // END BUKU TABUNGAN
 
     // EXPORT IMPORT DATA SISWA

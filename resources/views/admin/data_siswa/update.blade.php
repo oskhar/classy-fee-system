@@ -65,36 +65,10 @@
                                     <option value="Perempuan">Perempuan</option>
                                 </select>
                             </div>
-                            
-                            <div class='form-group col-sm-6' id="provinceFormGroup">
-                                <label>Provinsi</label>
-                                <select id="provinceSelect" class="form-control">
-                                    <option value="">Pilih Provinsi</option>
-                                </select>
-                            </div>
-                            
-                            <div class='form-group col-sm-6' id="regencyFormGroup" style="display: none;">
-                                <label class="text-muted">Kota</label>
-                                <select id="regencySelect" class="form-control">
-                                    <option value="">Pilih Kota/Kabupaten</option>
-                                </select>
-                            </div>
-                            <div class='form-group col-sm-6' id="districtFormGroup" style="display: none;">
-                                <label class="text-muted">Kecamatan</label>
-                                <select id="districtSelect" class="form-control">
-                                    <option value="">Pilih Kecamatan</option>
-                                </select>
-                            </div>
-                            <div class='form-group col-sm-6' id="villageFormGroup" style="display: none;">
-                                <label class="text-muted">Kelurahan</label>
-                                <select id="villageSelect" class="form-control">
-                                    <option value="">Pilih Kelurahan/Desa</option>
-                                </select>
-                            </div>
 
-                            <div class='form-group col-sm-12' id="detailFormGroup" style="display: none;">
-                                <label for='detailAlamat' class="text-muted">Alamat Siswa</label>
-                                <input type='text' class='form-control' id='detailAlamat' name='detailAlamat' placeholder='Detail Alamat'>
+                            <div class='form-group col-sm-12' id="detailFormGroup">
+                                <label for='alamat' class="text-muted">Alamat Siswa</label>
+                                <textarea class='form-control' id='alamat' name='alamat' placeholder='Detail Alamat'></textarea>
                             </div>
 
                             <h3 class="col-sm-12 text-left mt-4">Input Data Wali Siswa</h3>

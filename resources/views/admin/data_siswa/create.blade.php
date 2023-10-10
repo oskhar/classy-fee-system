@@ -19,36 +19,36 @@
                             @csrf
                             <h3>Input Data Siswa</h3>
                             <div class='form-group col-sm-12'>
-                                <label for='nama'>Nama Siswa</label>
+                                <label class="text-muted" for='nama'>Nama Siswa</label>
                                 <input type='text' class='form-control' id='nama' name='nama' placeholder='Nama Siswa'>
                             </div>
 
                             <div class='form-group col-sm-6'>
-                                <label for='nis'>NIS</label>
+                                <label class="text-muted" for='nis'>NIS</label>
                                 <input type='text' class='form-control' id='nis' name='nis' placeholder='NIS'>
                             </div>
 
                             <div class='form-group col-sm-6'>
-                                <label for='nisn'>NISN</label>
+                                <label class="text-muted" for='nisn'>NISN</label>
                                 <input type='text' class='form-control' id='nisn' name='nisn' placeholder='NISN'>
                             </div>
 
                             <div class='form-group col-sm-6'>
-                                <label for='idTahunAjar'>Tahun ajar</label>
+                                <label class="text-muted" for='idTahunAjar'>Tahun ajar</label>
                                 <select required class="form-control" name="idTahunAjar" id="idTahunAjar">
                                     <option value="" selected disabled>Data Tahun ajar Kosong</option>
                                 </select>
                             </div>
               
                             <div class='form-group col-sm-6'>
-                                <label for='idKelas'>Nama Kelas</label>
+                                <label class="text-muted" for='idKelas'>Nama Kelas</label>
                                 <select required class="form-control" name="idKelas" id="idKelas">
                                     <option value="" selected disabled>Data kelas kosong</option>
                                 </select>
                             </div>
 
                             <div class='form-group col-sm-6'>
-                                <label for='agama'>Agama</label>
+                                <label class="text-muted" for='agama'>Agama</label>
                                 <select id="agama" class="form-control">
                                     <option value="" selected disabled>Pilih Agama</option>
                                     <option value="Islam">Islam</option>
@@ -60,92 +60,66 @@
                             </div>
 
                             <div class='form-group col-sm-6'>
-                                <label for='tempat_lahir'>Tempat Lahir</label>
+                                <label class="text-muted" for='tempat_lahir'>Tempat Lahir</label>
                                 <input type='text' class='form-control' id='tempat_lahir' name='tempat_lahir' placeholder='tempat_lahir'>
                             </div>
 
                             <div class='form-group col-sm-6'>
-                                <label for='tanggal_lahir'>Tanggal Lahir</label>
+                                <label class="text-muted" for='tanggal_lahir'>Tanggal Lahir</label>
                                 <div class="input-group date" id="reservationdate" data-target-input="nearest">
                                     <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir">
                                 </div>
                             </div>
 
                             <div class='form-group col-sm-6'>
-                                <label for='jenis_kelamin'>Jenis Kelamin</label>
+                                <label class="text-muted" for='jenis_kelamin'>Jenis Kelamin</label>
                                 <select id="jenis_kelamin" class="form-control">
                                     <option value="" selected disabled>Pilih Jenis Kelamin</option>
                                     <option value="Laki Laki">Laki Laki</option>
                                     <option value="Perempuan">Perempuan</option>
                                 </select>
                             </div>
-                            
-                            <div class='form-group col-sm-6' id="provinceFormGroup">
-                                <label>Provinsi</label>
-                                <select id="provinceSelect" class="form-control">
-                                    <option value="">Pilih Provinsi</option>
-                                </select>
-                            </div>
-                            
-                            <div class='form-group col-sm-6' id="regencyFormGroup" style="display: none;">
-                                <label class="text-muted">Kota</label>
-                                <select id="regencySelect" class="form-control">
-                                    <option value="">Pilih Kota/Kabupaten</option>
-                                </select>
-                            </div>
-                            <div class='form-group col-sm-6' id="districtFormGroup" style="display: none;">
-                                <label class="text-muted">Kecamatan</label>
-                                <select id="districtSelect" class="form-control">
-                                    <option value="">Pilih Kecamatan</option>
-                                </select>
-                            </div>
-                            <div class='form-group col-sm-6' id="villageFormGroup" style="display: none;">
-                                <label class="text-muted">Kelurahan</label>
-                                <select id="villageSelect" class="form-control">
-                                    <option value="">Pilih Kelurahan/Desa</option>
-                                </select>
-                            </div>
 
-                            <div class='form-group col-sm-12' id="detailFormGroup" style="display: none;">
-                                <label for='detailAlamat' class="text-muted">Alamat Siswa</label>
-                                <input type='text' class='form-control' id='detailAlamat' name='detailAlamat' placeholder='Detail alamat'>
+                            <div class='form-group col-sm-12' id="detailFormGroup">
+                                <label class="text-muted" for='alamat'>Alamat Siswa</label>
+                                <textarea class='form-control' id='alamat' name='alamat' placeholder='Detail alamat'></textarea>
                             </div>
 
                             <h3 class="col-sm-12 text-left mt-4">Input Data Wali Siswa</h3>
 
                             <div class='form-group col-sm-6'>
-                                <label for='nama_ayah'>Nama Ayah</label>
+                                <label class="text-muted" for='nama_ayah'>Nama Ayah</label>
                                 <input type='text' class='form-control' id='nama_ayah' name='nama_ayah' placeholder='nama_ayah'>
                             </div>
 
                             <div class='form-group col-sm-6'>
-                                <label for='pekerjaan_ayah'>Pekerjaan Ayah</label>
+                                <label class="text-muted" for='pekerjaan_ayah'>Pekerjaan Ayah</label>
                                 <input type='text' class='form-control' id='pekerjaan_ayah' name='pekerjaan_ayah' placeholder='pekerjaan_ayah'>
                             </div>
 
                             <div class='form-group col-sm-6'>
-                                <label for='penghasilan_ayah'>Penghasilan Ayah</label>
+                                <label class="text-muted" for='penghasilan_ayah'>Penghasilan Ayah</label>
                                 <input type='number' class='form-control' id='penghasilan_ayah' name='penghasilan_ayah' placeholder='penghasilan_ayah'>
                             </div>
 
                             <div class='form-group col-sm-6'>
-                                <label for='nama_ibu'>Nama Ibu</label>
+                                <label class="text-muted" for='nama_ibu'>Nama Ibu</label>
                                 <input type='text' class='form-control' id='nama_ibu' name='nama_ibu' placeholder='nama_ibu'>
                             </div>
 
                             <div class='form-group col-sm-6'>
-                                <label for='pekerjaan_ibu'>Pekerjaan Ibu</label>
+                                <label class="text-muted" for='pekerjaan_ibu'>Pekerjaan Ibu</label>
                                 <input type='text' class='form-control' id='pekerjaan_ibu' name='pekerjaan_ibu' placeholder='pekerjaan_ibu'>
                             </div>
 
                             <div class='form-group col-sm-6'>
-                                <label for='penghasilan_ibu'>Penghasilan Ibu</label>
+                                <label class="text-muted" for='penghasilan_ibu'>Penghasilan Ibu</label>
                                 <input type='number' class='form-control' id='penghasilan_ibu' name='penghasilan_ibu' placeholder='penghasilan_ibu'>
                             </div>
 
                             <!-- text input -->
                             <div class="form-group col-sm-6">
-                                <label for="telp_rumah">No telepon rumah</label>
+                                <label class="text-muted" for="telp_rumah">No telepon rumah</label>
         
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -158,7 +132,7 @@
                             
                             <div class="col-sm-12 row">
                               <div class='form-group col-sm-6'>
-                                  <label for='status_data'>Status Data</label>
+                                  <label class="text-muted" for='status_data'>Status Data</label>
                                   <select class='form-control' id='status_data' name='status_data'>
                                       <option value='Aktif'>Aktif</option>
                                       <option value='Tidak Aktif'>Tidak Aktif</option>

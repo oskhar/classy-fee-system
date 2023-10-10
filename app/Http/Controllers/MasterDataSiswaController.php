@@ -33,14 +33,17 @@ class MasterDataSiswaController extends Controller
         ->join('tb_kelas', 'master_data_siswa.id_kelas', '=', 'tb_kelas.id_kelas')
         ->join('tb_tahun_ajar', 'master_data_siswa.id_tahun_ajar', '=', 'tb_tahun_ajar.id_tahun_ajar');
 
-        if ($request->has('id_kelas') && $request->has('id_tahun_ajar')) {
-            $query = $query->where('master_data_siswa.id_kelas', $request->id_kelas)
-                        ->where('master_data_siswa.id_tahun_ajar', $request->id_tahun_ajar)
+        if ($request->has('id_tahun_ajar')) {
+            $query = $query
+                        ->where('master_data_siswa.id_tahun_ajar', "LIKE", "%".$request->id_tahun_ajar."%")
                         ->distinct();
         }
-
+        if ($request->has('id_kelas')) {
+            $query = $query
+                        ->where('master_data_siswa.id_kelas', "LIKE", "%".$request->id_kelas."%")
+                        ->distinct();
+        }
         $totalRecords = $query->count();
-
         if ($request->has('start') && $request->has('length')) {
             $query = $query->offset($request->start)
                 ->limit($request->length);

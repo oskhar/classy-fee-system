@@ -153,6 +153,17 @@ Route::group(['prefix' => 'admin'], function ($router) {
     })->name('admin.data_pembayaran_spp_create');
 
     /**
+     * Router untuk halaman transaksi
+     * 
+     */
+    Route::get('/transaksi-tabungan', function () {
+        return view('admin.transaksi_tabungan.read');
+    })->name('admin.transaksi_tabungan');
+    Route::get('/transaksi-tabungan-create', function () {
+        return view('admin.transaksi_tabungan.create');
+    })->name('admin.transaksi_tabungan_create');
+
+    /**
      * Router untuk halaman cetak laporan
      * 
      */
@@ -164,3 +175,5 @@ Route::group(['prefix' => 'admin'], function ($router) {
 Route::get('/export/siswa', [ExportController::class, 'exportSiswaExcel'])->name('export.siswa');
 
 Route::get('/export/siswa-perkelas', [ExportController::class, 'exportSiswaPerkelasExcel']);
+
+Route::get('/export/buku-tabungan', [ExportController::class, 'exportBukuTabungan']);

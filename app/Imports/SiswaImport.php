@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Imports;
+use App\Models\MasterDataSiswaModel;
 use Maatwebsite\Excel\Concerns\ToModel;
 use App\Models\SiswaModel;
 use App\Models\WaliSiswaModel;
@@ -8,6 +9,14 @@ use Maatwebsite\Excel\Concerns\WithStartRow;
 
 class SiswaImport implements ToModel, WithStartRow
 {
+    private $id_kelas;
+    private $id_tahun_ajar;
+
+    public function __construct($id_kelas, $id_tahun_ajar)
+    {
+        $this->id_kelas = $id_kelas;
+        $this->id_tahun_ajar = $id_tahun_ajar;
+    }
     /**
      * Menentukan baris pertama yang akan dibaca (baris judul diabaikan).
      *
@@ -27,7 +36,11 @@ class SiswaImport implements ToModel, WithStartRow
 
         // Jika data siswa tidak ditemukan, maka buat data siswa baru
         if (!$siswa) {
-            // Selanjutnya, impor data ke tabel WaliSiswaModel (misalnya, kolom pertama adalah kolom nis di Excel)
+            /**
+             * Selanjutnya, impor data ke tabel WaliSiswaModel
+             * (misalnya, kolom pertama adalah kolom nis di Excel)
+             * 
+             */
             $waliSiswa = new WaliSiswaModel([
                 'nama_ayah' => $row[9],
                 'pekerjaan_ayah' => $row[10],
@@ -39,10 +52,13 @@ class SiswaImport implements ToModel, WithStartRow
                 'telp_rumah' => $row[15],
                 'id_wali_siswa' => $idWaliSiswa
             ]);
-
-            // Simpan data ke tabel WaliSiswaModel
             $waliSiswa->save();
             
+            /**
+             * Melakukan tambah data ke tabel siswa
+             * dengan data pada row excel yang
+             * sesuai
+             */
             $siswa = new SiswaModel([
                 'nis' => $row[0],
                 'nisn' => $row[1],
@@ -55,8 +71,33 @@ class SiswaImport implements ToModel, WithStartRow
                 'status_data' => $row[8],
                 'id_wali_siswa' => $idWaliSiswa
             ]);
-
             $siswa->save();
+
+            /**
+             * Menambahkan data master data setelah
+             * data siswa berhasil ditambahkan
+             */
+            $masterDataSiswa = new MasterDataSiswaModel([
+                'nis' => $row[0],
+                'nisn' => $row[1],
+                'id_tahun_ajar' => $this->id_tahun_ajar,
+                'id_kelas' => $this->id_kelas,
+            ]);
+            $masterDataSiswa->save();
+
+        } else {
+
+            /**
+             * Menambahkan data master data setelah
+             * data siswa berhasil ditambahkan
+             */
+            $masterDataSiswa = new MasterDataSiswaModel([
+                'nis' => $siswa->nis,
+                'nisn' => $siswa->nisn,
+                'id_tahun_ajar' => $this->id_tahun_ajar,
+                'id_kelas' => $this->id_kelas,
+            ]);
+            $masterDataSiswa->save();
         }
         
         return $siswa;

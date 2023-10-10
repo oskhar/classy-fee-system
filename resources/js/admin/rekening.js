@@ -149,7 +149,6 @@ class Main extends Core {
                                 <th>kredit</th>
                                 <th>saldo</th>
                                 <th>tanggal</th>
-                                <th>status_data</th>
                             </tr>
                         </thead>
                         <tbody>${self.arrayBukuRekeningToTable(
@@ -166,6 +165,7 @@ class Main extends Core {
                  * siswa sesuai permintaan
                  */
                 if (result.isConfirmed) {
+                    window.location.href = `${self.mainURL}/export/buku-tabungan?nomor_rekening=${nomor_rekening}`;
                 }
             });
         });
@@ -289,7 +289,6 @@ class Main extends Core {
                 <td>${this.numberToMoney(arrayBukuRekening[i].kredit)}</td>
                 <td>${this.numberToMoney(arrayBukuRekening[i].saldo)}</td>
                 <td>${arrayBukuRekening[i].tanggal}</td>
-                <td>${arrayBukuRekening[i].status_data}</td>
             </tr>`;
         }
         return hasil;

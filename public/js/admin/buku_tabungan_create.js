@@ -372,15 +372,12 @@ var Core = /*#__PURE__*/function () {
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!****************************************!*\
-  !*** ./resources/js/admin/rekening.js ***!
-  \****************************************/
+/*!****************************************************!*\
+  !*** ./resources/js/admin/buku_tabungan_create.js ***!
+  \****************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Core.js */ "./resources/js/admin/Core.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return { value: void 0, done: !0 }; } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable || "" === iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } throw new TypeError(_typeof(iterable) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -403,59 +400,16 @@ var Main = /*#__PURE__*/function (_Core) {
     _this = _super.call(this);
     _this.idTahunAjar = $("#idTahunAjar");
     _this.idKelas = $("#idKelas");
-    _this.dataTableElement = $("#example1");
-    _this.tombolExport = $("#exportSiswaPerkelas");
-    _this.kelasDipilih = "";
-    _this.setListener();
+    _this.pilihanNomorRekening = $("#nomor_rekening");
+    _this.setInputNomorRekening();
     _this.fetchTahunAjar();
+    _this.setListener();
     return _this;
   }
   _createClass(Main, [{
-    key: "setDataTableRekening",
-    value: function setDataTableRekening(requestIdTahunAjar, requestIdKelas) {
-      var _this2 = this;
-      /**
-       * Merefresh data pada datatable
-       * jika data table sudah terisi
-       */
-      var urlAPI = "".concat(this.mainURL, "/api/rekening?id_tahun_ajar=").concat(requestIdTahunAjar, "&id_kelas=").concat(requestIdKelas);
-      if (this.dataTable) {
-        this.dataTable.ajax.url(urlAPI).load();
-      } else {
-        var dataColumns = [{
-          data: "nomor_rekening"
-        }, {
-          data: "nis"
-        }, {
-          data: "nama_siswa"
-        }, {
-          data: "saldo",
-          render: function render(data) {
-            var uang = _this2.numberToMoney(data);
-            return uang;
-          }
-        }, {
-          data: "status_data",
-          render: function render(data) {
-            var className = data === "Aktif" ? "text-success" : "text-danger";
-            return "<strong class='".concat(className, " px-3'>").concat(data, "</strong>");
-          }
-        }, {
-          data: "nomor_rekening",
-          render: function render(data, type, row) {
-            return "\n                        <a class=\"btn btn-outline-primary btn-action btn-sm print\" data-nomor-rekening=\"".concat(data, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"Cetak buku tabungan\">\n                            <i class=\"fas fa-print\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-nis=\"").concat(data, "\" data-nama=\"").concat(row.nama_siswa, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"hapus data\">\n                            <i class=\"fas fa-trash\"></i>\n                        </a>\n                    ");
-          }
-        }];
-
-        // Membuat tabel
-        this.dataTable = this.setDataTable(this.dataTableElement, urlAPI, dataColumns, 20);
-      }
-    }
-  }, {
     key: "setListener",
     value: function setListener() {
-      var self = this; // Simpan referensi this dalam variabel self
-
+      var self = this;
       self.idTahunAjar.on("change", function () {
         self.tahunAjarSelected = $(this).val();
         if (self.tahunAjarSelected) {
@@ -469,111 +423,58 @@ var Main = /*#__PURE__*/function (_Core) {
         self.idKelasSelected = $(this).val();
         self.kelasDipilih = $(this).find(":selected").text();
         if (self.tahunAjarSelected && self.idKelasSelected) {
-          self.setDataTableRekening(self.tahunAjarSelected, self.idKelasSelected);
+          self.setInputNomorRekening(self.tahunAjarSelected, self.idKelasSelected);
         }
       });
-      self.tombolExport.on("click", function () {
-        self.exportSiswaPerkelasExcel();
-      });
+      $("#form-buku-tabungan").submit(function (event) {
+        // Mencegah pengiriman formulir secara default
+        event.preventDefault();
 
-      // Event listener untuk tombol delete
-      self.dataTableElement.on("click", ".btn-action.print", function (event) {
-        var button = $(this);
-        var nomor_rekening = button.data("nomor-rekening");
-        self.previewBukuRekening(nomor_rekening); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari Siswa Main
+        // Assigmen data yang diperlukan untuk mengakses API
+        var url = "".concat(self.mainURL, "/api/buku-tabungan");
+        var method = "post";
+        var debit = $("#debit").val() == "" ? 0 : $("#debit").val();
+        var kredit = $("#kredit").val() == "" ? 0 : $("#kredit").val();
+        var dataBody = {
+          nomor_rekening: $("#nomor_rekening").val(),
+          debit: debit,
+          kredit: kredit
+        };
+
+        // Jalankan api untuk create data saat submit
+        self.doAjax(url, function (response) {
+          if (response.data.errors) {
+            self.showInfoMessage(self.objectToString(response.data.errors), "pulihkan").then(function (result) {
+              if (result.isConfirmed) {
+                var _url = "".concat(self.mainURL, "/api/rekening/pulihkan");
+                var _method = "put";
+                var _dataBody = {
+                  nomor_rekening: response.data.nomor_rekening
+                };
+                self.doAjax(_url, function (response) {
+                  self.showSuccessAndRedirect(response.data.success.message, "".concat(self.mainURL, "/admin/data-rekening"));
+                }, _dataBody, _method);
+              }
+            });
+          } else {
+            self.showSuccessMessage(response.data.success.message);
+          }
+        }, dataBody, method);
       });
     }
   }, {
-    key: "previewBukuRekening",
-    value: function () {
-      var _previewBukuRekening = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(nomor_rekening) {
-        var self, urlAPI, dataTablePreview, dataColumnsPreview;
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) switch (_context.prev = _context.next) {
-            case 0:
-              /**
-               * Menginisialisasi this milik main class
-               * ke dalam bentuk lain agar tidak
-               * bentrok dengan class tambahan
-               */
-              self = this;
-              /**
-               * Melakukan assigment pada variable
-               * urlAPI untuk melakukan request
-               */
-              urlAPI = "".concat(self.mainURL, "/api/buku-tabungan?nomor_rekening=").concat(nomor_rekening);
-              /**
-               * Melakukan request menggunakan jquery
-               * ajax dengan gateway yang ditentukan
-               */
-              _context.next = 4;
-              return self.doAjax(urlAPI, function (response) {
-                /**
-                 * Menampilkan pop up data table
-                 */
-                self.showInfoMessage("", "<i class='fas fa-print'></i> Cetak data", "90%", "<div class=\"card card-success mt-4\">\n                <div class=\"card-header\">\n                    <h3 class=\"card-title\">Preview data rekening</h3>\n                    <div class=\"card-tools\">\n                        <button type=\"button\" class=\"btn btn-tool\" data-card-widget=\"collapse\">\n                            <i class=\"fas fa-minus\"></i>\n                        </button>\n                    </div>\n                </div>\n                <div class=\"card-body\">\n                    <table id=\"example2\" class=\"table table-bordered table-striped\">\n                        <thead>\n                            <tr>\n                                <th>nomor rekening</th>\n                                <th>debit</th>\n                                <th>kredit</th>\n                                <th>saldo</th>\n                                <th>tanggal</th>\n                            </tr>\n                        </thead>\n                        <tbody>".concat(self.arrayBukuRekeningToTable(response.data), "</tbody>\n                    </table>\n                </div>\n                </div>"), "var(--danger)", "<i class='fas fa-times'></i> Cancel").then(function (result) {
-                  /**
-                   * Mencetak data buku tabungan
-                   * siswa sesuai permintaan
-                   */
-                  if (result.isConfirmed) {
-                    window.location.href = "".concat(self.mainURL, "/export/buku-tabungan?nomor_rekening=").concat(nomor_rekening);
-                  }
-                });
-              });
-            case 4:
-              // Data yang dibutuhkan tabel
-              dataTablePreview = $("#example2");
-              dataColumnsPreview = [{
-                data: "nomor_rekening"
-              }, {
-                data: "debit"
-              }, {
-                data: "kredit"
-              }, {
-                data: "saldo"
-              }, {
-                data: "tanggal",
-                render: function render(data) {
-                  return self.convertTanggal(data);
-                }
-              }, {
-                data: "status_data",
-                render: function render(data) {
-                  var className = data === "Aktif" ? "text-success" : "text-danger";
-                  return "<strong class='".concat(className, " px-3'>").concat(data, "</strong>");
-                }
-              }]; // Membuat tabel
-              self.setDataTable(dataTablePreview, urlAPI, dataColumnsPreview, 10);
-            case 7:
-            case "end":
-              return _context.stop();
-          }
-        }, _callee, this);
-      }));
-      function previewBukuRekening(_x) {
-        return _previewBukuRekening.apply(this, arguments);
-      }
-      return previewBukuRekening;
-    }()
-  }, {
-    key: "performSoftDelete",
-    value: function performSoftDelete(nis, nama_siswa) {
-      var _this3 = this;
-      this.showWarningMessage("Hapus Siswa ".concat(nama_siswa, " ?"), "Hapus").then(function (result) {
-        // Assigmen data yang dibutuhkan untuk mengakses API
-        var urlAPI = "".concat(_this3.mainURL, "/api/rekening");
-        var method = "delete";
-        var dataBody = {
-          nis: nis
-        };
+    key: "setInputNomorRekening",
+    value: function setInputNomorRekening(idTahunAjar, idKelas) {
+      var self = this; // Simpan referensi this dalam variabel self
 
-        // Jalankan api untuk delete data jika tombol hapus diclick
-        if (result.isDenied) {
-          _this3.doAjax(urlAPI, function (response) {
-            _this3.refreshDataTable();
-            _this3.showSuccessMessage(response.data.success.message);
-          }, dataBody, method);
+      // Assigmen data yang diperlukan untuk mengakses API
+      var url = "".concat(self.mainURL, "/api/rekening?id_tahun_ajar=").concat(idTahunAjar, "&id_kelas=").concat(idKelas);
+      self.pilihanNomorRekening.html("");
+      this.doAjax(url, function (response) {
+        var data;
+        for (var i = 0; i < response.data.length; i++) {
+          data = response.data[i];
+          self.pilihanNomorRekening.append(new Option(data.nomor_rekening, data.nomor_rekening));
         }
       });
     }
@@ -591,7 +492,6 @@ var Main = /*#__PURE__*/function (_Core) {
     value: function fetchNamaKelas(requestIdTahunAjar) {
       var self = this;
       var url = "".concat(self.mainURL, "/api/kelas/dari-tahun-ajar");
-      self.tombolExport.show();
       self.doAjax(url, function (response) {
         var data = response.data;
         self.optionsList("nama kelas", self.idKelas, data);
@@ -616,25 +516,6 @@ var Main = /*#__PURE__*/function (_Core) {
           }));
         }
       });
-    }
-  }, {
-    key: "refreshDataTable",
-    value: function refreshDataTable() {
-      this.dataTable.ajax.reload();
-    }
-  }, {
-    key: "exportSiswaPerkelasExcel",
-    value: function exportSiswaPerkelasExcel() {
-      window.location.href = "".concat(this.mainURL, "/export/siswa-perkelas?nama_kelas=").concat(this.kelasDipilih, "&id_kelas=").concat(this.idKelasSelected, "&id_tahun_ajar=").concat(this.tahunAjarSelected);
-    }
-  }, {
-    key: "arrayBukuRekeningToTable",
-    value: function arrayBukuRekeningToTable(arrayBukuRekening) {
-      var hasil = "";
-      for (var i = 0; i < arrayBukuRekening.length; i++) {
-        hasil += "\n            <tr>\n                <td>".concat(arrayBukuRekening[i].nomor_rekening, "</td>\n                <td>").concat(this.numberToMoney(arrayBukuRekening[i].debit), "</td>\n                <td>").concat(this.numberToMoney(arrayBukuRekening[i].kredit), "</td>\n                <td>").concat(this.numberToMoney(arrayBukuRekening[i].saldo), "</td>\n                <td>").concat(arrayBukuRekening[i].tanggal, "</td>\n            </tr>");
-      }
-      return hasil;
     }
   }]);
   return Main;

@@ -5,41 +5,51 @@ class Main extends Core {
         super();
         this.idTahunAjar = $("#idTahunAjar");
         this.idKelas = $("#idKelas");
-
-        this.setListeners();
+        this.pilihanNomorRekening = $("#nomor_rekening");
+        this.setInputNomorRekening();
         this.fetchTahunAjar();
-        this.fetchNamaKelas();
+        this.setListener();
     }
 
-    setListeners() {
+    setListener() {
         const self = this;
 
-        $("#form-tambah-siswa").submit(function (event) {
+        self.idTahunAjar.on("change", function () {
+            self.tahunAjarSelected = $(this).val();
+
+            if (self.tahunAjarSelected) {
+                self.fetchNamaKelas(self.tahunAjarSelected);
+                if (self.dataTable) {
+                    $("#example1 tbody").html("");
+                }
+            }
+        });
+
+        self.idKelas.on("change", function () {
+            self.idKelasSelected = $(this).val();
+            self.kelasDipilih = $(this).find(":selected").text();
+
+            if (self.tahunAjarSelected && self.idKelasSelected) {
+                self.setInputNomorRekening(
+                    self.tahunAjarSelected,
+                    self.idKelasSelected
+                );
+            }
+        });
+
+        $("#form-buku-tabungan").submit(function (event) {
             // Mencegah pengiriman formulir secara default
             event.preventDefault();
 
             // Assigmen data yang diperlukan untuk mengakses API
-            let url = `${self.mainURL}/api/siswa`;
+            let url = `${self.mainURL}/api/buku-tabungan`;
             let method = "post";
+            let debit = $("#debit").val() == "" ? 0 : $("#debit").val();
+            let kredit = $("#kredit").val() == "" ? 0 : $("#kredit").val();
             let dataBody = {
-                nama_siswa: $("#nama").val(), // Ubah sesuai dengan ID input yang sesuai
-                nis: $("#nis").val(),
-                nisn: $("#nisn").val(),
-                agama: $("#agama").val(),
-                tempat_lahir: $("#tempat_lahir").val(),
-                tanggal_lahir: $("#tanggal_lahir").val(),
-                jenis_kelamin: $("#jenis_kelamin").val(),
-                alamat: $("#alamat").val(), // Gunakan metode yang sudah Anda definisikan untuk mendapatkan alamat
-                nama_ayah: $("#nama_ayah").val(),
-                pekerjaan_ayah: $("#pekerjaan_ayah").val(),
-                penghasilan_ayah: $("#penghasilan_ayah").val(),
-                nama_ibu: $("#nama_ibu").val(),
-                pekerjaan_ibu: $("#pekerjaan_ibu").val(),
-                penghasilan_ibu: $("#penghasilan_ibu").val(),
-                telp_rumah: $("#telp_rumah").val(), // Ubah sesuai dengan ID input yang sesuai
-                id_tahun_ajar: $("#idTahunAjar").val(),
-                id_kelas: $("#idKelas").val(),
-                status_data: $("#status_data").val(),
+                nomor_rekening: $("#nomor_rekening").val(),
+                debit: debit,
+                kredit: kredit,
             };
 
             // Jalankan api untuk create data saat submit
@@ -52,17 +62,18 @@ class Main extends Core {
                             "pulihkan"
                         ).then((result) => {
                             if (result.isConfirmed) {
-                                let url = `${self.mainURL}/api/siswa/pulihkan`;
+                                let url = `${self.mainURL}/api/rekening/pulihkan`;
                                 let method = "put";
                                 let dataBody = {
-                                    id_siswa: response.data.id_siswa,
+                                    nomor_rekening:
+                                        response.data.nomor_rekening,
                                 };
                                 self.doAjax(
                                     url,
                                     function (response) {
                                         self.showSuccessAndRedirect(
                                             response.data.success.message,
-                                            `${self.mainURL}/admin/data-siswa`
+                                            `${self.mainURL}/admin/data-rekening`
                                         );
                                     },
                                     dataBody,
@@ -80,6 +91,25 @@ class Main extends Core {
         });
     }
 
+    setInputNomorRekening(idTahunAjar, idKelas) {
+        const self = this; // Simpan referensi this dalam variabel self
+
+        // Assigmen data yang diperlukan untuk mengakses API
+        let url = `${self.mainURL}/api/rekening?id_tahun_ajar=${idTahunAjar}&id_kelas=${idKelas}`;
+
+        self.pilihanNomorRekening.html("");
+
+        this.doAjax(url, function (response) {
+            let data;
+            for (let i = 0; i < response.data.length; i++) {
+                data = response.data[i];
+                self.pilihanNomorRekening.append(
+                    new Option(data.nomor_rekening, data.nomor_rekening)
+                );
+            }
+        });
+    }
+
     fetchTahunAjar() {
         const self = this;
         const url = `${self.mainURL}/api/tahun-ajar`;
@@ -89,13 +119,20 @@ class Main extends Core {
         });
     }
 
-    fetchNamaKelas() {
+    fetchNamaKelas(requestIdTahunAjar) {
         const self = this;
-        const url = `${self.mainURL}/api/kelas`;
+        const url = `${self.mainURL}/api/kelas/dari-tahun-ajar`;
 
-        self.doAjax(url, function (response) {
-            self.optionsList("nama kelas", self.idKelas, response.data);
-        });
+        self.doAjax(
+            url,
+            function (response) {
+                let data = response.data;
+                self.optionsList("nama kelas", self.idKelas, data);
+            },
+            {
+                id_tahun_ajar: requestIdTahunAjar,
+            }
+        );
     }
 
     optionsList(namaData, selectElement, data) {
@@ -120,24 +157,8 @@ class Main extends Core {
             }
         });
     }
-
-    populateSelect(selectElement, data) {
-        selectElement.html('<option value="" selected disabled>Pilih</option>');
-        $.each(data, function (index, item) {
-            selectElement.append(
-                $("<option>", {
-                    value: item.id,
-                    text: item.name,
-                })
-            );
-        });
-        selectElement.show();
-    }
 }
 
 $(function () {
-    // Inisialisasi masker inputmask
-    $("[data-inputmask]").inputmask();
-
     new Main();
 });

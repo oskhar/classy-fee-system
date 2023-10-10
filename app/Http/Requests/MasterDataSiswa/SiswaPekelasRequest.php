@@ -21,8 +21,8 @@ class SiswaPekelasRequest extends CoreRequest
             'search' => 'nullable',
             'orderColumn' => 'nullable',
             'orderDir' => 'nullable',
-            'id_tahun_ajar' => 'required',
-            'id_kelas' => 'required',
+            'id_tahun_ajar' => 'nullable',
+            'id_kelas' => 'nullable',
         ];
     }
 
@@ -34,8 +34,6 @@ class SiswaPekelasRequest extends CoreRequest
     public function messages(): array
     {
         return [
-            'id_tahun_ajar.required' => "Id tahun ajar wajib diisi !!",
-            'id_kelas.required' => "Id kelas wajib diisi !!",
         ];
     }
 }

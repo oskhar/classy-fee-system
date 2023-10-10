@@ -18,7 +18,7 @@ class TahunAjarController extends Controller
             'id_tahun_ajar',
             'nama_tahun_ajar',
             'semester',
-            'status_data')->orderBy('nama_tahun_ajar', 'DESC');
+            'status_data')->orderBy('nama_tahun_ajar', 'DESC')->orderBy('semester', 'DESC');
 
         $totalRecords = TahunAjarModel::count();
     

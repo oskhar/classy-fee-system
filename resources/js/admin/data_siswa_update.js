@@ -3,19 +3,7 @@ import { Core } from "./Core.js";
 class Main extends Core {
     constructor() {
         super();
-        this.provinceSelect = $("#provinceSelect");
-        this.regencySelect = $("#regencySelect");
-        this.districtSelect = $("#districtSelect");
-        this.villageSelect = $("#villageSelect");
-        this.provinceFormGroup = $("#provinceFormGroup");
-        this.regencyFormGroup = $("#regencyFormGroup");
-        this.districtFormGroup = $("#districtFormGroup");
-        this.villageFormGroup = $("#villageFormGroup");
-        this.detailFormGroup = $("#detailFormGroup");
-        this.detailAlamat = $("#detailAlamat");
-        this.printButton = $("#printAlamat");
 
-        this.fetchProvinces();
         this.setListeners();
         this.setFormData();
     }
@@ -29,24 +17,10 @@ class Main extends Core {
         self.doAjax(
             url,
             function (response) {
-                const alamat = response.data.alamat;
-                console.log(alamat.split(", ", ""));
-                console.log(response.data.alamat);
-                self.provinceSelect
-                    .find('option[value="' + alamat[0] + '"]')
-                    .prop("selected", true);
-                self.regencySelect
-                    .find('option[value="' + alamat[1] + '"]')
-                    .prop("selected", true);
-                self.districtSelect
-                    .find('option[value="' + alamat[2] + '"]')
-                    .prop("selected", true);
-                self.villageSelect
-                    .find('option[value="' + alamat[3] + '"]')
-                    .prop("selected", true);
                 $("#nama_siswa").val(response.data.nama_siswa); // Ubah sesuai dengan ID input yang sesuai
                 $("#nis").val(response.data.nis);
                 $("#nisn").val(response.data.nisn);
+                $("#alamat").val(response.data.alamat);
                 $("#agama")
                     .find('option[value="' + response.data.agama + '"]')
                     .prop("selected", true);
@@ -90,7 +64,7 @@ class Main extends Core {
                 tempat_lahir: $("#tempat_lahir").val(),
                 tanggal_lahir: $("#tanggal_lahir").val(),
                 jenis_kelamin: $("#jenis_kelamin").val(),
-                alamat: self.getAlamatSelected(), // Gunakan metode yang sudah Anda definisikan untuk mendapatkan alamat
+                alamat: $("#alamat").val(),
                 nama_ayah: $("#nama_ayah").val(),
                 pekerjaan_ayah: $("#pekerjaan_ayah").val(),
                 penghasilan_ayah: $("#penghasilan_ayah").val(),
@@ -137,80 +111,6 @@ class Main extends Core {
                 method
             );
         });
-
-        self.provinceSelect.on("change", function () {
-            const selectedProvinceId = $(this).val();
-            self.regencyFormGroup.hide();
-            self.districtFormGroup.hide();
-            self.villageFormGroup.hide();
-
-            if (selectedProvinceId) {
-                self.fetchRegencies(selectedProvinceId);
-            }
-        });
-
-        self.regencySelect.on("change", function () {
-            const selectedRegencyId = $(this).val();
-            self.districtFormGroup.hide();
-            self.villageFormGroup.hide();
-
-            if (selectedRegencyId) {
-                self.fetchDistricts(selectedRegencyId);
-            }
-        });
-
-        self.districtSelect.on("change", function () {
-            const selectedDistrictId = $(this).val();
-            self.villageFormGroup.hide();
-
-            if (selectedDistrictId) {
-                self.fetchVillages(selectedDistrictId);
-            }
-        });
-
-        self.villageSelect.on("change", function () {
-            self.detailFormGroup.show();
-        });
-    }
-
-    fetchProvinces() {
-        const self = this;
-        const url = `${self.mainURL}/api-wilayah-indonesia/provinces.json`;
-
-        self.doAjax(url, function (data) {
-            self.populateSelect(self.provinceSelect, data);
-            self.provinceFormGroup.show();
-        });
-    }
-
-    fetchRegencies(provinceId) {
-        const self = this;
-        const url = `${self.mainURL}/api-wilayah-indonesia/regencies/${provinceId}.json`;
-
-        self.doAjax(url, function (data) {
-            self.populateSelect(self.regencySelect, data);
-            self.regencyFormGroup.show();
-        });
-    }
-
-    fetchDistricts(regencyId) {
-        const self = this;
-        const url = `${self.mainURL}/api-wilayah-indonesia/districts/${regencyId}.json`;
-
-        self.doAjax(url, function (data) {
-            self.populateSelect(self.districtSelect, data);
-            self.districtFormGroup.show();
-        });
-    }
-
-    fetchVillages(districtId) {
-        const self = this;
-        const url = `${self.mainURL}/api-wilayah-indonesia/villages/${districtId}.json`;
-
-        self.doAjax(url, function (data) {
-            self.populateSelect(self.villageSelect, data);
-            self.villageFormGroup.show();
-        });
     }
 
     populateSelect(selectElement, data) {
@@ -224,22 +124,6 @@ class Main extends Core {
             );
         });
         selectElement.show();
-    }
-
-    getAlamatSelected() {
-        const selectedProvince = this.provinceSelect.find(":selected").text();
-        const selectedRegency = this.regencySelect.find(":selected").text();
-        const selectedDistrict = this.districtSelect.find(":selected").text();
-        const selectedVillage = this.villageSelect.find(":selected").text();
-        const selectedDetail = this.detailAlamat.find(":selected").text();
-
-        const fullAddress = `${selectedProvince}, ${selectedRegency}, ${selectedDistrict}, ${selectedVillage}, ${selectedDetail}`;
-
-        if (fullAddress.includes("Pilih")) {
-            return "";
-        }
-
-        return this.toTitleCase(fullAddress);
     }
 
     getIdSiswa() {

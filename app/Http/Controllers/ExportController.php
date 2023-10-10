@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\BukuTabunganExport;
 use App\Exports\SiswaPerkelasExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -58,5 +59,27 @@ class ExportController extends Controller
          * berupa file exccel
          */
         return Excel::download(new SiswaPerkelasExport($requestDataExcel), $namaFileExcel);
+    }
+    public function exportBukuTabungan(Request $request)
+    {
+        /**
+         * Mengatur nama file excel
+         * yang akan diexport
+         */
+        $namaFileExcel = 'buku_tabungan_'.$request->nomor_rekening .'_'. $this->currentTime .'.xlsx';
+
+        /**
+         * Mengatur data request yang dibutuhkan dalam
+         * mengatur data yang akan di-Export ke excel
+         */
+        $requestDataExcel = [
+            "nomor_rekening" => $request->nomor_rekening
+        ];
+
+        /**
+         * Mengembalikan data response
+         * berupa file exccel
+         */
+        return Excel::download(new BukuTabunganExport($requestDataExcel), $namaFileExcel);
     }
 }

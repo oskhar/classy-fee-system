@@ -170,15 +170,15 @@
 								<li class="nav-item">
 									<a href="#" class="nav-link">
 										<i class="fa-solid fa-minus nav-icon"></i>
-										<p>Jenis Pembayaran</p>
+										<p>Jenis Pembayaran SPP</p>
 									</a>
 								</li>
 							</ul>
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
-									<a href="#" class="nav-link">
+									<a href="" class="nav-link">
 										<i class="fa-solid fa-minus nav-icon"></i>
-										<p>Transaksi Pembayaran</p>
+										<p>Transaksi Pembayaran SPP</p>
 									</a>
 								</li>
 							</ul>
@@ -237,17 +237,17 @@
 							</ul>
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
-									<a href="{{route('admin.data_buku_tabungan')}}" class="nav-link">
+									<a href="{{route('admin.transaksi_tabungan')}}" class="nav-link">
 										<i class="fa-solid fa-minus nav-icon"></i>
-										<p>Buku Tabungan Siswa</p>
+										<p>Transaksi Tabungan Siswa</p>
 									</a>
 								</li>
 							</ul>
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
-									<a href="#" class="nav-link">
+									<a href="{{route('admin.data_buku_tabungan')}}" class="nav-link">
 										<i class="fa-solid fa-minus nav-icon"></i>
-										<p>Transaksi Tarik Setor</p>
+										<p>Buku Tabungan Siswa</p>
 									</a>
 								</li>
 							</ul>

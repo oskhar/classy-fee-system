@@ -400,19 +400,7 @@ var Main = /*#__PURE__*/function (_Core) {
     _this = _super.call(this);
     _this.idTahunAjar = $("#idTahunAjar");
     _this.idKelas = $("#idKelas");
-    _this.provinceSelect = $("#provinceSelect");
-    _this.regencySelect = $("#regencySelect");
-    _this.districtSelect = $("#districtSelect");
-    _this.villageSelect = $("#villageSelect");
-    _this.provinceFormGroup = $("#provinceFormGroup");
-    _this.regencyFormGroup = $("#regencyFormGroup");
-    _this.districtFormGroup = $("#districtFormGroup");
-    _this.villageFormGroup = $("#villageFormGroup");
-    _this.detailFormGroup = $("#detailFormGroup");
-    _this.detailAlamat = $("#detailAlamat");
-    _this.printButton = $("#printAlamat");
     _this.setListeners();
-    _this.fetchProvinces();
     _this.fetchTahunAjar();
     _this.fetchNamaKelas();
     return _this;
@@ -421,33 +409,6 @@ var Main = /*#__PURE__*/function (_Core) {
     key: "setListeners",
     value: function setListeners() {
       var self = this;
-      self.provinceSelect.on("change", function () {
-        var selectedProvinceId = $(this).val();
-        self.regencyFormGroup.hide();
-        self.districtFormGroup.hide();
-        self.villageFormGroup.hide();
-        if (selectedProvinceId) {
-          self.fetchRegencies(selectedProvinceId);
-        }
-      });
-      self.regencySelect.on("change", function () {
-        var selectedRegencyId = $(this).val();
-        self.districtFormGroup.hide();
-        self.villageFormGroup.hide();
-        if (selectedRegencyId) {
-          self.fetchDistricts(selectedRegencyId);
-        }
-      });
-      self.districtSelect.on("change", function () {
-        var selectedDistrictId = $(this).val();
-        self.villageFormGroup.hide();
-        if (selectedDistrictId) {
-          self.fetchVillages(selectedDistrictId);
-        }
-      });
-      self.villageSelect.on("change", function () {
-        self.detailFormGroup.show();
-      });
       $("#form-tambah-siswa").submit(function (event) {
         // Mencegah pengiriman formulir secara default
         event.preventDefault();
@@ -464,7 +425,7 @@ var Main = /*#__PURE__*/function (_Core) {
           tempat_lahir: $("#tempat_lahir").val(),
           tanggal_lahir: $("#tanggal_lahir").val(),
           jenis_kelamin: $("#jenis_kelamin").val(),
-          alamat: self.getAlamatSelected(),
+          alamat: $("#alamat").val(),
           // Gunakan metode yang sudah Anda definisikan untuk mendapatkan alamat
           nama_ayah: $("#nama_ayah").val(),
           pekerjaan_ayah: $("#pekerjaan_ayah").val(),
@@ -498,46 +459,6 @@ var Main = /*#__PURE__*/function (_Core) {
             self.showSuccessMessage(response.data.success.message);
           }
         }, dataBody, method);
-      });
-    }
-  }, {
-    key: "fetchProvinces",
-    value: function fetchProvinces() {
-      var self = this;
-      var url = "".concat(self.mainURL, "/api-wilayah-indonesia/provinces.json");
-      self.doAjax(url, function (data) {
-        self.populateSelect(self.provinceSelect, data);
-        self.provinceFormGroup.show();
-      });
-    }
-  }, {
-    key: "fetchRegencies",
-    value: function fetchRegencies(provinceId) {
-      var self = this;
-      var url = "".concat(self.mainURL, "/api-wilayah-indonesia/regencies/").concat(provinceId, ".json");
-      self.doAjax(url, function (data) {
-        self.populateSelect(self.regencySelect, data);
-        self.regencyFormGroup.show();
-      });
-    }
-  }, {
-    key: "fetchDistricts",
-    value: function fetchDistricts(regencyId) {
-      var self = this;
-      var url = "".concat(self.mainURL, "/api-wilayah-indonesia/districts/").concat(regencyId, ".json");
-      self.doAjax(url, function (data) {
-        self.populateSelect(self.districtSelect, data);
-        self.districtFormGroup.show();
-      });
-    }
-  }, {
-    key: "fetchVillages",
-    value: function fetchVillages(districtId) {
-      var self = this;
-      var url = "".concat(self.mainURL, "/api-wilayah-indonesia/villages/").concat(districtId, ".json");
-      self.doAjax(url, function (data) {
-        self.populateSelect(self.villageSelect, data);
-        self.villageFormGroup.show();
       });
     }
   }, {
@@ -587,20 +508,6 @@ var Main = /*#__PURE__*/function (_Core) {
         }));
       });
       selectElement.show();
-    }
-  }, {
-    key: "getAlamatSelected",
-    value: function getAlamatSelected() {
-      var selectedProvince = this.provinceSelect.find(":selected").text();
-      var selectedRegency = this.regencySelect.find(":selected").text();
-      var selectedDistrict = this.districtSelect.find(":selected").text();
-      var selectedVillage = this.villageSelect.find(":selected").text();
-      var selectedDetail = this.detailAlamat.find(":selected").text();
-      var fullAddress = "".concat(selectedProvince, ", ").concat(selectedRegency, ", ").concat(selectedDistrict, ", ").concat(selectedVillage, ", ").concat(selectedDetail);
-      if (fullAddress.includes("Pilih")) {
-        return "";
-      }
-      return this.toTitleCase(fullAddress);
     }
   }]);
   return Main;

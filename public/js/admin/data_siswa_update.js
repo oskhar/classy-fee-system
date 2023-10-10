@@ -398,18 +398,6 @@ var Main = /*#__PURE__*/function (_Core) {
     var _this;
     _classCallCheck(this, Main);
     _this = _super.call(this);
-    _this.provinceSelect = $("#provinceSelect");
-    _this.regencySelect = $("#regencySelect");
-    _this.districtSelect = $("#districtSelect");
-    _this.villageSelect = $("#villageSelect");
-    _this.provinceFormGroup = $("#provinceFormGroup");
-    _this.regencyFormGroup = $("#regencyFormGroup");
-    _this.districtFormGroup = $("#districtFormGroup");
-    _this.villageFormGroup = $("#villageFormGroup");
-    _this.detailFormGroup = $("#detailFormGroup");
-    _this.detailAlamat = $("#detailAlamat");
-    _this.printButton = $("#printAlamat");
-    _this.fetchProvinces();
     _this.setListeners();
     _this.setFormData();
     return _this;
@@ -424,16 +412,10 @@ var Main = /*#__PURE__*/function (_Core) {
       };
       console.log(dataBody);
       self.doAjax(url, function (response) {
-        var alamat = response.data.alamat;
-        console.log(alamat.split(", ", ""));
-        console.log(response.data.alamat);
-        self.provinceSelect.find('option[value="' + alamat[0] + '"]').prop("selected", true);
-        self.regencySelect.find('option[value="' + alamat[1] + '"]').prop("selected", true);
-        self.districtSelect.find('option[value="' + alamat[2] + '"]').prop("selected", true);
-        self.villageSelect.find('option[value="' + alamat[3] + '"]').prop("selected", true);
         $("#nama_siswa").val(response.data.nama_siswa); // Ubah sesuai dengan ID input yang sesuai
         $("#nis").val(response.data.nis);
         $("#nisn").val(response.data.nisn);
+        $("#alamat").val(response.data.alamat);
         $("#agama").find('option[value="' + response.data.agama + '"]').prop("selected", true);
         $("#tempat_lahir").val(response.data.tempat_lahir);
         $("#tanggal_lahir").val(response.data.tanggal_lahir);
@@ -469,8 +451,7 @@ var Main = /*#__PURE__*/function (_Core) {
           tempat_lahir: $("#tempat_lahir").val(),
           tanggal_lahir: $("#tanggal_lahir").val(),
           jenis_kelamin: $("#jenis_kelamin").val(),
-          alamat: self.getAlamatSelected(),
-          // Gunakan metode yang sudah Anda definisikan untuk mendapatkan alamat
+          alamat: $("#alamat").val(),
           nama_ayah: $("#nama_ayah").val(),
           pekerjaan_ayah: $("#pekerjaan_ayah").val(),
           penghasilan_ayah: $("#penghasilan_ayah").val(),
@@ -502,73 +483,6 @@ var Main = /*#__PURE__*/function (_Core) {
           }
         }, dataBody, method);
       });
-      self.provinceSelect.on("change", function () {
-        var selectedProvinceId = $(this).val();
-        self.regencyFormGroup.hide();
-        self.districtFormGroup.hide();
-        self.villageFormGroup.hide();
-        if (selectedProvinceId) {
-          self.fetchRegencies(selectedProvinceId);
-        }
-      });
-      self.regencySelect.on("change", function () {
-        var selectedRegencyId = $(this).val();
-        self.districtFormGroup.hide();
-        self.villageFormGroup.hide();
-        if (selectedRegencyId) {
-          self.fetchDistricts(selectedRegencyId);
-        }
-      });
-      self.districtSelect.on("change", function () {
-        var selectedDistrictId = $(this).val();
-        self.villageFormGroup.hide();
-        if (selectedDistrictId) {
-          self.fetchVillages(selectedDistrictId);
-        }
-      });
-      self.villageSelect.on("change", function () {
-        self.detailFormGroup.show();
-      });
-    }
-  }, {
-    key: "fetchProvinces",
-    value: function fetchProvinces() {
-      var self = this;
-      var url = "".concat(self.mainURL, "/api-wilayah-indonesia/provinces.json");
-      self.doAjax(url, function (data) {
-        self.populateSelect(self.provinceSelect, data);
-        self.provinceFormGroup.show();
-      });
-    }
-  }, {
-    key: "fetchRegencies",
-    value: function fetchRegencies(provinceId) {
-      var self = this;
-      var url = "".concat(self.mainURL, "/api-wilayah-indonesia/regencies/").concat(provinceId, ".json");
-      self.doAjax(url, function (data) {
-        self.populateSelect(self.regencySelect, data);
-        self.regencyFormGroup.show();
-      });
-    }
-  }, {
-    key: "fetchDistricts",
-    value: function fetchDistricts(regencyId) {
-      var self = this;
-      var url = "".concat(self.mainURL, "/api-wilayah-indonesia/districts/").concat(regencyId, ".json");
-      self.doAjax(url, function (data) {
-        self.populateSelect(self.districtSelect, data);
-        self.districtFormGroup.show();
-      });
-    }
-  }, {
-    key: "fetchVillages",
-    value: function fetchVillages(districtId) {
-      var self = this;
-      var url = "".concat(self.mainURL, "/api-wilayah-indonesia/villages/").concat(districtId, ".json");
-      self.doAjax(url, function (data) {
-        self.populateSelect(self.villageSelect, data);
-        self.villageFormGroup.show();
-      });
     }
   }, {
     key: "populateSelect",
@@ -581,20 +495,6 @@ var Main = /*#__PURE__*/function (_Core) {
         }));
       });
       selectElement.show();
-    }
-  }, {
-    key: "getAlamatSelected",
-    value: function getAlamatSelected() {
-      var selectedProvince = this.provinceSelect.find(":selected").text();
-      var selectedRegency = this.regencySelect.find(":selected").text();
-      var selectedDistrict = this.districtSelect.find(":selected").text();
-      var selectedVillage = this.villageSelect.find(":selected").text();
-      var selectedDetail = this.detailAlamat.find(":selected").text();
-      var fullAddress = "".concat(selectedProvince, ", ").concat(selectedRegency, ", ").concat(selectedDistrict, ", ").concat(selectedVillage, ", ").concat(selectedDetail);
-      if (fullAddress.includes("Pilih")) {
-        return "";
-      }
-      return this.toTitleCase(fullAddress);
     }
   }, {
     key: "getIdSiswa",
