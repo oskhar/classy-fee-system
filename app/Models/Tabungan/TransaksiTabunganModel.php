@@ -33,6 +33,7 @@ class TransaksiTabunganModel extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'id_transaksi_tabungan',
         'id_administrator',
         'nomor_rekening',
         'jenis_transaksi',

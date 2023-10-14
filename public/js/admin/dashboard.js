@@ -58,12 +58,18 @@ var Core = /*#__PURE__*/function () {
     key: "checkAuthentication",
     value: function () {
       var _checkAuthentication = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var _this = this;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return this.doAjax("".concat(this.mainURL, "/api/auth/me"), function () {}, {}, "post");
+              return this.doAjax("".concat(this.mainURL, "/api/auth/me"), function (response) {
+                console.log(response);
+                _this.mainIdAdministrator = response.id_administrator;
+                _this.mainUsername = response.username;
+                _this.mainHakAkses = response.hak_akses;
+              }, {}, "post");
             case 3:
               _context.next = 8;
               break;
@@ -122,7 +128,7 @@ var Core = /*#__PURE__*/function () {
   }, {
     key: "doAjax",
     value: function doAjax(url, fungsiSaatSuccess) {
-      var _this = this;
+      var _this2 = this;
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
       var method = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "get";
       var dataHeader = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {};
@@ -141,11 +147,11 @@ var Core = /*#__PURE__*/function () {
           // Menampilkan pesan error AJAX
           var errors;
           if (xhr.responseJSON.errors) {
-            errors = _this.objectToString(xhr.responseJSON.errors);
+            errors = _this2.objectToString(xhr.responseJSON.errors);
           } else {
-            errors = _this.objectToString(xhr.responseJSON);
+            errors = _this2.objectToString(xhr.responseJSON);
           }
-          _this.showErrorMessage(errors).then(function () {
+          _this2.showErrorMessage(errors).then(function () {
             if (xhr.status == 401) {
               localStorage.removeItem("jwtToken");
               window.location.href = "/";

@@ -37,13 +37,14 @@ class Main extends Core {
         });
 
         $("#form-transaksi-tabungan").submit(function (event) {
-            // Mencegah pengiriman formulir secara default
+            // thisMencegah pengiriman formulir secara default
             event.preventDefault();
 
             // Assigmen data yang diperlukan untuk mengakses API
             let url = `${self.mainURL}/api/transaksi-tabungan`;
             let method = "post";
             let dataBody = {
+                id_administrator: self.mainIdAdministrator,
                 nomor_rekening: $("#nomor_rekening").val(),
                 jenis_transaksi: $("#jenis_transaksi").val(),
                 nominal: $("#nominal").val(),

@@ -15,6 +15,7 @@ class TransaksiTabunganCreateRequest extends CoreRequest
     public function rules(): array
     {
         return [
+            'id_administrator' => 'required',
             'nomor_rekening' => 'required',
             'jenis_transaksi' => 'required',
             'nominal' => 'required',
@@ -30,6 +31,7 @@ class TransaksiTabunganCreateRequest extends CoreRequest
     public function messages(): array
     {
         return [
+            'id_administrator.required' => "id_administrator wajib ada !!",
             'nomor_rekening.required' => "Nomor rekening wajib diisi !!",
             'kredit.required' => "Kredit wajib diisi !!",
             'debit.required' => "Debit wajib diisi !!",
