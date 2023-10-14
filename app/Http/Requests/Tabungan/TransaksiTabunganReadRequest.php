@@ -4,7 +4,7 @@ namespace App\Http\Requests\Tabungan;
 use App\Http\Requests\CoreRequest;
 
 
-class RekeningReadRequest extends CoreRequest
+class TransaksiTabunganReadRequest extends CoreRequest
 {
 
     /**
@@ -15,14 +15,12 @@ class RekeningReadRequest extends CoreRequest
     public function rules(): array
     {
         return [
-            'id_jurusan' => 'nullable',
+            'id_administrator' => 'nullable',
             'start' => 'nullable|integer',
             'length' => 'nullable|integer',
             'search' => 'nullable',
             'orderColumn' => 'nullable',
             'orderDir' => 'nullable',
-            'id_tahun_ajar' => 'nullable',
-            'id_kelas' => 'nullable',
         ];
     }
 

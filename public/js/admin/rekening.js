@@ -305,7 +305,7 @@ var Core = /*#__PURE__*/function () {
     key: "numberToMoney",
     value: function numberToMoney(data) {
       var uang = data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-      return "Rp ".concat(uang, ".-");
+      return "".concat(uang);
     }
   }]);
   return Core;
@@ -403,17 +403,19 @@ var Main = /*#__PURE__*/function (_Core) {
     _this = _super.call(this);
     _this.idTahunAjar = $("#idTahunAjar");
     _this.idKelas = $("#idKelas");
+    _this.tahunAjarSelected = false;
     _this.dataTableElement = $("#example1");
     _this.tombolExport = $("#exportSiswaPerkelas");
     _this.kelasDipilih = "";
-    _this.setListener();
     _this.fetchTahunAjar();
+    _this.setListener();
     return _this;
   }
   _createClass(Main, [{
     key: "setDataTableRekening",
-    value: function setDataTableRekening(requestIdTahunAjar, requestIdKelas) {
+    value: function setDataTableRekening(requestIdTahunAjar) {
       var _this2 = this;
+      var requestIdKelas = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
       /**
        * Merefresh data pada datatable
        * jika data table sudah terisi
@@ -456,15 +458,24 @@ var Main = /*#__PURE__*/function (_Core) {
     value: function setListener() {
       var self = this; // Simpan referensi this dalam variabel self
 
-      self.idTahunAjar.on("change", function () {
-        self.tahunAjarSelected = $(this).val();
-        if (self.tahunAjarSelected) {
-          self.fetchNamaKelas(self.tahunAjarSelected);
-          if (self.dataTable) {
-            $("#example1 tbody").html("");
+      self.idTahunAjar.on("change", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              self.tahunAjarSelected = $(this).val();
+              if (self.tahunAjarSelected) {
+                self.fetchNamaKelas(self.tahunAjarSelected);
+                if (self.dataTable) {
+                  $("#example1 tbody").html("");
+                }
+                self.setDataTableRekening(self.tahunAjarSelected);
+              }
+            case 2:
+            case "end":
+              return _context.stop();
           }
-        }
-      });
+        }, _callee, this);
+      })));
       self.idKelas.on("change", function () {
         self.idKelasSelected = $(this).val();
         self.kelasDipilih = $(this).find(":selected").text();
@@ -486,10 +497,10 @@ var Main = /*#__PURE__*/function (_Core) {
   }, {
     key: "previewBukuRekening",
     value: function () {
-      var _previewBukuRekening = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(nomor_rekening) {
+      var _previewBukuRekening = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(nomor_rekening) {
         var self, urlAPI, dataTablePreview, dataColumnsPreview;
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) switch (_context.prev = _context.next) {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
             case 0:
               /**
                * Menginisialisasi this milik main class
@@ -506,7 +517,7 @@ var Main = /*#__PURE__*/function (_Core) {
                * Melakukan request menggunakan jquery
                * ajax dengan gateway yang ditentukan
                */
-              _context.next = 4;
+              _context2.next = 4;
               return self.doAjax(urlAPI, function (response) {
                 /**
                  * Menampilkan pop up data table
@@ -547,9 +558,9 @@ var Main = /*#__PURE__*/function (_Core) {
               self.setDataTable(dataTablePreview, urlAPI, dataColumnsPreview, 10);
             case 7:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
-        }, _callee, this);
+        }, _callee2, this);
       }));
       function previewBukuRekening(_x) {
         return _previewBukuRekening.apply(this, arguments);
@@ -579,30 +590,81 @@ var Main = /*#__PURE__*/function (_Core) {
     }
   }, {
     key: "fetchTahunAjar",
-    value: function fetchTahunAjar() {
-      var self = this;
-      var url = "".concat(self.mainURL, "/api/tahun-ajar");
-      self.doAjax(url, function (response) {
-        self.optionsList("tahun ajar", self.idTahunAjar, response.data);
-      });
-    }
+    value: function () {
+      var _fetchTahunAjar = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var self, url;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) switch (_context4.prev = _context4.next) {
+            case 0:
+              self = this;
+              url = "".concat(self.mainURL, "/api/tahun-ajar");
+              self.doAjax(url, /*#__PURE__*/function () {
+                var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(response) {
+                  return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+                    while (1) switch (_context3.prev = _context3.next) {
+                      case 0:
+                        _context3.next = 2;
+                        return self.optionsList("tahun ajar", self.idTahunAjar, response.data);
+                      case 2:
+                        self.tahunAjarSelected = self.idTahunAjar.find(":selected").val();
+                        _context3.next = 5;
+                        return self.setDataTableRekening(self.tahunAjarSelected);
+                      case 5:
+                        self.fetchNamaKelas(self.tahunAjarSelected);
+                      case 6:
+                      case "end":
+                        return _context3.stop();
+                    }
+                  }, _callee3);
+                }));
+                return function (_x2) {
+                  return _ref2.apply(this, arguments);
+                };
+              }());
+            case 3:
+            case "end":
+              return _context4.stop();
+          }
+        }, _callee4, this);
+      }));
+      function fetchTahunAjar() {
+        return _fetchTahunAjar.apply(this, arguments);
+      }
+      return fetchTahunAjar;
+    }()
   }, {
     key: "fetchNamaKelas",
     value: function fetchNamaKelas(requestIdTahunAjar) {
       var self = this;
       var url = "".concat(self.mainURL, "/api/kelas/dari-tahun-ajar");
-      self.tombolExport.show();
-      self.doAjax(url, function (response) {
-        var data = response.data;
-        self.optionsList("nama kelas", self.idKelas, data);
-      }, {
+      self.doAjax(url, /*#__PURE__*/function () {
+        var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(response) {
+          var data;
+          return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+            while (1) switch (_context5.prev = _context5.next) {
+              case 0:
+                data = response.data;
+                _context5.next = 3;
+                return self.idKelas.html("<option value=\"\" selected>Semua Kelas</option>");
+              case 3:
+                self.optionsList("nama kelas", self.idKelas, data);
+              case 4:
+              case "end":
+                return _context5.stop();
+            }
+          }, _callee5);
+        }));
+        return function (_x3) {
+          return _ref3.apply(this, arguments);
+        };
+      }(), {
         id_tahun_ajar: requestIdTahunAjar
       });
     }
   }, {
     key: "optionsList",
     value: function optionsList(namaData, selectElement, data) {
-      selectElement.html("<option value=\"\" selected disabled>Pilih ".concat(namaData, "</option>"));
+      var firstOpsiTahunAjar = true;
       $.each(data, function (index, item) {
         if (item.id_kelas) {
           selectElement.append($("<option>", {
@@ -610,10 +672,19 @@ var Main = /*#__PURE__*/function (_Core) {
             text: item.nama_kelas
           }));
         } else if (item.id_tahun_ajar) {
-          selectElement.append($("<option>", {
-            value: item.id_tahun_ajar,
-            text: item.nama_tahun_ajar + " " + item.semester
-          }));
+          if (firstOpsiTahunAjar) {
+            firstOpsiTahunAjar = false;
+            selectElement.append($("<option>", {
+              value: item.id_tahun_ajar,
+              text: item.nama_tahun_ajar + " " + item.semester,
+              selected: true
+            }));
+          } else {
+            selectElement.append($("<option>", {
+              value: item.id_tahun_ajar,
+              text: item.nama_tahun_ajar + " " + item.semester
+            }));
+          }
         }
       });
     }

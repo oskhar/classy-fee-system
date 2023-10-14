@@ -26,8 +26,8 @@
             </div>
         
             <div class='form-group col-md-4'>
-                <label for'cb_jenis_pembayaran'>Jenis Pembayaran</label>
-                <select class='form-control' id='cb_jenis_pembayaran' name='cb_jenis_pembayaran'>
+                <label for'cb_jenis_transaksi'>Jenis Pembayaran</label>
+                <select class='form-control' id='cb_jenis_transaksi' name='cb_jenis_transaksi'>
                     <option value='SPP Bulanan'>SPP Bulanan</option>
                     <option value='Lainnya'>Lainnya</option>
                 </select>

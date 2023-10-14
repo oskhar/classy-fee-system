@@ -4,7 +4,7 @@ namespace App\Http\Requests\Tabungan;
 use App\Http\Requests\CoreRequest;
 
 
-class BukuTabunganCreateRequest extends CoreRequest
+class TransaksiTabunganCreateRequest extends CoreRequest
 {
 
     /**
@@ -16,8 +16,8 @@ class BukuTabunganCreateRequest extends CoreRequest
     {
         return [
             'nomor_rekening' => 'required',
-            'kredit' => 'required',
-            'debit' => 'required',
+            'jenis_transaksi' => 'required',
+            'nominal' => 'required',
             'status_data' => ['nullable', 'in:Aktif,Tidak Aktif'],
         ];
     }

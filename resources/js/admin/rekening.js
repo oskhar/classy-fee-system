@@ -5,14 +5,15 @@ class Main extends Core {
         super();
         this.idTahunAjar = $("#idTahunAjar");
         this.idKelas = $("#idKelas");
+        this.tahunAjarSelected = false;
         this.dataTableElement = $("#example1");
         this.tombolExport = $("#exportSiswaPerkelas");
         this.kelasDipilih = "";
-        this.setListener();
         this.fetchTahunAjar();
+        this.setListener();
     }
 
-    setDataTableRekening(requestIdTahunAjar, requestIdKelas) {
+    setDataTableRekening(requestIdTahunAjar, requestIdKelas = "") {
         /**
          * Merefresh data pada datatable
          * jika data table sudah terisi
@@ -66,7 +67,7 @@ class Main extends Core {
     setListener() {
         const self = this; // Simpan referensi this dalam variabel self
 
-        self.idTahunAjar.on("change", function () {
+        self.idTahunAjar.on("change", async function () {
             self.tahunAjarSelected = $(this).val();
 
             if (self.tahunAjarSelected) {
@@ -74,6 +75,7 @@ class Main extends Core {
                 if (self.dataTable) {
                     $("#example1 tbody").html("");
                 }
+                self.setDataTableRekening(self.tahunAjarSelected);
             }
         });
 
@@ -222,24 +224,33 @@ class Main extends Core {
         );
     }
 
-    fetchTahunAjar() {
+    async fetchTahunAjar() {
         const self = this;
         const url = `${self.mainURL}/api/tahun-ajar`;
 
-        self.doAjax(url, function (response) {
-            self.optionsList("tahun ajar", self.idTahunAjar, response.data);
+        self.doAjax(url, async function (response) {
+            await self.optionsList(
+                "tahun ajar",
+                self.idTahunAjar,
+                response.data
+            );
+            self.tahunAjarSelected = self.idTahunAjar.find(":selected").val();
+            await self.setDataTableRekening(self.tahunAjarSelected);
+            self.fetchNamaKelas(self.tahunAjarSelected);
         });
     }
 
     fetchNamaKelas(requestIdTahunAjar) {
         const self = this;
         const url = `${self.mainURL}/api/kelas/dari-tahun-ajar`;
-        self.tombolExport.show();
 
         self.doAjax(
             url,
-            function (response) {
+            async function (response) {
                 let data = response.data;
+                await self.idKelas.html(
+                    `<option value="" selected>Semua Kelas</option>`
+                );
                 self.optionsList("nama kelas", self.idKelas, data);
             },
             {
@@ -249,9 +260,7 @@ class Main extends Core {
     }
 
     optionsList(namaData, selectElement, data) {
-        selectElement.html(
-            `<option value="" selected disabled>Pilih ${namaData}</option>`
-        );
+        let firstOpsiTahunAjar = true;
         $.each(data, function (index, item) {
             if (item.id_kelas) {
                 selectElement.append(
@@ -261,12 +270,23 @@ class Main extends Core {
                     })
                 );
             } else if (item.id_tahun_ajar) {
-                selectElement.append(
-                    $("<option>", {
-                        value: item.id_tahun_ajar,
-                        text: item.nama_tahun_ajar + " " + item.semester,
-                    })
-                );
+                if (firstOpsiTahunAjar) {
+                    firstOpsiTahunAjar = false;
+                    selectElement.append(
+                        $("<option>", {
+                            value: item.id_tahun_ajar,
+                            text: item.nama_tahun_ajar + " " + item.semester,
+                            selected: true,
+                        })
+                    );
+                } else {
+                    selectElement.append(
+                        $("<option>", {
+                            value: item.id_tahun_ajar,
+                            text: item.nama_tahun_ajar + " " + item.semester,
+                        })
+                    );
+                }
             }
         });
     }

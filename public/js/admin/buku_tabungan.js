@@ -305,7 +305,7 @@ var Core = /*#__PURE__*/function () {
     key: "numberToMoney",
     value: function numberToMoney(data) {
       var uang = data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-      return "Rp ".concat(uang, ".-");
+      return "".concat(uang);
     }
   }]);
   return Core;
@@ -413,19 +413,19 @@ var Main = /*#__PURE__*/function (_Core) {
       }, {
         data: "debit",
         render: function render(data) {
-          var uang = _this2.numberToMoney(data);
+          var uang = _this2.numberToMoney(data) == 0 ? "0" : "Rp ".concat(_this2.numberToMoney(data), ".-");
           return uang;
         }
       }, {
         data: "kredit",
         render: function render(data) {
-          var uang = _this2.numberToMoney(data);
+          var uang = _this2.numberToMoney(data) == 0 ? "0" : "Rp ".concat(_this2.numberToMoney(data), ".-");
           return uang;
         }
       }, {
         data: "saldo",
         render: function render(data) {
-          var uang = _this2.numberToMoney(data);
+          var uang = "Rp ".concat(_this2.numberToMoney(data), ".-");
           return uang;
         }
       }, {

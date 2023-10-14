@@ -103,42 +103,4 @@ class BukuTabunganController extends Controller
         
         return response()->json($response)->setStatusCode(200);
     }
-
-    public function create(BukuTabunganCreateRequest $request)
-    {
-        // Validasi data
-        $data = $request->validated();
-
-        /**
-         * Membuat data saldo sebelumnya
-         */
-        $rekening = RekeningModel::where('nomor_rekening', $data['nomor_rekening'])->first();
-        $saldoSebelumnya = $rekening->saldo;
-        $saldoHasil = $saldoSebelumnya + ($data['debit']-$data['kredit']);
-        $rekening->update(['saldo' => $saldoHasil]);
-
-
-        /**
-         * Membuat object data untuk mengisi buku tabungan
-         * sebagai tanda setoran awal
-         */
-        $dataBukuTabungan = [
-            "nomor_rekening" => $data['nomor_rekening'],
-            "debit" => $data['debit'],
-            "kredit" => $data['kredit'],
-            "saldo" => $saldoHasil,
-            "tanggal" => $this->currentDate->format('Y-m-d'),
-        ];
-
-        // Insert data ke tabel
-        $bukuTabungan = new BukuTabunganModel($dataBukuTabungan);
-        $bukuTabungan->save();
-
-        // Kembalikan dengan respon
-        return (new RekeningResource([
-            'success' => [
-                'message' => "Data tabungan dengan nomor $rekening->nomor_rekening berhasil ditambahkan"
-            ]
-        ]))->response()->setStatusCode(201);
-    }
 }

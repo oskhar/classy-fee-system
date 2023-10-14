@@ -37,9 +37,15 @@ class RekeningController extends Controller
             )->join('master_data_siswa', 'tb_rekening.nis', '=', 'master_data_siswa.nis')
             ->join('tb_siswa', 'tb_rekening.nis', '=', 'tb_siswa.nis');
 
-        if ($request->has('id_kelas') && $request->has('id_tahun_ajar')) {
-            $query = $query->where('master_data_siswa.id_kelas', $request->id_kelas)
-                        ->where('master_data_siswa.id_tahun_ajar', $request->id_tahun_ajar)
+        if ($request->has('id_kelas')) {
+            $query = $query
+                        ->where('master_data_siswa.id_kelas', 'LIKE', '%'. $request->id_kelas .'%')
+                        ->distinct();
+        }
+
+        if ($request->has('id_tahun_ajar')) {
+            $query = $query
+                        ->where('master_data_siswa.id_tahun_ajar', 'LIKE', '%'. $request->id_tahun_ajar .'%')
                         ->distinct();
         }
 

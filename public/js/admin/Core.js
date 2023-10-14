@@ -334,7 +334,7 @@ var Core = /*#__PURE__*/function () {
     key: "numberToMoney",
     value: function numberToMoney(data) {
       var uang = data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-      return "Rp ".concat(uang, ".-");
+      return "".concat(uang);
     }
   }]);
   return Core;

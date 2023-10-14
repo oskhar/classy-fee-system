@@ -3,7 +3,7 @@
 @section('title', 'Halaman Dashboard')
 @section('mainContent')
 
-  @include('depedensi.admin.data_buku_tabungan.read')
+  @include('depedensi.admin.transaksi_tabungan.read')
 
   <section class="content">
 
@@ -15,25 +15,6 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-12">
-          <div class="card">
-            <div class="card-body row">
-              <div class='form-group col-sm-6'>
-                  <label for='idTahunAjar'>Tahun ajar</label>
-                  <select required class="form-control" name="idTahunAjar" id="idTahunAjar">
-                      <option value="" disabled>Pilih tahun ajar</option>
-                  </select>
-              </div>
-
-              <div class='form-group col-sm-6'>
-                  <label for='idKelas'>Nama Kelas</label>
-                  <select required class="form-control" name="idKelas" id="idKelas">
-                      <option value="" disabled>Pilih kelas</option>
-                  </select>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-12">
           <!-- /.card-header -->
           <div class="card">
             <div class="card-body row">
@@ -43,12 +24,12 @@
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>
+                        <th>hak akses</th>
                         <th>nomor rekening</th>
-                        <th>debit</th>
-                        <th>kredit</th>
-                        <th>saldo</th>
-                        <th>tanggal</th>
-                        <th>status_data</th>
+                        <th>jenis transaksi</th>
+                        <th>tanggal transaksi</th>
+                        <th>nominal</th>
+                        <th>status data</th>
                       </tr>
                     </thead>
                     <tbody>

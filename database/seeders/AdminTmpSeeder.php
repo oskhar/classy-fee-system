@@ -20,7 +20,8 @@ class AdminTmpSeeder extends Seeder
          * sistem auth semetara
          */
         AdminModel::create([
-            'id_admin' => 'J-001',
+            'id_administrator' => 'J-001',
+            'hak_akses' => 'admin',
             'username' => 'admin',
             'password' => Hash::make('admin'),
         ]);

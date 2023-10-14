@@ -305,7 +305,7 @@ var Core = /*#__PURE__*/function () {
     key: "numberToMoney",
     value: function numberToMoney(data) {
       var uang = data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-      return "Rp ".concat(uang, ".-");
+      return "".concat(uang);
     }
   }]);
   return Core;
@@ -399,7 +399,10 @@ var Main = /*#__PURE__*/function (_Core) {
     _classCallCheck(this, Main);
     _this = _super.call(this);
     _this.pilihanSiswa = $("#nis");
-    _this.setInputSiswa();
+    _this.idTahunAjar = $("#idTahunAjar");
+    _this.idKelas = $("#idKelas");
+    _this.tahunAjarSelected = false;
+    _this.fetchTahunAjar();
     _this.setListener();
     return _this;
   }
@@ -407,6 +410,22 @@ var Main = /*#__PURE__*/function (_Core) {
     key: "setListener",
     value: function setListener() {
       var self = this;
+      self.idTahunAjar.on("change", function () {
+        self.tahunAjarSelected = $(this).val();
+        if (self.tahunAjarSelected) {
+          self.fetchNamaKelas(self.tahunAjarSelected);
+          if (self.dataTable) {
+            $("#example1 tbody").html("");
+          }
+        }
+      });
+      self.idKelas.on("change", function () {
+        self.idKelasSelected = $(this).val();
+        self.kelasDipilih = $(this).find(":selected").text();
+        if (self.tahunAjarSelected && self.idKelasSelected) {
+          self.setInputSiswa(self.tahunAjarSelected, self.idKelasSelected);
+        }
+      });
       $("#form-tambah-rekening").submit(function (event) {
         // Mencegah pengiriman formulir secara default
         event.preventDefault();
@@ -454,6 +473,45 @@ var Main = /*#__PURE__*/function (_Core) {
         for (var i = 0; i < response.data.length; i++) {
           data = response.data[i];
           self.pilihanSiswa.append(new Option("(".concat(data.nis, ") ").concat(data.nama_siswa), data.nis));
+        }
+      });
+    }
+  }, {
+    key: "fetchTahunAjar",
+    value: function fetchTahunAjar() {
+      var self = this;
+      var url = "".concat(self.mainURL, "/api/tahun-ajar");
+      self.doAjax(url, function (response) {
+        self.optionsList("tahun ajar", self.idTahunAjar, response.data);
+      });
+    }
+  }, {
+    key: "fetchNamaKelas",
+    value: function fetchNamaKelas(requestIdTahunAjar) {
+      var self = this;
+      var url = "".concat(self.mainURL, "/api/kelas/dari-tahun-ajar");
+      self.doAjax(url, function (response) {
+        var data = response.data;
+        self.optionsList("nama kelas", self.idKelas, data);
+      }, {
+        id_tahun_ajar: requestIdTahunAjar
+      });
+    }
+  }, {
+    key: "optionsList",
+    value: function optionsList(namaData, selectElement, data) {
+      selectElement.html("<option value=\"\" selected disabled>Pilih ".concat(namaData, "</option>"));
+      $.each(data, function (index, item) {
+        if (item.id_kelas) {
+          selectElement.append($("<option>", {
+            value: item.id_kelas,
+            text: item.nama_kelas
+          }));
+        } else if (item.id_tahun_ajar) {
+          selectElement.append($("<option>", {
+            value: item.id_tahun_ajar,
+            text: item.nama_tahun_ajar + " " + item.semester
+          }));
         }
       });
     }

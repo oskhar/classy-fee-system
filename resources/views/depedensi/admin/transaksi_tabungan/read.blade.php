@@ -7,7 +7,7 @@
 
 {{-- START JS --}}
 {{-- Main JS --}}
-<script src="{{ asset('js/admin/buku_tabungan.js') }}"></script>
+<script src="{{ asset('js/admin/transaksi_tabungan.js') }}"></script>
 {{-- DataTables  & Plugins --}}
 <script src="{{ asset('adminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('adminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>

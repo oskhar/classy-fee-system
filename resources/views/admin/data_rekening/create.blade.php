@@ -17,7 +17,18 @@
                     <div class='card-body'>
                         <form method='POST' enctype='multipart/form-data' class="row" id="form-tambah-rekening">
                             @csrf
-
+                            <div class='form-group col-sm-6'>
+                                <label for='idTahunAjar'>Tahun ajar</label>
+                                <select required class="form-control" name="idTahunAjar" id="idTahunAjar">
+                                    <option value="" disabled>Pilih tahun ajar</option>
+                                </select>
+                            </div>
+                            <div class='form-group col-sm-6'>
+                                <label for='idKelas'>Nama Kelas</label>
+                                <select required class="form-control" name="idKelas" id="idKelas">
+                                    <option value="" disabled>Pilih kelas</option>
+                                </select>
+                            </div>
                             <div class='form-group col-sm-12'>
                                 <label for='nis'>Pilih Siswa</label>
                                 <select class='form-control' id='nis' name='nis'>

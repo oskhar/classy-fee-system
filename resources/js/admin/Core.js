@@ -252,6 +252,6 @@ export class Core {
 
     numberToMoney(data) {
         const uang = data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        return `Rp ${uang}.-`;
+        return `${uang}`;
     }
 }

@@ -19,8 +19,8 @@ class AdminModel extends Authenticatable implements JWTSubject
      * @var string
      * @var string
      */
-    protected $table = 'tb_admin';
-    protected $primaryKey = 'id_admin';
+    protected $table = 'tb_administrator';
+    protected $primaryKey = 'id_administrator';
     protected $keyType = "string";
 
     /**
@@ -39,6 +39,7 @@ class AdminModel extends Authenticatable implements JWTSubject
         'id_admin',
         'username',
         'password',
+        'hak_akses',
     ];
 
     /**

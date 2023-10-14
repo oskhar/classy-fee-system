@@ -15,21 +15,27 @@ class Main extends Core {
             {
                 data: "debit",
                 render: (data) => {
-                    const uang = this.numberToMoney(data);
+                    const uang =
+                        this.numberToMoney(data) == 0
+                            ? "0"
+                            : `Rp ${this.numberToMoney(data)}.-`;
                     return uang;
                 },
             },
             {
                 data: "kredit",
                 render: (data) => {
-                    const uang = this.numberToMoney(data);
+                    const uang =
+                        this.numberToMoney(data) == 0
+                            ? "0"
+                            : `Rp ${this.numberToMoney(data)}.-`;
                     return uang;
                 },
             },
             {
                 data: "saldo",
                 render: (data) => {
-                    const uang = this.numberToMoney(data);
+                    const uang = `Rp ${this.numberToMoney(data)}.-`;
                     return uang;
                 },
             },

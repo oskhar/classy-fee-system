@@ -5,6 +5,7 @@ use App\Http\Controllers\MasterDataSiswaController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\Tabungan\BukuTabunganController;
 use App\Http\Controllers\Tabungan\RekeningController;
+use App\Http\Controllers\Tabungan\TransaksiTabunganController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JurusanController;
@@ -79,7 +80,11 @@ Route::group(['middleware' => 'apiauthmid'], function ($router) {
 
     // START BUKU TABUNGAN
     Route::get('/buku-tabungan', [BukuTabunganController::class, 'get']);
-    Route::post('/buku-tabungan', [BukuTabunganController::class, 'create']);
+    // END BUKU TABUNGAN
+    
+    // START BUKU TABUNGAN
+    Route::get('/transaksi-tabungan', [TransaksiTabunganController::class, 'get']);
+    Route::post('/transaksi-tabungan', [TransaksiTabunganController::class, 'create']);
     // END BUKU TABUNGAN
 
     // EXPORT IMPORT DATA SISWA

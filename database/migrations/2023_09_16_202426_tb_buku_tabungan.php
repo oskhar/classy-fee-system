@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('nomor_rekening');
             $table->foreign('nomor_rekening')->references('nomor_rekening')->on('tb_rekening')->onDelete('cascade')->onUpdate('cascade');
 
-            $table->bigInteger('debit');
-            $table->bigInteger('kredit');
+            $table->bigInteger('debit')->default(0);
+            $table->bigInteger('kredit')->default(0);
             $table->bigInteger('saldo');
 
             $table->date('tanggal');

@@ -311,228 +311,6 @@ var Core = /*#__PURE__*/function () {
   return Core;
 }();
 
-/***/ }),
-
-/***/ "./resources/js/admin/dashboard.js":
-/*!*****************************************!*\
-  !*** ./resources/js/admin/dashboard.js ***!
-  \*****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Core.js */ "./resources/js/admin/Core.js");
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-var Main = /*#__PURE__*/function (_Core) {
-  _inherits(Main, _Core);
-  var _super = _createSuper(Main);
-  function Main() {
-    var _this;
-    _classCallCheck(this, Main);
-    _this = _super.call(this);
-    var areaChartData = {
-      labels: ["January", "February", "March", "April", "May", "June", "July"],
-      datasets: [{
-        label: "Pemasukan",
-        backgroundColor: "rgba(40,167,69,0.9)",
-        borderColor: "rgba(40,167,69,0.8)",
-        pointRadius: false,
-        pointColor: "#3b8bba",
-        pointStrokeColor: "rgba(40,167,69,1)",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(40,167,69,1)",
-        data: [28, 48, 40, 19, 86, 27, 90]
-      }, {
-        label: "Pengeluaran",
-        backgroundColor: "rgba(220,53,69,0.9)",
-        borderColor: "rgba(220,53,69,0.8)",
-        pointRadius: false,
-        pointColor: "#3b8bba",
-        pointStrokeColor: "rgba(220,53,69,1)",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(220,53,69,1)",
-        data: [32, 61, 12, 39, 6, 62, 21]
-      }]
-    };
-    var barChartOptions = {
-      responsive: true,
-      maintainAspectRatio: false,
-      datasetFill: false
-    };
-    var barChartCanvas = $("#barChartGanjil").text("tesdoang");
-    var barChartData = $.extend(true, {}, areaChartData);
-    for (var i = 0; i < areaChartData.datasets.length; i++) {
-      var temp = areaChartData.datasets[i];
-      barChartData.datasets[i] = temp;
-    }
-    new Chart(barChartCanvas, {
-      type: "bar",
-      data: barChartData,
-      options: barChartOptions
-    });
-    var barChartCanvas = $("#barChartGenap").text("tesdoang");
-    var barChartData = $.extend(true, {}, areaChartData);
-    for (var _i = 0; _i < areaChartData.datasets.length; _i++) {
-      var _temp = areaChartData.datasets[_i];
-      barChartData.datasets[_i] = _temp;
-    }
-    new Chart(barChartCanvas, {
-      type: "bar",
-      data: barChartData,
-      options: barChartOptions
-    });
-    return _this;
-  }
-  return _createClass(Main);
-}(_Core_js__WEBPACK_IMPORTED_MODULE_0__.Core);
-$(function () {
-  new Main();
-});
-
-/***/ }),
-
-/***/ "./resources/css/admin/data_kelas.css":
-/*!********************************************!*\
-  !*** ./resources/css/admin/data_kelas.css ***!
-  \********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./resources/css/admin/data_kelas_create.css":
-/*!***************************************************!*\
-  !*** ./resources/css/admin/data_kelas_create.css ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./resources/css/admin/data_kelas_update.css":
-/*!***************************************************!*\
-  !*** ./resources/css/admin/data_kelas_update.css ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./resources/css/admin/data_tahun_ajar.css":
-/*!*************************************************!*\
-  !*** ./resources/css/admin/data_tahun_ajar.css ***!
-  \*************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./resources/css/admin/data_tahun_ajar_create.css":
-/*!********************************************************!*\
-  !*** ./resources/css/admin/data_tahun_ajar_create.css ***!
-  \********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./resources/css/admin/rekening.css":
-/*!******************************************!*\
-  !*** ./resources/css/admin/rekening.css ***!
-  \******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./resources/css/template_admin.css":
-/*!******************************************!*\
-  !*** ./resources/css/template_admin.css ***!
-  \******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./resources/css/admin/data_siswa.css":
-/*!********************************************!*\
-  !*** ./resources/css/admin/data_siswa.css ***!
-  \********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./resources/css/admin/data_jurusan.css":
-/*!**********************************************!*\
-  !*** ./resources/css/admin/data_jurusan.css ***!
-  \**********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./resources/css/admin/data_jurusan_create.css":
-/*!*****************************************************!*\
-  !*** ./resources/css/admin/data_jurusan_create.css ***!
-  \*****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./resources/css/admin/data_jurusan_update.css":
-/*!*****************************************************!*\
-  !*** ./resources/css/admin/data_jurusan_update.css ***!
-  \*****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
 /***/ })
 
 /******/ 	});
@@ -561,42 +339,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = __webpack_modules__;
-/******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/chunk loaded */
-/******/ 	(() => {
-/******/ 		var deferred = [];
-/******/ 		__webpack_require__.O = (result, chunkIds, fn, priority) => {
-/******/ 			if(chunkIds) {
-/******/ 				priority = priority || 0;
-/******/ 				for(var i = deferred.length; i > 0 && deferred[i - 1][2] > priority; i--) deferred[i] = deferred[i - 1];
-/******/ 				deferred[i] = [chunkIds, fn, priority];
-/******/ 				return;
-/******/ 			}
-/******/ 			var notFulfilled = Infinity;
-/******/ 			for (var i = 0; i < deferred.length; i++) {
-/******/ 				var [chunkIds, fn, priority] = deferred[i];
-/******/ 				var fulfilled = true;
-/******/ 				for (var j = 0; j < chunkIds.length; j++) {
-/******/ 					if ((priority & 1 === 0 || notFulfilled >= priority) && Object.keys(__webpack_require__.O).every((key) => (__webpack_require__.O[key](chunkIds[j])))) {
-/******/ 						chunkIds.splice(j--, 1);
-/******/ 					} else {
-/******/ 						fulfilled = false;
-/******/ 						if(priority < notFulfilled) notFulfilled = priority;
-/******/ 					}
-/******/ 				}
-/******/ 				if(fulfilled) {
-/******/ 					deferred.splice(i--, 1)
-/******/ 					var r = fn();
-/******/ 					if (r !== undefined) result = r;
-/******/ 				}
-/******/ 			}
-/******/ 			return result;
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -625,88 +368,135 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 		};
 /******/ 	})();
 /******/ 	
-/******/ 	/* webpack/runtime/jsonp chunk loading */
-/******/ 	(() => {
-/******/ 		// no baseURI
-/******/ 		
-/******/ 		// object to store loaded and loading chunks
-/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
-/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
-/******/ 		var installedChunks = {
-/******/ 			"/js/admin/dashboard": 0,
-/******/ 			"css/admin/data_jurusan_update": 0,
-/******/ 			"css/admin/data_jurusan_create": 0,
-/******/ 			"css/admin/data_jurusan": 0,
-/******/ 			"css/admin/data_siswa": 0,
-/******/ 			"css/template_admin": 0,
-/******/ 			"css/admin/rekening": 0,
-/******/ 			"css/admin/data_tahun_ajar_create": 0,
-/******/ 			"css/admin/data_tahun_ajar": 0,
-/******/ 			"css/admin/data_kelas_update": 0,
-/******/ 			"css/admin/data_kelas_create": 0,
-/******/ 			"css/admin/data_kelas": 0
-/******/ 		};
-/******/ 		
-/******/ 		// no chunk on demand loading
-/******/ 		
-/******/ 		// no prefetching
-/******/ 		
-/******/ 		// no preloaded
-/******/ 		
-/******/ 		// no HMR
-/******/ 		
-/******/ 		// no HMR manifest
-/******/ 		
-/******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
-/******/ 		
-/******/ 		// install a JSONP callback for chunk loading
-/******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
-/******/ 			var [chunkIds, moreModules, runtime] = data;
-/******/ 			// add "moreModules" to the modules object,
-/******/ 			// then flag all "chunkIds" as loaded and fire callback
-/******/ 			var moduleId, chunkId, i = 0;
-/******/ 			if(chunkIds.some((id) => (installedChunks[id] !== 0))) {
-/******/ 				for(moduleId in moreModules) {
-/******/ 					if(__webpack_require__.o(moreModules, moduleId)) {
-/******/ 						__webpack_require__.m[moduleId] = moreModules[moduleId];
-/******/ 					}
-/******/ 				}
-/******/ 				if(runtime) var result = runtime(__webpack_require__);
-/******/ 			}
-/******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
-/******/ 			for(;i < chunkIds.length; i++) {
-/******/ 				chunkId = chunkIds[i];
-/******/ 				if(__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
-/******/ 					installedChunks[chunkId][0]();
-/******/ 				}
-/******/ 				installedChunks[chunkId] = 0;
-/******/ 			}
-/******/ 			return __webpack_require__.O(result);
-/******/ 		}
-/******/ 		
-/******/ 		var chunkLoadingGlobal = self["webpackChunkclassy_fee_system"] = self["webpackChunkclassy_fee_system"] || [];
-/******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
-/******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
-/******/ 	})();
-/******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/js/admin/dashboard.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/template_admin.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_siswa.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_jurusan.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_jurusan_create.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_jurusan_update.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_kelas.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_kelas_create.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_kelas_update.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_tahun_ajar.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/data_tahun_ajar_create.css")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/admin/data_jurusan_update","css/admin/data_jurusan_create","css/admin/data_jurusan","css/admin/data_siswa","css/template_admin","css/admin/rekening","css/admin/data_tahun_ajar_create","css/admin/data_tahun_ajar","css/admin/data_kelas_update","css/admin/data_kelas_create","css/admin/data_kelas"], () => (__webpack_require__("./resources/css/admin/rekening.css")))
-/******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+/*!**************************************************!*\
+  !*** ./resources/js/admin/transaksi_tabungan.js ***!
+  \**************************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Core.js */ "./resources/js/admin/Core.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var Main = /*#__PURE__*/function (_Core) {
+  _inherits(Main, _Core);
+  var _super = _createSuper(Main);
+  function Main() {
+    var _this;
+    _classCallCheck(this, Main);
+    _this = _super.call(this);
+    _this.dataTableElement = $("#example1");
+    _this.kelasDipilih = "";
+    _this.setDataTableRekening();
+    _this.setListener();
+    return _this;
+  }
+  _createClass(Main, [{
+    key: "setDataTableRekening",
+    value: function setDataTableRekening() {
+      var _this2 = this;
+      /**
+       * Merefresh data pada datatable
+       * jika data table sudah terisi
+       */
+      var urlAPI = "".concat(this.mainURL, "/api/transaksi-tabungan");
+      if (this.dataTable) {
+        this.dataTable.ajax.url(urlAPI).load();
+      } else {
+        var dataColumns = [{
+          data: "hak_akses"
+        }, {
+          data: "nomor_rekening"
+        }, {
+          data: "jenis_transaksi"
+        }, {
+          data: "tanggal_transaksi"
+        }, {
+          data: "nominal",
+          render: function render(data) {
+            var uang = _this2.numberToMoney(data);
+            return uang;
+          }
+        }, {
+          data: "status_data",
+          render: function render(data) {
+            var className = data === "Aktif" ? "text-success" : "text-danger";
+            return "<strong class='".concat(className, " px-3'>").concat(data, "</strong>");
+          }
+        }, {
+          data: "nomor_rekening",
+          render: function render(data, type, row) {
+            return "\n                        <a class=\"btn btn-outline-primary btn-action btn-sm print\" data-nomor-rekening=\"".concat(data, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"Cetak buku tabungan\">\n                            <i class=\"fas fa-print\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-nis=\"").concat(data, "\" data-nama=\"").concat(row.nama_siswa, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"hapus data\">\n                            <i class=\"fas fa-trash\"></i>\n                        </a>\n                    ");
+          }
+        }];
+
+        // Membuat tabel
+        this.dataTable = this.setDataTable(this.dataTableElement, urlAPI, dataColumns, 20);
+      }
+    }
+  }, {
+    key: "setListener",
+    value: function setListener() {
+      var self = this; // Simpan referensi this dalam variabel self
+
+      // Event listener untuk tombol delete
+      self.dataTableElement.on("click", ".btn-action.print", function (event) {
+        var button = $(this);
+        var nomor_rekening = button.data("nomor-rekening");
+        self.previewBukuRekening(nomor_rekening); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari Siswa Main
+      });
+    }
+  }, {
+    key: "performSoftDelete",
+    value: function performSoftDelete(nis, nama_siswa) {
+      var _this3 = this;
+      this.showWarningMessage("Hapus Siswa ".concat(nama_siswa, " ?"), "Hapus").then(function (result) {
+        // Assigmen data yang dibutuhkan untuk mengakses API
+        var urlAPI = "".concat(_this3.mainURL, "/api/rekening");
+        var method = "delete";
+        var dataBody = {
+          nis: nis
+        };
+
+        // Jalankan api untuk delete data jika tombol hapus diclick
+        if (result.isDenied) {
+          _this3.doAjax(urlAPI, function (response) {
+            _this3.refreshDataTable();
+            _this3.showSuccessMessage(response.data.success.message);
+          }, dataBody, method);
+        }
+      });
+    }
+  }, {
+    key: "refreshDataTable",
+    value: function refreshDataTable() {
+      this.dataTable.ajax.reload();
+    }
+  }, {
+    key: "exportSiswaPerkelasExcel",
+    value: function exportSiswaPerkelasExcel() {
+      window.location.href = "".concat(this.mainURL, "/export/siswa-perkelas?nama_kelas=").concat(this.kelasDipilih, "&id_kelas=").concat(this.idKelasSelected, "&id_tahun_ajar=").concat(this.tahunAjarSelected);
+    }
+  }]);
+  return Main;
+}(_Core_js__WEBPACK_IMPORTED_MODULE_0__.Core);
+$(function () {
+  new Main();
+});
+})();
+
 /******/ })()
 ;

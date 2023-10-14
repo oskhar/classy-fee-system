@@ -305,7 +305,7 @@ var Core = /*#__PURE__*/function () {
     key: "numberToMoney",
     value: function numberToMoney(data) {
       var uang = data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-      return "Rp ".concat(uang, ".-");
+      return "".concat(uang);
     }
   }]);
   return Core;
@@ -406,8 +406,8 @@ var Main = /*#__PURE__*/function (_Core) {
     _this.dataTableElement = $("#example1");
     _this.tombolExport = $("#exportSiswaPerkelas");
     _this.kelasDipilih = "";
-    _this.setListener();
     _this.fetchTahunAjar();
+    _this.setListener();
     return _this;
   }
   _createClass(Main, [{
@@ -584,7 +584,6 @@ var Main = /*#__PURE__*/function (_Core) {
     key: "optionsList",
     value: function optionsList(namaData, selectElement, data) {
       var firstOpsiTahunAjar = true;
-      var firstOpsiKelas = true;
       $.each(data, function (index, item) {
         if (item.id_kelas) {
           selectElement.append($("<option>", {

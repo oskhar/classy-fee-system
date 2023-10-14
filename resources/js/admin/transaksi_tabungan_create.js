@@ -6,7 +6,6 @@ class Main extends Core {
         this.idTahunAjar = $("#idTahunAjar");
         this.idKelas = $("#idKelas");
         this.pilihanNomorRekening = $("#nomor_rekening");
-        this.setInputNomorRekening();
         this.fetchTahunAjar();
         this.setListener();
     }
@@ -37,19 +36,17 @@ class Main extends Core {
             }
         });
 
-        $("#form-buku-tabungan").submit(function (event) {
+        $("#form-transaksi-tabungan").submit(function (event) {
             // Mencegah pengiriman formulir secara default
             event.preventDefault();
 
             // Assigmen data yang diperlukan untuk mengakses API
-            let url = `${self.mainURL}/api/buku-tabungan`;
+            let url = `${self.mainURL}/api/transaksi-tabungan`;
             let method = "post";
-            let debit = $("#debit").val() == "" ? 0 : $("#debit").val();
-            let kredit = $("#kredit").val() == "" ? 0 : $("#kredit").val();
             let dataBody = {
                 nomor_rekening: $("#nomor_rekening").val(),
-                debit: debit,
-                kredit: kredit,
+                jenis_transaksi: $("#jenis_transaksi").val(),
+                nominal: $("#nominal").val(),
             };
 
             // Jalankan api untuk create data saat submit

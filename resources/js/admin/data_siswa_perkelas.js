@@ -8,8 +8,8 @@ class Main extends Core {
         this.dataTableElement = $("#example1");
         this.tombolExport = $("#exportSiswaPerkelas");
         this.kelasDipilih = "";
-        this.setListener();
         this.fetchTahunAjar();
+        this.setListener();
     }
 
     setDataTableSiswa(requestIdTahunAjar, requestIdKelas = "") {
@@ -167,7 +167,6 @@ class Main extends Core {
 
     optionsList(namaData, selectElement, data) {
         let firstOpsiTahunAjar = true;
-        let firstOpsiKelas = true;
         $.each(data, function (index, item) {
             if (item.id_kelas) {
                 selectElement.append(
