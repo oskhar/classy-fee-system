@@ -3,12 +3,12 @@ import { Core } from "./Core.js";
 class Main extends Core {
     constructor() {
         super();
+        this.dataTableElement = $("#example1");
         this.setDataTableBukuTabungan();
     }
 
     setDataTableBukuTabungan() {
         // Data yang dibutuhkan tabel
-        this.dataTableElement = $("#example1");
         const urlAPI = `${this.mainURL}/api/buku-tabungan`;
         const dataColumns = [
             { data: "nomor_rekening" },
@@ -60,7 +60,7 @@ class Main extends Core {
             this.dataTableElement,
             urlAPI,
             dataColumns,
-            40
+            10
         );
     }
 }

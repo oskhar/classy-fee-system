@@ -77,7 +77,7 @@ class RekeningController extends Controller
         // Pencarian berdasarkan nama_kelas
         if ($request->has('search') && !empty($request->search['value'])) {
             $searchValue = $request->search['value'];
-            $query = $query->where('tb_kelas.nama_kelas', 'LIKE', '%' . $searchValue . '%');
+            $query = $query->where('tb_rekening.nomor_rekening', 'LIKE', '%' . $searchValue . '%');
             $filteredRecords = $query->count();
         } else {
             $filteredRecords = $totalRecords; // Jumlah total keseluruhan data
@@ -95,7 +95,7 @@ class RekeningController extends Controller
         return response()->json($response)->setStatusCode(200);
     }
 
-    public function getSiswaBelumTerdaftar (): JsonResponse
+    public function getSiswaBelumTerdaftar (Request $request): JsonResponse
     {
         /**
          * Membuat query dasar sebagai acuan utama
@@ -107,6 +107,17 @@ class RekeningController extends Controller
         )->join('tb_siswa', 'tb_siswa.nis', '=', 'master_data_siswa.nis')
         ->leftJoin('tb_rekening', 'tb_siswa.nis', '=', 'tb_rekening.nis')
         ->whereNull('tb_rekening.nis');
+
+        if ($request->has('id_tahun_ajar')) {
+            $query = $query
+                        ->where('master_data_siswa.id_tahun_ajar', "LIKE", "%".$request->id_tahun_ajar."%")
+                        ->distinct();
+        }
+        if ($request->has('id_kelas')) {
+            $query = $query
+                        ->where('master_data_siswa.id_kelas', "LIKE", "%".$request->id_kelas."%")
+                        ->distinct();
+        }
 
         /**
          * Mengambil seluruh data berdasarkan

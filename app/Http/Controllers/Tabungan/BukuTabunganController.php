@@ -52,9 +52,15 @@ class BukuTabunganController extends Controller
             return response()->json(['data' => $data])->setStatusCode(200);
         }
 
-        if ($request->has('id_kelas') && $request->has('id_tahun_ajar')) {
-            $query = $query->where('master_data_siswa.id_kelas', $request->id_kelas)
-                        ->where('master_data_siswa.id_tahun_ajar', $request->id_tahun_ajar)
+        if ($request->has('id_tahun_ajar')) {
+            $query = $query
+                        ->where('master_data_siswa.id_tahun_ajar', 'LIKE', '%' . $request->id_tahun_ajar . '%')
+                        ->distinct();
+        }
+
+        if ($request->has('id_kelas')) {
+            $query = $query
+                        ->where('master_data_siswa.id_kelas', 'LIKE', '%' . $request->id_kelas . '%')
                         ->distinct();
         }
 
@@ -71,10 +77,12 @@ class BukuTabunganController extends Controller
             $orderByDir = $request->order[0]['dir'];
 
             $columns = [
+                'id_buku_tabungan',
                 'nomor_rekening',
-                'nis',
-                'nama_siswa',
-                'saldo'
+                'debit',
+                'kredit',
+                'saldo',
+                'tanggal',
             ];
 
             if (isset($columns[$orderByColumn])) {

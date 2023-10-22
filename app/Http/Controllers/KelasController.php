@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\KelasCreateRequest;
 use App\Http\Requests\KelasReadRequest;
 use App\Http\Requests\KelasUpdateRequest;
+use App\Http\Requests\MasterDataSiswa\KelasDariTahunAjarRequest;
 use App\Http\Resources\KelasResource;
 use App\Models\KelasModel;
+use App\Models\MasterDataSiswaModel;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -214,4 +216,37 @@ class KelasController extends Controller
         ]))->response()->setStatusCode(204);
     }
 
+    public function getDariTahunAjar (KelasDariTahunAjarRequest $request): JsonResponse
+    {
+        /**
+         * Query utama yang ditetapkan untuk melakukan
+         * pengambilan data sesuai parameter tujuan
+         */
+        $query = MasterDataSiswaModel::select(
+            'tb_kelas.id_kelas',
+            'tb_kelas.nama_kelas',
+            'tb_tahun_ajar.nama_tahun_ajar'
+        )->join('tb_kelas', 'master_data_siswa.id_kelas', '=', 'tb_kelas.id_kelas')
+        ->join('tb_tahun_ajar', 'master_data_siswa.id_tahun_ajar', '=', 'tb_tahun_ajar.id_tahun_ajar')
+        ->orderBy('tb_kelas.nama_kelas', 'ASC');
+
+        /**
+         * Mengedit query sesuai kebutuhan
+         */
+        $query = $query
+                    ->where('master_data_siswa.id_tahun_ajar', $request['id_tahun_ajar'])
+                    ->distinct();
+
+        /**
+         * Mendapatkan data yang sudah difilter
+         * dengan beberapa query laravel
+         */
+        $data = $query->get();
+
+        /**
+         * Mengembalikan data berdasarkan
+         * resource yang sudah diatur
+         */
+        return (new KelasResource($data))->response()->setStatusCode(200);
+    }
 }

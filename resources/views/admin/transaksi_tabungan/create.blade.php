@@ -24,7 +24,7 @@
     
                   <div class='form-group col-sm-6'>
                       <label for='idKelas'>Nama Kelas</label>
-                      <select required class="form-control" name="idKelas" id="idKelas">
+                      <select class="form-control" name="idKelas" id="idKelas">
                           <option value="" disabled>Pilih kelas</option>
                       </select>
                   </div>
@@ -46,7 +46,7 @@
 
                             <div class='form-group col-sm-6'>
                                 <label for='jenis_transaksi'>Pilih jenis pembayaran</label>
-                                <select class="form-control select2" style="width: 100%;" id='jenis_transaksi' name='jenis_transaksi'>
+                                <select class="form-control" style="width: 100%;" id='jenis_transaksi' name='jenis_transaksi'>
                                     <option value="" selected disabled>jenis pembayaran</option>
                                     <option value="debit">pemasukan</option>
                                     <option value="kredit">pengeluaran</option>

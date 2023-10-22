@@ -65,7 +65,6 @@ var Core = /*#__PURE__*/function () {
               _context.prev = 0;
               _context.next = 3;
               return this.doAjax("".concat(this.mainURL, "/api/auth/me"), function (response) {
-                console.log(response);
                 _this.mainIdAdministrator = response.id_administrator;
                 _this.mainUsername = response.username;
                 _this.mainHakAkses = response.hak_akses;
@@ -410,9 +409,9 @@ var Main = /*#__PURE__*/function (_Core) {
     _this.idTahunAjar = $("#idTahunAjar");
     _this.idKelas = $("#idKelas");
     _this.tahunAjarSelected = false;
+    _this.kelasDipilih = "";
     _this.dataTableElement = $("#example1");
     _this.tombolExport = $("#exportSiswaPerkelas");
-    _this.kelasDipilih = "";
     _this.fetchTahunAjar();
     _this.setListener();
     return _this;
@@ -439,7 +438,7 @@ var Main = /*#__PURE__*/function (_Core) {
         }, {
           data: "saldo",
           render: function render(data) {
-            var uang = _this2.numberToMoney(data);
+            var uang = _this2.numberToMoney(data) == 0 ? "0" : "Rp ".concat(_this2.numberToMoney(data), ".-");
             return uang;
           }
         }, {
@@ -485,7 +484,7 @@ var Main = /*#__PURE__*/function (_Core) {
       self.idKelas.on("change", function () {
         self.idKelasSelected = $(this).val();
         self.kelasDipilih = $(this).find(":selected").text();
-        if (self.tahunAjarSelected && self.idKelasSelected) {
+        if (self.tahunAjarSelected) {
           self.setDataTableRekening(self.tahunAjarSelected, self.idKelasSelected);
         }
       });
@@ -503,10 +502,10 @@ var Main = /*#__PURE__*/function (_Core) {
   }, {
     key: "previewBukuRekening",
     value: function () {
-      var _previewBukuRekening = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(nomor_rekening) {
-        var self, urlAPI, dataTablePreview, dataColumnsPreview;
-        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-          while (1) switch (_context2.prev = _context2.next) {
+      var _previewBukuRekening = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(nomor_rekening) {
+        var self, urlAPI;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
             case 0:
               /**
                * Menginisialisasi this milik main class
@@ -523,50 +522,36 @@ var Main = /*#__PURE__*/function (_Core) {
                * Melakukan request menggunakan jquery
                * ajax dengan gateway yang ditentukan
                */
-              _context2.next = 4;
-              return self.doAjax(urlAPI, function (response) {
-                /**
-                 * Menampilkan pop up data table
-                 */
-                self.showInfoMessage("", "<i class='fas fa-print'></i> Cetak data", "90%", "<div class=\"card card-success mt-4\">\n                <div class=\"card-header\">\n                    <h3 class=\"card-title\">Preview data rekening</h3>\n                    <div class=\"card-tools\">\n                        <button type=\"button\" class=\"btn btn-tool\" data-card-widget=\"collapse\">\n                            <i class=\"fas fa-minus\"></i>\n                        </button>\n                    </div>\n                </div>\n                <div class=\"card-body\">\n                    <table id=\"example2\" class=\"table table-bordered table-striped\">\n                        <thead>\n                            <tr>\n                                <th>nomor rekening</th>\n                                <th>debit</th>\n                                <th>kredit</th>\n                                <th>saldo</th>\n                                <th>tanggal</th>\n                            </tr>\n                        </thead>\n                        <tbody>".concat(self.arrayBukuRekeningToTable(response.data), "</tbody>\n                    </table>\n                </div>\n                </div>"), "var(--danger)", "<i class='fas fa-times'></i> Cancel").then(function (result) {
-                  /**
-                   * Mencetak data buku tabungan
-                   * siswa sesuai permintaan
-                   */
-                  if (result.isConfirmed) {
-                    window.location.href = "".concat(self.mainURL, "/export/buku-tabungan?nomor_rekening=").concat(nomor_rekening);
-                  }
-                });
-              });
-            case 4:
-              // Data yang dibutuhkan tabel
-              dataTablePreview = $("#example2");
-              dataColumnsPreview = [{
-                data: "nomor_rekening"
-              }, {
-                data: "debit"
-              }, {
-                data: "kredit"
-              }, {
-                data: "saldo"
-              }, {
-                data: "tanggal",
-                render: function render(data) {
-                  return self.convertTanggal(data);
-                }
-              }, {
-                data: "status_data",
-                render: function render(data) {
-                  var className = data === "Aktif" ? "text-success" : "text-danger";
-                  return "<strong class='".concat(className, " px-3'>").concat(data, "</strong>");
-                }
-              }]; // Membuat tabel
-              self.setDataTable(dataTablePreview, urlAPI, dataColumnsPreview, 10);
-            case 7:
+              self.doAjax(urlAPI, /*#__PURE__*/function () {
+                var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(response) {
+                  return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+                    while (1) switch (_context2.prev = _context2.next) {
+                      case 0:
+                        _context2.next = 2;
+                        return self.showInfoMessage("", "<i class='fas fa-print'></i> Cetak data", "90%", "<div class=\"card card-success mt-4\">\n                <div class=\"card-header\">\n                    <h3 class=\"card-title\">Preview data rekening</h3>\n                    <div class=\"card-tools\">\n                        <button type=\"button\" class=\"btn btn-tool\" data-card-widget=\"collapse\">\n                            <i class=\"fas fa-minus\"></i>\n                        </button>\n                    </div>\n                </div>\n                <div class=\"card-body\">\n                    <table id=\"example2\" class=\"table table-bordered table-striped\">\n                        <thead>\n                            <tr>\n                                <th>nomor rekening</th>\n                                <th>debit</th>\n                                <th>kredit</th>\n                                <th>saldo</th>\n                                <th>tanggal</th>\n                            </tr>\n                        </thead>\n                        <tbody>".concat(self.arrayBukuRekeningToTable(response.data), "</tbody>\n                    </table>\n                </div>\n                </div>"), "var(--danger)", "<i class='fas fa-times'></i> Cancel").then(function (result) {
+                          /**
+                           * Mencetak data buku tabungan
+                           * siswa sesuai permintaan
+                           */
+                          if (result.isConfirmed) {
+                            window.location.href = "".concat(self.mainURL, "/export/buku-tabungan?nomor_rekening=").concat(nomor_rekening);
+                          }
+                        });
+                      case 2:
+                      case "end":
+                        return _context2.stop();
+                    }
+                  }, _callee2);
+                }));
+                return function (_x2) {
+                  return _ref2.apply(this, arguments);
+                };
+              }());
+            case 3:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
-        }, _callee2, this);
+        }, _callee3, this);
       }));
       function previewBukuRekening(_x) {
         return _previewBukuRekening.apply(this, arguments);
@@ -597,41 +582,41 @@ var Main = /*#__PURE__*/function (_Core) {
   }, {
     key: "fetchTahunAjar",
     value: function () {
-      var _fetchTahunAjar = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+      var _fetchTahunAjar = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
         var self, url;
-        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-          while (1) switch (_context4.prev = _context4.next) {
+        return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+          while (1) switch (_context5.prev = _context5.next) {
             case 0:
               self = this;
               url = "".concat(self.mainURL, "/api/tahun-ajar");
               self.doAjax(url, /*#__PURE__*/function () {
-                var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(response) {
-                  return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-                    while (1) switch (_context3.prev = _context3.next) {
+                var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(response) {
+                  return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+                    while (1) switch (_context4.prev = _context4.next) {
                       case 0:
-                        _context3.next = 2;
+                        _context4.next = 2;
                         return self.optionsList("tahun ajar", self.idTahunAjar, response.data);
                       case 2:
                         self.tahunAjarSelected = self.idTahunAjar.find(":selected").val();
-                        _context3.next = 5;
+                        _context4.next = 5;
                         return self.setDataTableRekening(self.tahunAjarSelected);
                       case 5:
                         self.fetchNamaKelas(self.tahunAjarSelected);
                       case 6:
                       case "end":
-                        return _context3.stop();
+                        return _context4.stop();
                     }
-                  }, _callee3);
+                  }, _callee4);
                 }));
-                return function (_x2) {
-                  return _ref2.apply(this, arguments);
+                return function (_x3) {
+                  return _ref3.apply(this, arguments);
                 };
               }());
             case 3:
             case "end":
-              return _context4.stop();
+              return _context5.stop();
           }
-        }, _callee4, this);
+        }, _callee5, this);
       }));
       function fetchTahunAjar() {
         return _fetchTahunAjar.apply(this, arguments);
@@ -644,24 +629,24 @@ var Main = /*#__PURE__*/function (_Core) {
       var self = this;
       var url = "".concat(self.mainURL, "/api/kelas/dari-tahun-ajar");
       self.doAjax(url, /*#__PURE__*/function () {
-        var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(response) {
+        var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(response) {
           var data;
-          return _regeneratorRuntime().wrap(function _callee5$(_context5) {
-            while (1) switch (_context5.prev = _context5.next) {
+          return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+            while (1) switch (_context6.prev = _context6.next) {
               case 0:
                 data = response.data;
-                _context5.next = 3;
+                _context6.next = 3;
                 return self.idKelas.html("<option value=\"\" selected>Semua Kelas</option>");
               case 3:
                 self.optionsList("nama kelas", self.idKelas, data);
               case 4:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
-          }, _callee5);
+          }, _callee6);
         }));
-        return function (_x3) {
-          return _ref3.apply(this, arguments);
+        return function (_x4) {
+          return _ref4.apply(this, arguments);
         };
       }(), {
         id_tahun_ajar: requestIdTahunAjar
@@ -709,7 +694,7 @@ var Main = /*#__PURE__*/function (_Core) {
     value: function arrayBukuRekeningToTable(arrayBukuRekening) {
       var hasil = "";
       for (var i = 0; i < arrayBukuRekening.length; i++) {
-        hasil += "\n            <tr>\n                <td>".concat(arrayBukuRekening[i].nomor_rekening, "</td>\n                <td>").concat(this.numberToMoney(arrayBukuRekening[i].debit), "</td>\n                <td>").concat(this.numberToMoney(arrayBukuRekening[i].kredit), "</td>\n                <td>").concat(this.numberToMoney(arrayBukuRekening[i].saldo), "</td>\n                <td>").concat(arrayBukuRekening[i].tanggal, "</td>\n            </tr>");
+        hasil += "\n            <tr>\n                <td>".concat(arrayBukuRekening[i].nomor_rekening, "</td>\n                <td>").concat(this.numberToMoney(arrayBukuRekening[i].debit) == 0 ? "0" : "Rp ".concat(this.numberToMoney(arrayBukuRekening[i].debit), ".-"), "</td>\n                <td>").concat(this.numberToMoney(arrayBukuRekening[i].kredit) == 0 ? "0" : "Rp ".concat(this.numberToMoney(arrayBukuRekening[i].kredit), ".-"), "</td>\n                <td>").concat(this.numberToMoney(arrayBukuRekening[i].saldo) == 0 ? "0" : "Rp ".concat(this.numberToMoney(arrayBukuRekening[i].saldo), ".-"), "</td>\n                <td>").concat(this.convertTanggal(arrayBukuRekening[i].tanggal), "</td>\n            </tr>");
       }
       return hasil;
     }

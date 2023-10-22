@@ -276,9 +276,10 @@ class SiswaController extends Controller
         $data = $request->validated();
 
         $siswa = SiswaModel::find($data['nis']);
+        $masterSiswa = MasterDataSiswaModel::find($data['nis']);
         $waliSiswa = WaliSiswaModel::find($siswa->id_wali_siswa);
         
-        if (!$siswa || !$waliSiswa) {
+        if (!$siswa || !$waliSiswa || !$masterSiswa) {
             throw new HttpResponseException(response()->json([
                 'errors' => [
                     'message' => [
@@ -288,8 +289,11 @@ class SiswaController extends Controller
             ])->setStatusCode(404));
         }
         $siswa->update(['status_data' => 'Tidak Aktif']);
+        $masterSiswa->update(['status_data' => 'Tidak Aktif']);
         $waliSiswa->update(['status_data' => 'Tidak Aktif']);
+        
         $siswa->delete(); // Perform soft delete
+        $masterSiswa->delete(); // Perform soft delete
         $waliSiswa->delete(); // Perform soft delete
         
         return (new SiswaResource([
@@ -326,4 +330,85 @@ class SiswaController extends Controller
         ]))->response()->setStatusCode(204);
     }
 
+    //
+    public function getPerkelas(Request $request): JsonResponse
+    {
+        /**
+         * Query utama yang ditetapkan untuk melakukan
+         * pengambilan data sesuai parameter tujuan
+         */
+        $query = MasterDataSiswaModel::select(
+            'master_data_siswa.nis',
+            'master_data_siswa.nisn',
+            'master_data_siswa.id_kelas',
+            'master_data_siswa.id_tahun_ajar',
+            'tb_siswa.nama_siswa',
+            'tb_siswa.status_data',
+            'tb_kelas.nama_kelas',
+            'tb_tahun_ajar.nama_tahun_ajar',
+            'tb_tahun_ajar.semester'
+        )->join('tb_siswa', 'master_data_siswa.nis', '=', 'tb_siswa.nis')
+        ->join('tb_kelas', 'master_data_siswa.id_kelas', '=', 'tb_kelas.id_kelas')
+        ->join('tb_tahun_ajar', 'master_data_siswa.id_tahun_ajar', '=', 'tb_tahun_ajar.id_tahun_ajar');
+
+        if ($request->has('id_tahun_ajar')) {
+            $query = $query
+                        ->where('master_data_siswa.id_tahun_ajar', "LIKE", "%".$request->id_tahun_ajar."%")
+                        ->distinct();
+        }
+        if ($request->has('id_kelas')) {
+            $query = $query
+                        ->where('master_data_siswa.id_kelas', "LIKE", "%".$request->id_kelas."%")
+                        ->distinct();
+        }
+        $totalRecords = $query->count();
+        if ($request->has('start') && $request->has('length')) {
+            $query = $query->offset($request->start)
+                ->limit($request->length);
+        }
+
+        // Penyortiran (Ordering) berdasarkan kolom yang dipilih
+        if ($request->has('order') && count($request->order) > 0) {
+            $orderByColumn = $request->order[0]['column'];
+            $orderByDir = $request->order[0]['dir'];
+
+            $columns = [
+                'nis',
+                'nisn',
+                'nama_siswa',
+                'nama_kelas',
+                'nama_tahun_ajar',
+                'semester'
+            ];
+
+            if (isset($columns[$orderByColumn])) {
+                $orderBy = $columns[$orderByColumn];
+                $query = $query->orderBy($orderBy, $orderByDir);
+            }
+        }
+
+        // Pencarian berdasarkan nama_kelas
+        if ($request->has('search') && !empty($request->search['value'])) {
+            $searchValue = $request->search['value'];
+            $query = $query->where('tb_siswa.nama_siswa', 'LIKE', '%' . $searchValue . '%');
+            $filteredRecords = $query->count();
+        } else {
+            $filteredRecords = $totalRecords; // Jumlah total keseluruhan data
+        }
+
+        $data = $query->get();
+        
+        $response = [
+            'draw' => intval($request->input('draw')), // Pastikan draw disertakan
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $filteredRecords,
+            'data' => SiswaResource::collection($data),
+        ];
+
+        /**
+         * Mengembalikan data berdasarkan
+         * resource yang sudah diatur
+         */
+        return response()->json($response)->setStatusCode(200);
+    }
 }

@@ -42,7 +42,7 @@ Route::group(['middleware' => 'apiauthmid'], function ($router) {
     Route::put('/siswa/pulihkan', [SiswaController::class, 'restore']);
     Route::delete('/siswa', [SiswaController::class, 'delete']);
 
-    Route::get('/siswa/perkelas', [MasterDataSiswaController::class, 'getSiswaPerkelas']);
+    Route::get('/siswa/perkelas', [SiswaController::class, 'getPerkelas']);
     // END DATA SISWA
 
     // START DATA KELAS
@@ -52,7 +52,7 @@ Route::group(['middleware' => 'apiauthmid'], function ($router) {
     Route::put('/kelas/pulihkan', [KelasController::class, 'restore']);
     Route::delete('/kelas', [KelasController::class, 'delete']);
 
-    Route::get('/kelas/dari-tahun-ajar', [MasterDataSiswaController::class, 'getKelasDariTahunAjar']);
+    Route::get('/kelas/dari-tahun-ajar', [KelasController::class, 'getDariTahunAjar']);
     // END DATA KELAS
 
     // START DATA JURUSAN

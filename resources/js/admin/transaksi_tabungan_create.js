@@ -21,6 +21,7 @@ class Main extends Core {
                 if (self.dataTable) {
                     $("#example1 tbody").html("");
                 }
+                self.setInputNomorRekening(self.tahunAjarSelected);
             }
         });
 
@@ -28,7 +29,7 @@ class Main extends Core {
             self.idKelasSelected = $(this).val();
             self.kelasDipilih = $(this).find(":selected").text();
 
-            if (self.tahunAjarSelected && self.idKelasSelected) {
+            if (self.tahunAjarSelected) {
                 self.setInputNomorRekening(
                     self.tahunAjarSelected,
                     self.idKelasSelected
@@ -87,9 +88,12 @@ class Main extends Core {
                 method
             );
         });
+        $(".select2").select2({
+            theme: "bootstrap4",
+        });
     }
 
-    setInputNomorRekening(idTahunAjar, idKelas) {
+    setInputNomorRekening(idTahunAjar, idKelas = "") {
         const self = this; // Simpan referensi this dalam variabel self
 
         // Assigmen data yang diperlukan untuk mengakses API
@@ -112,8 +116,13 @@ class Main extends Core {
         const self = this;
         const url = `${self.mainURL}/api/tahun-ajar`;
 
-        self.doAjax(url, function (response) {
+        self.doAjax(url, async function (response) {
             self.optionsList("tahun ajar", self.idTahunAjar, response.data);
+            self.tahunAjarSelected = await self.idTahunAjar
+                .find(":selected")
+                .val();
+            await self.setInputNomorRekening(self.tahunAjarSelected);
+            self.fetchNamaKelas(self.tahunAjarSelected);
         });
     }
 
@@ -123,8 +132,11 @@ class Main extends Core {
 
         self.doAjax(
             url,
-            function (response) {
+            async function (response) {
                 let data = response.data;
+                await self.idKelas.html(
+                    `<option value="" selected>Semua Kelas</option>`
+                );
                 self.optionsList("nama kelas", self.idKelas, data);
             },
             {
@@ -134,9 +146,7 @@ class Main extends Core {
     }
 
     optionsList(namaData, selectElement, data) {
-        selectElement.html(
-            `<option value="" selected disabled>Pilih ${namaData}</option>`
-        );
+        let firstOpsiTahunAjar = true;
         $.each(data, function (index, item) {
             if (item.id_kelas) {
                 selectElement.append(
@@ -146,12 +156,23 @@ class Main extends Core {
                     })
                 );
             } else if (item.id_tahun_ajar) {
-                selectElement.append(
-                    $("<option>", {
-                        value: item.id_tahun_ajar,
-                        text: item.nama_tahun_ajar + " " + item.semester,
-                    })
-                );
+                if (firstOpsiTahunAjar) {
+                    firstOpsiTahunAjar = false;
+                    selectElement.append(
+                        $("<option>", {
+                            value: item.id_tahun_ajar,
+                            text: item.nama_tahun_ajar + " " + item.semester,
+                            selected: true,
+                        })
+                    );
+                } else {
+                    selectElement.append(
+                        $("<option>", {
+                            value: item.id_tahun_ajar,
+                            text: item.nama_tahun_ajar + " " + item.semester,
+                        })
+                    );
+                }
             }
         });
     }

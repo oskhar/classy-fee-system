@@ -65,7 +65,6 @@ var Core = /*#__PURE__*/function () {
               _context.prev = 0;
               _context.next = 3;
               return this.doAjax("".concat(this.mainURL, "/api/auth/me"), function (response) {
-                console.log(response);
                 _this.mainIdAdministrator = response.id_administrator;
                 _this.mainUsername = response.username;
                 _this.mainHakAkses = response.hak_akses;
@@ -423,29 +422,21 @@ var Main = /*#__PURE__*/function (_Core) {
         this.dataTable.ajax.url(urlAPI).load();
       } else {
         var dataColumns = [{
-          data: "hak_akses"
+          data: "id_transaksi_tabungan"
         }, {
           data: "nomor_rekening"
         }, {
           data: "jenis_transaksi"
         }, {
-          data: "tanggal_transaksi"
+          data: "tanggal_transaksi",
+          render: function render(data) {
+            return _this2.convertTanggal(data);
+          }
         }, {
           data: "nominal",
           render: function render(data) {
-            var uang = _this2.numberToMoney(data);
+            var uang = _this2.numberToMoney(data) == 0 ? "0" : "Rp ".concat(_this2.numberToMoney(data), ".-");
             return uang;
-          }
-        }, {
-          data: "status_data",
-          render: function render(data) {
-            var className = data === "Aktif" ? "text-success" : "text-danger";
-            return "<strong class='".concat(className, " px-3'>").concat(data, "</strong>");
-          }
-        }, {
-          data: "nomor_rekening",
-          render: function render(data, type, row) {
-            return "\n                        <a class=\"btn btn-outline-primary btn-action btn-sm print\" data-nomor-rekening=\"".concat(data, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"Cetak buku tabungan\">\n                            <i class=\"fas fa-print\"></i>\n                        </a>\n                        <a class=\"btn btn-outline-danger btn-action btn-sm delete\" data-nis=\"").concat(data, "\" data-nama=\"").concat(row.nama_siswa, "\" data-toggle=\"tooltip\" data-bs-placement=\"top\" title=\"hapus data\">\n                            <i class=\"fas fa-trash\"></i>\n                        </a>\n                    ");
           }
         }];
 

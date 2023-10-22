@@ -222,14 +222,14 @@
 						<!-- /. SI. Rapot Siswa -->
 
 						<!-- SI. Tabungan Siswa -->
-						<li class="nav-item">
-							<a href="#" class="nav-link">
+						<li class="nav-item @if(strpos(request()->path(), 'admin/data-rekening') !== false || strpos(request()->path(), 'admin/data-buku-tabungan') !== false || strpos(request()->path(), 'admin/transaksi-tabungan') !== false) menu-open @endif">
+							<a href="#" class="nav-link @if(strpos(request()->path(), 'admin/data-rekening') !== false || strpos(request()->path(), 'admin/data-buku-tabungan') !== false || strpos(request()->path(), 'admin/transaksi-tabungan') !== false) active @endif">
 								<i class="nav-icon fa-solid fa-book"></i>
 								<p>Sis. Tabungan Siswa<i class="fas fa-angle-left right"></i></p>
 							</a>
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
-									<a href="{{route('admin.data_rekening')}}" class="nav-link">
+									<a href="{{route('admin.data_rekening')}}" class="nav-link @if(strpos(request()->path(), 'admin/data-rekening') !== false) active @endif">
 										<i class="fa-solid fa-minus nav-icon"></i>
 										<p>Pembukaan Rekening Siswa</p>
 									</a>
@@ -237,7 +237,7 @@
 							</ul>
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
-									<a href="{{route('admin.transaksi_tabungan')}}" class="nav-link">
+									<a href="{{route('admin.transaksi_tabungan')}}" class="nav-link @if(strpos(request()->path(), 'admin/transaksi-tabungan') !== false) active @endif">
 										<i class="fa-solid fa-minus nav-icon"></i>
 										<p>Transaksi Tabungan Siswa</p>
 									</a>
@@ -245,7 +245,7 @@
 							</ul>
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
-									<a href="{{route('admin.data_buku_tabungan')}}" class="nav-link">
+									<a href="{{route('admin.data_buku_tabungan')}}" class="nav-link @if(strpos(request()->path(), 'admin/data-buku-tabungan') !== false) active @endif">
 										<i class="fa-solid fa-minus nav-icon"></i>
 										<p>Buku Tabungan Siswa</p>
 									</a>

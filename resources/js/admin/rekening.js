@@ -6,9 +6,9 @@ class Main extends Core {
         this.idTahunAjar = $("#idTahunAjar");
         this.idKelas = $("#idKelas");
         this.tahunAjarSelected = false;
+        this.kelasDipilih = "";
         this.dataTableElement = $("#example1");
         this.tombolExport = $("#exportSiswaPerkelas");
-        this.kelasDipilih = "";
         this.fetchTahunAjar();
         this.setListener();
     }
@@ -29,7 +29,10 @@ class Main extends Core {
                 {
                     data: "saldo",
                     render: (data) => {
-                        const uang = this.numberToMoney(data);
+                        const uang =
+                            this.numberToMoney(data) == 0
+                                ? "0"
+                                : `Rp ${this.numberToMoney(data)}.-`;
                         return uang;
                     },
                 },
@@ -83,7 +86,7 @@ class Main extends Core {
             self.idKelasSelected = $(this).val();
             self.kelasDipilih = $(this).find(":selected").text();
 
-            if (self.tahunAjarSelected && self.idKelasSelected) {
+            if (self.tahunAjarSelected) {
                 self.setDataTableRekening(
                     self.tahunAjarSelected,
                     self.idKelasSelected
@@ -125,15 +128,16 @@ class Main extends Core {
          * Melakukan request menggunakan jquery
          * ajax dengan gateway yang ditentukan
          */
-        await self.doAjax(urlAPI, function (response) {
+        self.doAjax(urlAPI, async function (response) {
             /**
              * Menampilkan pop up data table
              */
-            self.showInfoMessage(
-                "",
-                "<i class='fas fa-print'></i> Cetak data",
-                "90%",
-                `<div class="card card-success mt-4">
+            await self
+                .showInfoMessage(
+                    "",
+                    "<i class='fas fa-print'></i> Cetak data",
+                    "90%",
+                    `<div class="card card-success mt-4">
                 <div class="card-header">
                     <h3 class="card-title">Preview data rekening</h3>
                     <div class="card-tools">
@@ -159,43 +163,19 @@ class Main extends Core {
                     </table>
                 </div>
                 </div>`,
-                "var(--danger)",
-                "<i class='fas fa-times'></i> Cancel"
-            ).then((result) => {
-                /**
-                 * Mencetak data buku tabungan
-                 * siswa sesuai permintaan
-                 */
-                if (result.isConfirmed) {
-                    window.location.href = `${self.mainURL}/export/buku-tabungan?nomor_rekening=${nomor_rekening}`;
-                }
-            });
+                    "var(--danger)",
+                    "<i class='fas fa-times'></i> Cancel"
+                )
+                .then((result) => {
+                    /**
+                     * Mencetak data buku tabungan
+                     * siswa sesuai permintaan
+                     */
+                    if (result.isConfirmed) {
+                        window.location.href = `${self.mainURL}/export/buku-tabungan?nomor_rekening=${nomor_rekening}`;
+                    }
+                });
         });
-        // Data yang dibutuhkan tabel
-        const dataTablePreview = $("#example2");
-        const dataColumnsPreview = [
-            { data: "nomor_rekening" },
-            { data: "debit" },
-            { data: "kredit" },
-            { data: "saldo" },
-            {
-                data: "tanggal",
-                render: (data) => {
-                    return self.convertTanggal(data);
-                },
-            },
-            {
-                data: "status_data",
-                render: (data) => {
-                    const className =
-                        data === "Aktif" ? "text-success" : "text-danger";
-                    return `<strong class='${className} px-3'>${data}</strong>`;
-                },
-            },
-        ];
-
-        // Membuat tabel
-        self.setDataTable(dataTablePreview, urlAPI, dataColumnsPreview, 10);
     }
 
     performSoftDelete(nis, nama_siswa) {
@@ -305,10 +285,28 @@ class Main extends Core {
             hasil += `
             <tr>
                 <td>${arrayBukuRekening[i].nomor_rekening}</td>
-                <td>${this.numberToMoney(arrayBukuRekening[i].debit)}</td>
-                <td>${this.numberToMoney(arrayBukuRekening[i].kredit)}</td>
-                <td>${this.numberToMoney(arrayBukuRekening[i].saldo)}</td>
-                <td>${arrayBukuRekening[i].tanggal}</td>
+                <td>${
+                    this.numberToMoney(arrayBukuRekening[i].debit) == 0
+                        ? "0"
+                        : `Rp ${this.numberToMoney(
+                              arrayBukuRekening[i].debit
+                          )}.-`
+                }</td>
+                <td>${
+                    this.numberToMoney(arrayBukuRekening[i].kredit) == 0
+                        ? "0"
+                        : `Rp ${this.numberToMoney(
+                              arrayBukuRekening[i].kredit
+                          )}.-`
+                }</td>
+                <td>${
+                    this.numberToMoney(arrayBukuRekening[i].saldo) == 0
+                        ? "0"
+                        : `Rp ${this.numberToMoney(
+                              arrayBukuRekening[i].saldo
+                          )}.-`
+                }</td>
+                <td>${this.convertTanggal(arrayBukuRekening[i].tanggal)}</td>
             </tr>`;
         }
         return hasil;

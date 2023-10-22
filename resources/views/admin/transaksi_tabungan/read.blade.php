@@ -24,12 +24,11 @@
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>
-                        <th>hak akses</th>
+                        <th>id transaksi</th>
                         <th>nomor rekening</th>
                         <th>jenis transaksi</th>
                         <th>tanggal transaksi</th>
                         <th>nominal</th>
-                        <th>status data</th>
                       </tr>
                     </thead>
                     <tbody>

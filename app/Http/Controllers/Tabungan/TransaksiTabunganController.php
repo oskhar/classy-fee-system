@@ -30,14 +30,13 @@ class TransaksiTabunganController extends Controller
          * menumpuk query tambahan untuk mengambil data
          */
         $query = TransaksiTabunganModel::select(
-            'tb_transaksi_tabungan.id_transaksi_tabungan',
-            'tb_transaksi_tabungan.nomor_rekening',
-            'tb_transaksi_tabungan.jenis_transaksi',
-            'tb_transaksi_tabungan.tanggal_transaksi',
-            'tb_transaksi_tabungan.nominal',
-            'tb_administrator.hak_akses',
-            'tb_transaksi_tabungan.status_data'
-            )->join('tb_administrator', 'tb_administrator.id_administrator', '=', 'tb_transaksi_tabungan.id_administrator');
+            'id_transaksi_tabungan',
+            'nomor_rekening',
+            'jenis_transaksi',
+            'tanggal_transaksi',
+            'nominal',
+            'status_data'
+            );
 
         $totalRecords = TransaksiTabunganModel::count();
 
@@ -52,11 +51,11 @@ class TransaksiTabunganController extends Controller
             $orderByDir = $request->order[0]['dir'];
 
             $columns = [
+                'id_transaksi_tabungan',
                 'nomor_rekening',
                 'jenis_transaksi',
                 'tanggal_transaksi',
                 'nominal',
-                'hak_akses',
             ];
 
             if (isset($columns[$orderByColumn])) {
@@ -97,13 +96,14 @@ class TransaksiTabunganController extends Controller
         $rekening = RekeningModel::where('nomor_rekening', $data['nomor_rekening'])->first();
 
         $saldoSebelumnya = $rekening->saldo;
-        $saldoHasil = $data['jenis_transaksi'] == "debit" ? $saldoSebelumnya + $data['nominal'] : $saldoSebelumnya - $data['nominal'];
+        $saldoHasil = $data['jenis_transaksi'] == "debit" ? $data['nominal'] : -1 * $data['nominal'];
+        $saldoHasil += $saldoSebelumnya;
 
-        if ($saldoHasil < 0) {
+        if ($saldoHasil < 5000) {
             throw new HttpResponseException(response()->json([
                 'errors' => [
                     'message' => [
-                        'Pengurangan saldo melebihi saldo saat ini!'
+                        'Pengurangan saldo melebihi batas maksimum!'
                     ]
                 ]
             ])->setStatusCode(400));
@@ -135,7 +135,7 @@ class TransaksiTabunganController extends Controller
         $generateIdAdministrator = "P-";
         $generateIdAdministrator .= $data['jenis_transaksi'] == "debit" ? "01-":"02-";
         $generateIdAdministrator .= substr($this->currentDate->format('Y-m-d'), -2)."-";
-        $generateIdAdministrator .= str_pad($banyakDataTransaksi, 4, '0', STR_PAD_LEFT);
+        $generateIdAdministrator .= str_pad($banyakDataTransaksi+1, 4, '0', STR_PAD_LEFT);
         $dataRekeningTabungan = [
             "id_transaksi_tabungan" => $generateIdAdministrator,
             "id_administrator" => $data['id_administrator'],

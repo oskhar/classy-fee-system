@@ -15,25 +15,6 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-12">
-          <div class="card">
-            <div class="card-body row">
-              <div class='form-group col-sm-6'>
-                  <label for='idTahunAjar'>Tahun ajar</label>
-                  <select required class="form-control" name="idTahunAjar" id="idTahunAjar">
-                      <option value="" disabled>Pilih tahun ajar</option>
-                  </select>
-              </div>
-
-              <div class='form-group col-sm-6'>
-                  <label for='idKelas'>Nama Kelas</label>
-                  <select required class="form-control" name="idKelas" id="idKelas">
-                      <option value="" disabled>Pilih kelas</option>
-                  </select>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-12">
           <!-- /.card-header -->
           <div class="card">
             <div class="card-body row">

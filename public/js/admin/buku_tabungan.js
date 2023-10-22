@@ -65,7 +65,6 @@ var Core = /*#__PURE__*/function () {
               _context.prev = 0;
               _context.next = 3;
               return this.doAjax("".concat(this.mainURL, "/api/auth/me"), function (response) {
-                console.log(response);
                 _this.mainIdAdministrator = response.id_administrator;
                 _this.mainUsername = response.username;
                 _this.mainHakAkses = response.hak_akses;
@@ -404,6 +403,7 @@ var Main = /*#__PURE__*/function (_Core) {
     var _this;
     _classCallCheck(this, Main);
     _this = _super.call(this);
+    _this.dataTableElement = $("#example1");
     _this.setDataTableBukuTabungan();
     return _this;
   }
@@ -412,7 +412,6 @@ var Main = /*#__PURE__*/function (_Core) {
     value: function setDataTableBukuTabungan() {
       var _this2 = this;
       // Data yang dibutuhkan tabel
-      this.dataTableElement = $("#example1");
       var urlAPI = "".concat(this.mainURL, "/api/buku-tabungan");
       var dataColumns = [{
         data: "nomor_rekening"
@@ -448,7 +447,7 @@ var Main = /*#__PURE__*/function (_Core) {
       }];
 
       // Membuat tabel
-      this.dataTable = this.setDataTable(this.dataTableElement, urlAPI, dataColumns, 40);
+      this.dataTable = this.setDataTable(this.dataTableElement, urlAPI, dataColumns, 10);
     }
   }]);
   return Main;

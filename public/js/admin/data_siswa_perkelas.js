@@ -65,7 +65,6 @@ var Core = /*#__PURE__*/function () {
               _context.prev = 0;
               _context.next = 3;
               return this.doAjax("".concat(this.mainURL, "/api/auth/me"), function (response) {
-                console.log(response);
                 _this.mainIdAdministrator = response.id_administrator;
                 _this.mainUsername = response.username;
                 _this.mainHakAkses = response.hak_akses;
@@ -484,12 +483,20 @@ var Main = /*#__PURE__*/function (_Core) {
       self.idKelas.on("change", function () {
         self.idKelasSelected = $(this).val();
         self.kelasDipilih = $(this).find(":selected").text();
-        if (self.tahunAjarSelected && self.idKelasSelected) {
+        if (self.tahunAjarSelected) {
           self.setDataTableSiswa(self.tahunAjarSelected, self.idKelasSelected);
         }
       });
       self.tombolExport.on("click", function () {
         self.exportSiswaPerkelasExcel();
+      });
+
+      // Event listener untuk tombol delete
+      this.dataTableElement.on("click", ".btn-action.delete", function (event) {
+        var button = $(this);
+        var nis = button.data("nis");
+        var nama_siswa = button.data("nama");
+        self.performSoftDelete(nis, nama_siswa); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari Siswa Main
       });
     }
   }, {

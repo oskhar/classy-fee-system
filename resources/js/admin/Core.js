@@ -36,7 +36,6 @@ export class Core {
             await this.doAjax(
                 `${this.mainURL}/api/auth/me`,
                 (response) => {
-                    console.log(response);
                     this.mainIdAdministrator = response.id_administrator;
                     this.mainUsername = response.username;
                     this.mainHakAkses = response.hak_akses;

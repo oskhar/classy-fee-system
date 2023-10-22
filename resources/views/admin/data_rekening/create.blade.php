@@ -25,13 +25,13 @@
                             </div>
                             <div class='form-group col-sm-6'>
                                 <label for='idKelas'>Nama Kelas</label>
-                                <select required class="form-control" name="idKelas" id="idKelas">
+                                <select class="form-control" name="idKelas" id="idKelas">
                                     <option value="" disabled>Pilih kelas</option>
                                 </select>
                             </div>
                             <div class='form-group col-sm-12'>
                                 <label for='nis'>Pilih Siswa</label>
-                                <select class='form-control' id='nis' name='nis'>
+                                <select class='form-control select2' id='nis' name='nis'>
                                     <option value='' selected disabled>Tidak Ada Siswa</option>
                                 </select>
                             </div>

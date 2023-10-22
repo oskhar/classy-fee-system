@@ -91,7 +91,7 @@ class Main extends Core {
             self.idKelasSelected = $(this).val();
             self.kelasDipilih = $(this).find(":selected").text();
 
-            if (self.tahunAjarSelected && self.idKelasSelected) {
+            if (self.tahunAjarSelected) {
                 self.setDataTableSiswa(
                     self.tahunAjarSelected,
                     self.idKelasSelected
@@ -102,6 +102,18 @@ class Main extends Core {
         self.tombolExport.on("click", function () {
             self.exportSiswaPerkelasExcel();
         });
+
+        // Event listener untuk tombol delete
+        this.dataTableElement.on(
+            "click",
+            ".btn-action.delete",
+            function (event) {
+                const button = $(this);
+                const nis = button.data("nis");
+                const nama_siswa = button.data("nama");
+                self.performSoftDelete(nis, nama_siswa); // Menggunakan variabel self untuk memanggil metode performSoftDelete dari Siswa Main
+            }
+        );
     }
 
     performSoftDelete(nis, nama_siswa) {

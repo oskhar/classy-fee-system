@@ -19,35 +19,24 @@ class Main extends Core {
             this.dataTable.ajax.url(urlAPI).load();
         } else {
             const dataColumns = [
-                { data: "hak_akses" },
+                { data: "id_transaksi_tabungan" },
                 { data: "nomor_rekening" },
                 { data: "jenis_transaksi" },
-                { data: "tanggal_transaksi" },
+                {
+                    data: "tanggal_transaksi",
+                    render: (data) => {
+                        return this.convertTanggal(data);
+                    },
+                },
                 {
                     data: "nominal",
                     render: (data) => {
-                        const uang = this.numberToMoney(data);
+                        const uang =
+                            this.numberToMoney(data) == 0
+                                ? "0"
+                                : `Rp ${this.numberToMoney(data)}.-`;
                         return uang;
                     },
-                },
-                {
-                    data: "status_data",
-                    render: (data) => {
-                        const className =
-                            data === "Aktif" ? "text-success" : "text-danger";
-                        return `<strong class='${className} px-3'>${data}</strong>`;
-                    },
-                },
-                {
-                    data: "nomor_rekening",
-                    render: (data, type, row) => `
-                        <a class="btn btn-outline-primary btn-action btn-sm print" data-nomor-rekening="${data}" data-toggle="tooltip" data-bs-placement="top" title="Cetak buku tabungan">
-                            <i class="fas fa-print"></i>
-                        </a>
-                        <a class="btn btn-outline-danger btn-action btn-sm delete" data-nis="${data}" data-nama="${row.nama_siswa}" data-toggle="tooltip" data-bs-placement="top" title="hapus data">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    `,
                 },
             ];
 

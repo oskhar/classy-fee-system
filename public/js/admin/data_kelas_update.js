@@ -65,7 +65,6 @@ var Core = /*#__PURE__*/function () {
               _context.prev = 0;
               _context.next = 3;
               return this.doAjax("".concat(this.mainURL, "/api/auth/me"), function (response) {
-                console.log(response);
                 _this.mainIdAdministrator = response.id_administrator;
                 _this.mainUsername = response.username;
                 _this.mainHakAkses = response.hak_akses;
